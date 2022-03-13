@@ -1,92 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import foodImage from './food.jpg';
+import React, { PropsWithChildren } from 'react';
+import foodImage from '../food.jpg';
 import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMagnifyingGlass,
-  faUser,
-  faXmark,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
 
-function Header() {
-  const headerStyle = css`
-    height: 60px;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    box-shadow: 0 4px 11px rgb(0 0 0 / 10%);
-    position: relative;
-  `;
-  const logoLink = css`
-    margin: 0 25px;
-  `;
-  const logoImage = css`
-    width: 100px;
-    height: 33px;
-    color: hotpink;
-  `;
-  const headerInput = css`
-    height: 27px;
-    margin-left: 13px;
-    border: none;
-    font-size: 16px;
-    &:focus {
-      outline: none;
-    }
-  `;
-  const searchDiv = css`
-    display: flex;
-    align-items: center;
-    padding-left: 27px;
-    flex-grow: 1;
-  `;
-  const headerUl = css`
-    display: flex;
-    list-style: none;
-  `;
-  const headerLi = css`
-    width: 130px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-left: 1px solid #dbdbdb;
-  `;
-  const liSpan = css`
-    color: gray;
-    font-size: 16px;
-  `;
-  const headerLink = css`
-    text-decoration-line: none;
-  `;
-  const headerProfile = css`
-    height: 100%;
-    width: 86px;
-    border-left: 1px solid #dbdbdb;
-    display: flex;
-    justify-content: center;
-  `;
+interface ModalDefaultType {
+  onClickToggleModal: () => void;
+}
+
+function Modal({ onClickToggleModal }: PropsWithChildren<ModalDefaultType>) {
   const icon = css`
     border: none;
     color: gray;
     background-color: white;
-  `;
-  const searchIcon = css`
-    width: 25px;
-    height: 25px;
-    color: gray;
+    cursor: pointer;
+    display: flex;
   `;
 
-  const modal = css`
-    /* display: none; */
+  const ModalContainer = css`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+  const modalOpen = css`
     position: absolute;
     right: 20px;
     top: 70px;
     width: 320px;
     height: 534px;
-    border: 1px solid black;
+
+    box-sizing: border-box;
+    background-color: white;
+    z-index: 10000;
   `;
   const modalUl = css`
     display: flex;
@@ -97,16 +44,22 @@ function Header() {
     list-style: none;
     width: 294px;
     height: 86px;
-    margin: 0;
+    margin-top: 16px;
+    margin-right: 10px;
+    box-sizing: border-box;
   `;
   const modalLi = css`
     width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: gray;
+    cursor: pointer;
   `;
   const modalContent = css`
     height: 413px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
   `;
   const modalListImg = css`
     width: 70px;
@@ -124,9 +77,12 @@ function Header() {
     flex-direction: column;
     flex-grow: 1;
   `;
-  const clearDiv = css`
+  const modalNav = css`
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
+    margin-left: 16px;
+    margin-right: 16px;
   `;
   const modalLink = css`
     display: flex;
@@ -164,40 +120,27 @@ function Header() {
     color: #ff7100;
     background-color: transparent;
   `;
+
+  const modalBackground = css`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.2);
+  `;
   return (
-    <header css={headerStyle}>
-      <a href="/" css={logoLink}>
-        <img src={logo} alt="먹대장 로고" css={logoImage} />
-      </a>
-      <div css={searchDiv}>
-        <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
-        <input placeholder="지역, 식당 또는 음식" css={headerInput}></input>
-      </div>
-      <ul css={headerUl}>
-        <li css={headerLi}>
-          <a href="/" css={headerLink}>
-            <span css={liSpan}>맛집 리스트</span>
-          </a>
-        </li>
-        <li css={headerLi}>
-          <a href="/" css={headerLink}>
-            <span css={liSpan}>술집 리스트</span>
-          </a>
-        </li>
-      </ul>
-      <div css={headerProfile}>
-        <button css={icon}>
-          <FontAwesomeIcon icon={faUser} size="2x" />
-        </button>
-      </div>
-      <div css={modal}>
+    <div css={ModalContainer}>
+      <div css={modalOpen}>
         <ul css={modalUl}>
           <li css={modalLi}>최근 본 맛집</li>
           <li css={modalLi}>가고싶다</li>
         </ul>
         <div css={modalContent}>
-          <div css={clearDiv}>
-            <button css={icon}>창 닫기</button>
+          <div css={modalNav}>
+            <button css={icon} onClick={onClickToggleModal}>
+              창 닫기
+            </button>
             <button css={icon}>
               <FontAwesomeIcon icon={faXmark} />
             </button>
@@ -226,8 +169,18 @@ function Header() {
           <button css={loginButton}>로그인</button>
         </footer>
       </div>
-    </header>
+      <div
+        css={modalBackground}
+        onClick={(e: React.MouseEvent) => {
+          e.preventDefault();
+
+          if (onClickToggleModal) {
+            onClickToggleModal();
+          }
+        }}
+      />
+    </div>
   );
 }
 
-export default Header;
+export default Modal;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './Header';
+import Header from './components/Header';
 import emotionReset from 'emotion-reset';
 import { Global, css } from '@emotion/react';
 
@@ -14,7 +14,6 @@ function App() {
           *, *::after, *::before {
             -moz-osx-font-smoothing: grayscale;
             -webkit-font-smoothing: antialiased;
-            font-smoothing: antialiased;
           }
         `}
       />
