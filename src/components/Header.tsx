@@ -26,7 +26,8 @@ function Header() {
     height: 27px;
     margin-left: 13px;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 700;
     &:focus {
       outline: none;
     }
@@ -37,9 +38,13 @@ function Header() {
     padding-left: 27px;
     flex-grow: 1;
   `;
+  const searchDivNone = css`
+    visibility: hidden;
+  `;
   const headerUl = css`
     display: flex;
     list-style: none;
+    margin-left: auto;
   `;
   const headerLi = css`
     width: 130px;
@@ -51,7 +56,13 @@ function Header() {
   `;
   const liSpan = css`
     color: gray;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 700;
+  `;
+  const liSpanMain = css`
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
   `;
   const headerLink = css`
     text-decoration-line: none;
@@ -76,6 +87,7 @@ function Header() {
   `;
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isMainPage, setIsMainPage] = useState<boolean>(false);
 
   const onClickToggleModal = useCallback(() => {
     setIsOpenModal(!isOpenModal);
@@ -87,19 +99,19 @@ function Header() {
         <a href="/" css={logoLink}>
           <img src={logo} alt="먹대장 로고" css={logoImage} />
         </a>
-        <div css={searchDiv}>
+        <div css={isMainPage ? searchDivNone : searchDiv}>
           <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
           <input placeholder="지역, 식당 또는 음식" css={headerInput}></input>
         </div>
         <ul css={headerUl}>
           <li css={headerLi}>
             <a href="/" css={headerLink}>
-              <span css={liSpan}>맛집 리스트</span>
+              <span css={isMainPage ? liSpanMain : liSpan}>맛집 리스트</span>
             </a>
           </li>
           <li css={headerLi}>
             <a href="/" css={headerLink}>
-              <span css={liSpan}>술집 리스트</span>
+              <span css={isMainPage ? liSpanMain : liSpan}>술집 리스트</span>
             </a>
           </li>
         </ul>
