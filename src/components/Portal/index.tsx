@@ -3,16 +3,17 @@ import { createPortal } from 'react-dom';
 import { css } from '@emotion/react';
 
 const darkTheme = css`
-  background-color: black;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 900;
 `;
 
 const Portal: FC = () => {
   return createPortal(
     <div css={darkTheme}></div>,
-    document.getElementById('wrapper') as HTMLElement,
+    document.getElementById('modal-background') as HTMLElement,
   );
 };
 

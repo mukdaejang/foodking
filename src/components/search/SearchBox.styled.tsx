@@ -6,6 +6,18 @@ export const searchBar = css`
   margin-top: 60px;
 `;
 
+export const modalSearchBar = css`
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 60px;
+
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+
+  transform: translate(-50%, 0);
+`;
+
 export const searchBar__field = css`
   margin: 0px;
   padding: 0px;

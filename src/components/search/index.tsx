@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SearchModal from './SearchModal';
 import {
   searchBar,
+  modalSearchBar,
   searchBar__field,
   searchBar__contents,
   search__input,
@@ -11,14 +12,14 @@ import {
   findImgStyle,
   display,
 } from './SearchBox.styled';
-// import Portal from '@/components/Portal;
+import Portal from '@/components/Portal';
 import { css } from '@emotion/react';
 
 const SearchBox = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div css={searchBar}>
+    <div css={modalOpen ? modalSearchBar : searchBar}>
       <fieldset css={searchBar__field}>
         <div css={searchBar__contents}>
           <div className="contents__left">
@@ -38,6 +39,7 @@ const SearchBox = () => {
                 }}
               ></input>
               {modalOpen && <SearchModal modalOpen={true} />}
+              {modalOpen && <Portal></Portal>}
             </div>
             <span css={display}>CLEAR</span>
           </div>

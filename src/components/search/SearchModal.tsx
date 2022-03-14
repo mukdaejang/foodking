@@ -9,6 +9,7 @@ const openNavBox = css`
   position: absolute;
   width: 100%;
 
+  z-index: 1000;
   background: white;
   color: black;
   margin: 0 auto;
