@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import StyledFooter from './Footer.styled';
-import Logo from '@/assets/img/logo.png';
+import Logo from '@/assets/img/darkLogo.png';
 
 const Footer: FC = () => {
   return (
