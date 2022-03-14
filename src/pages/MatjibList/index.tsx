@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import { MatjibListTags, Footer } from '@/components';
+import { MatjibListTags } from '@/components';
 
 const Title: FC = styled.h1`
   font-size: 1.3rem;
@@ -14,7 +14,6 @@ const MatjipList: FC = () => {
     <div>
       {/* <Title>믿고 보는 맛집 리스트</Title>
       <MatjibListTags /> */}
-      <Footer />
     </div>
   );
 };

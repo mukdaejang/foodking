@@ -13,7 +13,7 @@ import {
 const Restaurant = () => {
   return (
     <li css={restaurantItem}>
-      <a css={restaurantLink} href="javascript:void(0)">
+      <a css={restaurantLink} href="/">
         <figure>
           <img css={restaurantImg} src={`${food}`} alt="food" />
           <figcaption css={restaurantInfo}>

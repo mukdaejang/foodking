@@ -1,12 +1,13 @@
 import { MatjibList, Main } from '@/pages';
-import Header from '@/components/Header';
+import { Header, Footer } from '@/components';
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      <Header />
       <Main />
       <MatjibList />
+      <Footer />
     </div>
   );
 }

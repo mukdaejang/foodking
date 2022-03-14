@@ -11,7 +11,7 @@ import {
 function CategoryItem() {
   return (
     <li css={categoryItem}>
-      <a css={categoryLink} href="javascript:void(0)">
+      <a css={categoryLink} href="/">
         <figure>
           <img css={categoryImg} src={`${food}`} alt="food" />
           <figcaption css={categoryInfo}>
