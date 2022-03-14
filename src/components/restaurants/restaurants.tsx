@@ -5,11 +5,10 @@ import { Restaurant } from '@/components';
 // const Restaurant = ({ href }) => {
 
 interface restaurantChecker {
-  href: string;
   title: string;
 }
 
-const Restaurants = ({ href, title }: restaurantChecker) => {
+const Restaurants = ({ title }: restaurantChecker) => {
   const restaurantsContent = css`
     padding: 30px 0;
   `;
@@ -25,7 +24,7 @@ const Restaurants = ({ href, title }: restaurantChecker) => {
 
   return (
     <section css={restaurantsContent}>
-      <h2 css={restaurantsTitle}>{`${'평점이 높은 맛집'}`}</h2>
+      <h2 css={restaurantsTitle}>{title}</h2>
       <ul css={restaurantsList}>
         <Restaurant />
         <Restaurant />
