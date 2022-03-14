@@ -3,7 +3,7 @@ export { default as Restaurants } from './Restaurants';
 export { default as CategoryItem } from './CategoryItem';
 export { default as Category } from './Category';
 export { default as Carousel } from './Carousel';
-export { default as SearchBox } from './search/SearchBox';
+export { default as SearchBox } from './Search';
 export { default as Banner } from './Banner';
 export { default as Header } from './Header';
 export { default as Modal } from './Modal';

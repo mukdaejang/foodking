@@ -1,4 +1,5 @@
-import SearchBox from '../search/SearchBox';
+import { FC } from 'react';
+import SearchBox from '@/components/Search';
 import { banner } from './Banner.styled';
 
 const Banner = () => {

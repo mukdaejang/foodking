@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import StyledFooter from './Footer.styled';
 import Logo from '@/assets/img/darkLogo.png';
 
-const Footer: FC = () => {
+const Footer = () => {
   return (
     <StyledFooter>
       <div className="upper">

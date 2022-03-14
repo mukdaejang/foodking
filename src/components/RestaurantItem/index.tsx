@@ -1,5 +1,4 @@
 import food from '@/assets/food.jpeg';
-import { FC } from 'react';
 import {
   restaurantItem,
   restaurantLink,

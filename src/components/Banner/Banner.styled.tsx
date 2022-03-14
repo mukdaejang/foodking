@@ -2,14 +2,6 @@ import { css } from '@emotion/react';
 import mainBanner from '@/assets/img/banner.jpg';
 
 export const banner = css`
-  p {
-    margin: 0;
-    padidng: 0;
-  }
-  h1 {
-    margin: 0;
-    padidng: 0;
-  }
   width: 100vw;
   height: 500px;
   background: url(${mainBanner}) no-repeat;

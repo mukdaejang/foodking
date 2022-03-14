@@ -1,5 +1,5 @@
 import { Category } from '@/components';
-import { FC } from 'react';
+
 import {
   carousel,
   categoryTitle,
@@ -15,7 +15,7 @@ interface CarouselChecker {
   title: string;
 }
 
-const Carousel: FC<CarouselChecker> = ({ title }) => {
+const Carousel = ({ title }: CarouselChecker) => {
   return (
     <section css={carousel}>
       <h2 css={categoryTitle}>{`믿고 보는 ${title} 리스트`}</h2>
