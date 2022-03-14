@@ -1,7 +1,8 @@
-import React from 'react';
+import { FC, MouseEvent } from 'react';
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
+import { loginGoogle, loginFacebook } from '@/firebase';
 import {
   ModalContainer,
   modalBackground,
@@ -27,7 +28,17 @@ type ModalProps = {
   onClickToggleModal: () => void;
 };
 
-function Modal({ onClickToggleModal }: ModalProps) {
+const Modal: FC<ModalProps> = ({ onClickToggleModal }) => {
+  const googleLogin = () => {
+    loginGoogle().then((result) => {
+      console.log(result);
+    });
+  };
+  const facebookLogin = () => {
+    loginFacebook().then((result) => {
+      console.log(result);
+    });
+  };
   return (
     <div css={ModalContainer}>
       <div css={modalOpen}>
@@ -65,12 +76,14 @@ function Modal({ onClickToggleModal }: ModalProps) {
           </ul>
         </div>
         <footer css={modalFooter}>
-          <button css={loginButton}>로그인</button>
+          <button css={loginButton} onClick={facebookLogin}>
+            로그인
+          </button>
         </footer>
       </div>
       <div
         css={modalBackground}
-        onClick={(e: React.MouseEvent) => {
+        onClick={(e: MouseEvent) => {
           e.preventDefault();
 
           if (onClickToggleModal) {
@@ -80,6 +93,6 @@ function Modal({ onClickToggleModal }: ModalProps) {
       />
     </div>
   );
-}
+};
 
 export default Modal;
