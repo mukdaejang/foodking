@@ -7,7 +7,7 @@ import glassSolid from '@/assets/icons/glass-solid.svg';
 
 const openNavBox = css`
   position: absolute;
-  width: 100%;
+  width: 110%;
 
   z-index: 1000;
   background: white;
@@ -22,10 +22,10 @@ const openNavBox = css`
 
 const ulStyle = css`
   list-style-type: none;
-
-  margin: 20px;
+  margin: 10px 0;
+  padding: 0 30px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   li {
     padding: 10px 20px;
     cursor: pointer;
