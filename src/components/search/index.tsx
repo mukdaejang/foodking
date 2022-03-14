@@ -11,7 +11,7 @@ import {
   findImgStyle,
   display,
 } from './SearchBox.styled';
-import Portal from '@/components/Portal';
+// import Portal from '@/components/Portal;
 import { css } from '@emotion/react';
 
 const SearchBox = () => {
