@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import styled from '@emotion/styled';
 
-const TagButton: FC = styled.button`
+const TagButton = styled.button`
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
   border-radius: 1.5rem;
@@ -12,7 +11,7 @@ type TagType = {
   content: string;
 };
 
-const Tag: FC<TagType> = ({ content }) => {
+const Tag = ({ content }: TagType) => {
   return <TagButton>#{content}</TagButton>;
 };
 
