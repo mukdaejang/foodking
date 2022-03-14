@@ -1,4 +1,3 @@
-import React from 'react';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 
 import {
@@ -11,6 +10,7 @@ import {
   findImgStyle,
   display,
 } from './SearchBox.styled';
+
 import SearchModal from './SearchModal';
 
 const SearchBox = () => {

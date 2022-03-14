@@ -1,4 +1,4 @@
-import SearchBox from '../search/SearchBox';
+import SearchBox from '@/components/Search';
 import { banner } from './Banner.styled';
 
 const Banner = () => {

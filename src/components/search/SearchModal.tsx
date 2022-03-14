@@ -1,5 +1,4 @@
-import React from 'react';
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import SearchKeyword from './SearchKeyword';
 
 const navBox = css`
