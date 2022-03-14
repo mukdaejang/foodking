@@ -1,5 +1,4 @@
-import React from 'react';
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 
 const keywordStyle = css`

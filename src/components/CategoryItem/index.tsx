@@ -1,5 +1,5 @@
 import food from '@/assets/food.jpeg';
-import { FC } from 'react';
+
 import {
   categoryItem,
   categoryLink,
