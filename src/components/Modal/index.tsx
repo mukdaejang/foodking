@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, MouseEvent } from 'react';
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +27,7 @@ type ModalProps = {
   onClickToggleModal: () => void;
 };
 
-function Modal({ onClickToggleModal }: ModalProps) {
+const Modal: FC<ModalProps> = ({ onClickToggleModal }) => {
   return (
     <div css={ModalContainer}>
       <div css={modalOpen}>
@@ -70,7 +70,7 @@ function Modal({ onClickToggleModal }: ModalProps) {
       </div>
       <div
         css={modalBackground}
-        onClick={(e: React.MouseEvent) => {
+        onClick={(e: MouseEvent) => {
           e.preventDefault();
 
           if (onClickToggleModal) {
@@ -80,6 +80,6 @@ function Modal({ onClickToggleModal }: ModalProps) {
       />
     </div>
   );
-}
+};
 
 export default Modal;

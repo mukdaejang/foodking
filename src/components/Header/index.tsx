@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { FC, useState, useCallback, Fragment } from 'react';
 import Modal from '@/components/Modal';
 import logo from '@/assets/img/logo.svg';
 
@@ -21,7 +21,7 @@ import {
   icon,
 } from './Header.styled';
 
-function Header() {
+const Header: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
 
@@ -30,7 +30,7 @@ function Header() {
   }, [isOpenModal]);
 
   return (
-    <>
+    <Fragment>
       <header css={headerStyle}>
         <a href="/" css={logoLink}>
           <img src={logo} alt="먹대장 로고" css={logoImage} />
@@ -62,8 +62,8 @@ function Header() {
         </div>
       </header>
       {isOpenModal && <Modal onClickToggleModal={onClickToggleModal}></Modal>}
-    </>
+    </Fragment>
   );
-}
+};
 
 export default Header;
