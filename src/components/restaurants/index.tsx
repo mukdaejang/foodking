@@ -1,4 +1,5 @@
 import { Restaurant } from '@/components';
+import { FC } from 'react';
 import {
   restaurantsContent,
   restaurantsTitle,
@@ -9,10 +10,10 @@ interface restaurantChecker {
   title: string;
 }
 
-const Restaurants = ({ title }: restaurantChecker) => {
+const Restaurants: FC<restaurantChecker> = ({ title }) => {
   return (
     <section css={restaurantsContent}>
-      <h2 css={restaurantsTitle}>{title}</h2>
+      <h2 css={restaurantsTitle}>{`평점이 높은 ${title}`}</h2>
       <ul css={restaurantsList}>
         <Restaurant />
         <Restaurant />

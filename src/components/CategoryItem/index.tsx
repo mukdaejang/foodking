@@ -1,4 +1,5 @@
 import food from '@/assets/food.jpeg';
+import { FC } from 'react';
 import {
   categoryItem,
   categoryLink,
@@ -8,7 +9,7 @@ import {
   categoryText,
 } from './category_item.styled';
 
-function CategoryItem() {
+const CategoryItem = () => {
   return (
     <li css={categoryItem}>
       <a css={categoryLink} href="/">
@@ -24,6 +25,6 @@ function CategoryItem() {
       </a>
     </li>
   );
-}
+};
 
 export default CategoryItem;
