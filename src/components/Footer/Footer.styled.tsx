@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import styled from '@emotion/styled';
 
-const StyledFooter: FC = styled.footer`
+const StyledFooter = styled.footer`
   padding: 3rem 10rem;
   background-color: ${({ theme }) => theme.colors.gray200};
   color: ${({ theme }) => theme.colors.gray300};

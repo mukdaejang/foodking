@@ -11,11 +11,19 @@ const categoryTitle = css`
   font-size: 1.5rem;
   font-weight: 700;
 `;
+const carouselView = css`
+  overflow: hidden;
+  margin: 0 50px;
+`;
 const carouselItems = css`
   display: flex;
-  overflow: hidden;
-  /* 임시 */
-  margin: 0 50px;
+  white-space: nowrap;
+
+  & > li {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 100%;
+  }
 `;
 const carouselControl = css`
   position: absolute;
@@ -58,16 +66,13 @@ const navigationControl = css`
     cursor: pointer;
   }
 `;
-const carouselSelect = css`
-  background-color: #ff792a;
-`;
 export {
   carousel,
   categoryTitle,
+  carouselView,
   carouselItems,
   carouselControl,
   carouselControlPrev,
   carouselControlNext,
-  carouselSelect,
   navigationControl,
 };

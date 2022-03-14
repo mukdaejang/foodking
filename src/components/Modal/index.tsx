@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
@@ -30,7 +30,7 @@ type ModalProps = {
   onClickToggleModal: () => void;
 };
 
-const Modal: FC<ModalProps> = ({ onClickToggleModal }) => {
+const Modal = ({ onClickToggleModal }: ModalProps) => {
   const dispatch = useAppDispatch();
 
   const googleLogin = () => {

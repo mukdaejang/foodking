@@ -29,7 +29,7 @@ const Restaurant = () => {
 };
 
 Restaurant.defaultProps = {
-  href: 'javascript:void(0)',
+  href: '/',
 };
 
 export default Restaurant;

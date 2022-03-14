@@ -1,17 +1,17 @@
 import { CategoryItem } from '@/components';
 import { categoryContent, categoryList } from './category.styled';
 
-const Category = () => {
+interface CategoryChecker {
+  categoryItemList: Array<object>;
+}
+
+const Category = ({ categoryItemList }: CategoryChecker) => {
   return (
     <section css={categoryContent}>
-      {/* <h2 css={categoryTitle}>{`믿고 보는 ${'맛집'} 리스트`}</h2> */}
       <ul css={categoryList}>
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
+        {categoryItemList.map((categoryItem) => (
+          <CategoryItem categoryData={categoryItem} />
+        ))}
       </ul>
     </section>
   );
