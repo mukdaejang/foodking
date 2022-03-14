@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 const categoryItem = css`
   float: left;
   position: relative;
-  width: 33%;
+  width: calc(100% / 3);
   padding: 20px;
   box-sizing: border-box;
 `;
