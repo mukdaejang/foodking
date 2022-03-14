@@ -1,27 +1,15 @@
-import './restaurants.css';
-import { css } from '@emotion/react';
 import { Restaurant } from '@/components';
-
-// const Restaurant = ({ href }) => {
+import {
+  restaurantsContent,
+  restaurantsTitle,
+  restaurantsList,
+} from './restaurants.styled';
 
 interface restaurantChecker {
   title: string;
 }
 
 const Restaurants = ({ title }: restaurantChecker) => {
-  const restaurantsContent = css`
-    padding: 30px 0;
-  `;
-  const restaurantsTitle = css`
-    color: #ff792a;
-    font-size: 1.5rem;
-    font-weight: 700;
-  `;
-  const restaurantsList = css`
-    display: block;
-    overflow: hidden;
-  `;
-
   return (
     <section css={restaurantsContent}>
       <h2 css={restaurantsTitle}>{title}</h2>

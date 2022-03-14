@@ -1,22 +1,7 @@
-import './category.css';
-import { css } from '@emotion/react';
 import { CategoryItem } from '@/components';
+import { categoryContent, categoryList } from './category.styled';
 
 function Category() {
-  const categoryContent = css`
-    padding-top: 30px;
-    padding-bottom: 40px;
-  `;
-  const categoryTitle = css`
-    color: #ff792a;
-    font-size: 1.5rem;
-    font-weight: 700;
-  `;
-  const categoryList = css`
-    display: block;
-    overflow: hidden;
-  `;
-
   return (
     <section css={categoryContent}>
       {/* <h2 css={categoryTitle}>{`믿고 보는 ${'맛집'} 리스트`}</h2> */}
