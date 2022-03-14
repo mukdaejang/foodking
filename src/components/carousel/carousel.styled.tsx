@@ -4,6 +4,7 @@ import arrow from '@/assets/arrow.png';
 const carousel = css`
   position: relative;
   margin: 0 auto;
+  padding: 30px 0;
 `;
 const categoryTitle = css`
   color: #ff792a;
