@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from '@/App';
 import { auth } from './firebase';
 import AuthProvider from '../src/provider/authProvider';
@@ -13,9 +14,9 @@ ReactDOM.render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <AuthProvider>
+      <Router>
         <App />
-      </AuthProvider>
+      </Router>
     </ThemeProvider>
   </StrictMode>,
   document.getElementById('root'),

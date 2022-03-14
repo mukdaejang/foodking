@@ -1,14 +1,14 @@
-import { MatjibList, Main } from '@/pages';
+import { Fragment } from 'react';
 import { Header, Footer } from '@/components';
+import Router from '@/Router';
 
 function App() {
   return (
-    <div className="App">
+    <Fragment>
       <Header />
-      <Main />
-      <MatjibList />
+      <Router />
       <Footer />
-    </div>
+    </Fragment>
   );
 }
 

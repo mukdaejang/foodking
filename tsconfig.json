@@ -12,7 +12,7 @@
     "checkJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
