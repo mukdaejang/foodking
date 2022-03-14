@@ -1,13 +1,13 @@
-import Banner from '@/components/Banner';
-import Header from '@/components/Header';
-import { MatjibList } from '@/pages';
+import { MatjibList, Main } from '@/pages';
+import { Header, Footer } from '@/components';
 
 function App() {
   return (
     <div className="App">
-      <Header></Header>
-      <Banner></Banner>
+      <Header />
+      <Main />
       <MatjibList />
+      <Footer />
     </div>
   );
 }
