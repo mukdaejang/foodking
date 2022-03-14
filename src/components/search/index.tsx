@@ -1,19 +1,20 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
-
+import { useState } from 'react';
 import {
   searchBar,
-  searchBar__contents,
   searchBar__field,
+  searchBar__contents,
   search__input,
   searh__btn,
   position,
   findImgStyle,
   display,
 } from './SearchBox.styled';
-
 import SearchModal from './SearchModal';
 
 const SearchBox = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const searchInputClick = () => {};
   return (
     <div css={searchBar}>
       <fieldset css={searchBar__field}>
@@ -29,8 +30,12 @@ const SearchBox = () => {
                 id="search__input"
                 className="search__input"
                 placeholder="지역, 식당 또는 음식"
+                onClick={() => {
+                  console.log('clicked');
+                  setModalOpen(true);
+                }}
               ></input>
-              <SearchModal icon={glassSolid}></SearchModal>
+              {modalOpen && <SearchModal />}
             </div>
             <span css={display}>CLEAR</span>
           </div>

@@ -1,12 +1,11 @@
+import React from 'react';
 import { css } from '@emotion/react';
 import SearchKeyword from './SearchKeyword';
+import { createPortal } from 'react-dom';
+
+import glassSolid from '@/assets/icons/glass-solid.svg';
 
 const navBox = css`
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
   position: absolute;
   width: 100%;
 
@@ -40,7 +39,10 @@ const searchselected = css`
   border-bottom: 3px solid #ff7100;
 `;
 
-const SearchModal = ({ ...props }) => {
+const SearchModal: React.FC = ({ children }) => {
+  // if (!modalOpen) return null;
+  // return createPortal(
+  // document.getElementById('search-modal') as HTMLElement,)
   return (
     <nav css={navBox}>
       <ul css={ulStyle}>
