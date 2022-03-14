@@ -8,6 +8,7 @@ const keywordStyle = css`
   img {
     opacity: 0.6;
     padding: 10px;
+    box-sizing: content-box;
   }
   :hover {
     cursor: pointer;
