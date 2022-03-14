@@ -17,6 +17,7 @@ export const logoImage = css`
   color: hotpink;
 `;
 export const headerInput = css`
+  width: 100%;
   height: 27px;
   margin-left: 13px;
   border: none;
