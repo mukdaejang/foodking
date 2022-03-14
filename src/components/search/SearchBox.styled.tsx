@@ -64,7 +64,7 @@ export const searchBar__contents = css`
 `;
 
 export const search__input = css`
-  width: 70%;
+  width: 100%;
   height: 100%;
   font-size: 20px;
 
@@ -95,9 +95,10 @@ export const searh__btn = css`
 export const none = css`
   display: none;
 `;
-export const display = css`
-  display: block;
-  opacity: 0.5;
+export const spanDisplay = css`
+  color: rgba(0, 0, 0, 0.4);
+  margin-right: 20px;
+  cursor: pointer;
 `;
 
 export const position = css`

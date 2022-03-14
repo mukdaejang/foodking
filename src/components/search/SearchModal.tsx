@@ -17,6 +17,7 @@ const openNavBox = css`
   .keyword-suggester img {
     width: 20px;
     height: 20px;
+    margin-left: 10px;
   }
 `;
 
@@ -26,6 +27,7 @@ const ulStyle = css`
   padding: 0 30px;
   display: flex;
   justify-content: space-between;
+
   li {
     padding: 10px 20px;
     cursor: pointer;
@@ -33,32 +35,43 @@ const ulStyle = css`
   li:hover {
     opacity: 0.6;
   }
+  .search-selected {
+    color: #ff7100;
+    border-bottom: 3px solid #ff7100;
+  }
 `;
 
-const searchselected = css`
-  color: #ff7100;
-  border-bottom: 3px solid #ff7100;
-`;
-
-const display = css`
-  display: block;
-`;
 const none = css`
   display: none;
 `;
 
 type Display = {
   modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SearchModal = ({ modalOpen }: Display) => {
-  // return createPortal(
-  // document.getElementById('search-modal') as HTMLElement,)
+const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
+  const onClick = (e: any) => {
+    const $list = e.target.parentNode.childNodes;
 
+    if (!e.target.classList.contains('search-selected')) {
+      $list.forEach((elem: any) => {
+        if (elem.classList.contains('search-selected')) {
+          elem.classList.remove('search-selected');
+        }
+      });
+    }
+    e.target.classList.add('search-selected');
+  };
+
+  const ulClick = (e: any) => {
+    console.log(e.target.classList);
+  };
+  // 이미 fetch 받은 데이터에서 filtering 해주는 방식으로
   return (
-    <nav css={modalOpen ? openNavBox : none}>
-      <ul css={ulStyle}>
-        <li css={searchselected}>추천 검색어</li>
+    <nav css={modalOpen ? openNavBox : none} onClick={onClick}>
+      <ul css={ulStyle} onClick={ulClick}>
+        <li className="search-selected">추천 검색어</li>
         <li>인기 검색어</li>
         <li>최근 검색어</li>
       </ul>
