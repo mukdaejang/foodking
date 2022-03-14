@@ -7,12 +7,19 @@ const darkTheme = css`
   position: absolute;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: 1000vh;
 `;
+type SetState = {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const Portal: FC = () => {
+const Background = ({ setModalOpen }: SetState) => {
+  return <div css={darkTheme}></div>;
+};
+
+const Portal = ({ setModalOpen }: SetState) => {
   return createPortal(
-    <div css={darkTheme}></div>,
+    <Background setModalOpen={setModalOpen} />,
     document.getElementById('modal-background') as HTMLElement,
   );
 };
