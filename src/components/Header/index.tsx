@@ -1,5 +1,5 @@
-import { Fragment, useState, useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useCallback, Fragment, useEffect } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import Modal from '@/components/Modal';
 import logo from '@/assets/img/logo.svg';
 
@@ -22,7 +22,7 @@ import {
   icon,
 } from './Header.styled';
 
-function Header() {
+const Header = () => {
   const [showHeader, setShowHeader] = useState<boolean>(true);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
@@ -50,14 +50,14 @@ function Header() {
           </div>
           <ul css={headerUl}>
             <li css={headerLi}>
-              <a href="/" css={headerLink}>
+              <Link to="/matjib_list" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>맛집 리스트</span>
-              </a>
+              </Link>
             </li>
             <li css={headerLi}>
-              <a href="/" css={headerLink}>
+              <Link to="/" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>술집 리스트</span>
-              </a>
+              </Link>
             </li>
           </ul>
           <div css={headerProfile}>
@@ -74,6 +74,6 @@ function Header() {
       {isOpenModal && <Modal onClickToggleModal={onClickToggleModal}></Modal>}
     </Fragment>
   );
-}
+};
 
 export default Header;

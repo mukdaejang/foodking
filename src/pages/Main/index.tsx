@@ -1,7 +1,10 @@
-// import styled from '@emotion/styled';
-import { Restaurants, Category, Carousel, Banner } from '@/components';
+import { Restaurants, Carousel, Banner } from '@/components';
+import { useAppSelector } from '@/store/hooks';
 
 const Main = () => {
+  const auth = useAppSelector(({ auth }) => auth.status);
+  console.log(auth);
+
   return (
     <div>
       <Banner />
