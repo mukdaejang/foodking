@@ -1,5 +1,6 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
 import { useState } from 'react';
+import SearchModal from './SearchModal';
 import {
   searchBar,
   searchBar__field,
@@ -10,11 +11,12 @@ import {
   findImgStyle,
   display,
 } from './SearchBox.styled';
-import SearchModal from './SearchModal';
+import Portal from '@/components/Portal';
+import { css } from '@emotion/react';
 
 const SearchBox = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const searchInputClick = () => {};
+
   return (
     <div css={searchBar}>
       <fieldset css={searchBar__field}>
@@ -35,7 +37,7 @@ const SearchBox = () => {
                   setModalOpen(true);
                 }}
               ></input>
-              {modalOpen && <SearchModal />}
+              {modalOpen && <SearchModal modalOpen={true} />}
             </div>
             <span css={display}>CLEAR</span>
           </div>

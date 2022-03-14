@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 
 import glassSolid from '@/assets/icons/glass-solid.svg';
 
-const navBox = css`
+const openNavBox = css`
   position: absolute;
   width: 100%;
 
@@ -39,12 +39,23 @@ const searchselected = css`
   border-bottom: 3px solid #ff7100;
 `;
 
-const SearchModal: React.FC = ({ children }) => {
-  // if (!modalOpen) return null;
+const display = css`
+  display: block;
+`;
+const none = css`
+  display: none;
+`;
+
+type Display = {
+  modalOpen: boolean;
+};
+
+const SearchModal = ({ modalOpen }: Display) => {
   // return createPortal(
   // document.getElementById('search-modal') as HTMLElement,)
+
   return (
-    <nav css={navBox}>
+    <nav css={modalOpen ? openNavBox : none}>
       <ul css={ulStyle}>
         <li css={searchselected}>추천 검색어</li>
         <li>인기 검색어</li>
