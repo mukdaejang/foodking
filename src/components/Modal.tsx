@@ -4,11 +4,11 @@ import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
 
-interface ModalDefaultType {
+type ModalProps = {
   onClickToggleModal: () => void;
-}
+};
 
-function Modal({ onClickToggleModal }: PropsWithChildren<ModalDefaultType>) {
+function Modal({ onClickToggleModal }: ModalProps) {
   const icon = css`
     border: none;
     color: gray;
@@ -129,6 +129,7 @@ function Modal({ onClickToggleModal }: PropsWithChildren<ModalDefaultType>) {
     z-index: 9999;
     background-color: rgba(0, 0, 0, 0.2);
   `;
+
   return (
     <div css={ModalContainer}>
       <div css={modalOpen}>
