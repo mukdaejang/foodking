@@ -1,5 +1,4 @@
 import food from '@/assets/food.jpeg';
-import { FC } from 'react';
 import {
   restaurantItem,
   restaurantLink,
@@ -30,7 +29,7 @@ const Restaurant = () => {
 };
 
 Restaurant.defaultProps = {
-  href: 'javascript:void(0)',
+  href: '/',
 };
 
 export default Restaurant;
