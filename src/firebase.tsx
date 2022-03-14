@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+} from 'firebase/auth';
 
 const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUR_ID,
@@ -13,3 +18,15 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+//Google 로그인
+const providerGoogle = new GoogleAuthProvider();
+export const loginGoogle = () => {
+  return signInWithPopup(auth, providerGoogle);
+};
+
+// Facebook 로그인
+const providerFacebook = new FacebookAuthProvider();
+export const loginFacebook = () => {
+  return signInWithPopup(auth, providerFacebook);
+};
