@@ -1,0 +1,42 @@
+.carousel {
+  position: relative;
+  margin: 0 auto;
+  background-color: skyblue;
+}
+
+.carousel_items {
+  display: flex;
+  overflow: hidden;
+  /* 임시 */
+  margin: 0 50px;
+}
+
+
+/* carousel의 prev, next 버튼 */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  color: #000;
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.carousel-control:focus {
+  outline: none;
+}
+
+/* carousel의 prev 버튼 */
+.carousel-control.prev {
+  left: 0;
+}
+
+/* carousel의 next 버튼 */
+.carousel-control.next {
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}
