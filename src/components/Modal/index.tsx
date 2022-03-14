@@ -3,6 +3,8 @@ import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
 import { loginGoogle, loginFacebook } from '@/firebase';
+import { useAppDispatch } from '@/store/hooks';
+import { login } from '@/store/auth/auth-actions';
 import {
   ModalContainer,
   modalBackground,
@@ -29,13 +31,14 @@ type ModalProps = {
 };
 
 const Modal: FC<ModalProps> = ({ onClickToggleModal }) => {
+  const dispatch = useAppDispatch();
+
   const googleLogin = () => {
-    loginGoogle().then((result) => {
-      console.log(result);
-    });
+    dispatch(login());
   };
   const facebookLogin = () => {
     loginFacebook().then((result) => {
+      // 리덕스에 상태넣기
       console.log(result);
     });
   };
@@ -76,7 +79,7 @@ const Modal: FC<ModalProps> = ({ onClickToggleModal }) => {
           </ul>
         </div>
         <footer css={modalFooter}>
-          <button css={loginButton} onClick={facebookLogin}>
+          <button css={loginButton} onClick={googleLogin}>
             로그인
           </button>
         </footer>
