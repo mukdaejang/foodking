@@ -1,23 +1,20 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header';
-import emotionReset from 'emotion-reset';
 import { Global, css } from '@emotion/react';
 
 function App() {
+  const reset = css`
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  `;
   return (
     <div>
-      <Global
-        styles={css`
-          ${emotionReset}
-
-          *, *::after, *::before {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-          }
-        `}
-      />
-      <Header></Header>;
+      <Global styles={reset} />
+      <Header></Header>
     </div>
   );
 }
