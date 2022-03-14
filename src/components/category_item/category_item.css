@@ -1,0 +1,35 @@
+.category__item {
+  float: left;
+  position: relative;
+  width: 33%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.category__img {
+  width: 100%;
+  height: 100%;
+}
+
+.category__info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 6px 6px 16px rgb(0 0 0 / 90%);
+}
+
+
+.category__name {
+  white-space: nowrap;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.category__text {
+  font-size: 1rem;
+  margin-top: 12px;
+  text-align: center;
+}
