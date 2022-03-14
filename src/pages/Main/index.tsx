@@ -5,8 +5,10 @@ const Main = () => {
   return (
     <div>
       <Banner />
-      <Restaurants title={'평점이 높은 맛집'} />
       <Carousel title={'맛집'} />
+      <Carousel title={'술집'} />
+      <Restaurants title={'맛집'} />
+      <Restaurants title={'술집'} />
     </div>
   );
 };

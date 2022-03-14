@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Tag from './Tag';
 
 const tags: string[] = [
@@ -15,7 +14,7 @@ const tags: string[] = [
   '디저트',
 ];
 
-const Tags: FC = () => {
+const Tags = () => {
   return (
     <p>
       {tags.map((tag) => (

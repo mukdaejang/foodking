@@ -12,7 +12,7 @@ interface restaurantChecker {
 const Restaurants = ({ title }: restaurantChecker) => {
   return (
     <section css={restaurantsContent}>
-      <h2 css={restaurantsTitle}>{title}</h2>
+      <h2 css={restaurantsTitle}>{`평점이 높은 ${title}`}</h2>
       <ul css={restaurantsList}>
         <Restaurant />
         <Restaurant />

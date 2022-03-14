@@ -1,4 +1,5 @@
 import { Category } from '@/components';
+
 import {
   carousel,
   categoryTitle,
@@ -14,7 +15,7 @@ interface CarouselChecker {
   title: string;
 }
 
-function Carousel({ title }: CarouselChecker) {
+const Carousel = ({ title }: CarouselChecker) => {
   return (
     <section css={carousel}>
       <h2 css={categoryTitle}>{`믿고 보는 ${title} 리스트`}</h2>
@@ -33,6 +34,6 @@ function Carousel({ title }: CarouselChecker) {
       </ul>
     </section>
   );
-}
+};
 
 export default Carousel;

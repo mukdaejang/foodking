@@ -1,8 +1,8 @@
-export { default as Restaurant } from './restaurant_item/restaurant';
-export { default as Restaurants } from './restaurants/restaurants';
-export { default as CategoryItem } from './category_item/category_item';
-export { default as Category } from './category/category';
-export { default as Carousel } from './carousel/carousel';
+export { default as Restaurant } from './RestaurantItem';
+export { default as Restaurants } from './Restaurants';
+export { default as CategoryItem } from './CategoryItem';
+export { default as Category } from './Category';
+export { default as Carousel } from './Carousel';
 export { default as SearchBox } from './Search';
 export { default as Banner } from './Banner';
 export { default as Header } from './Header';

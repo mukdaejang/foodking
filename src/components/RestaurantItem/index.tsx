@@ -9,7 +9,6 @@ import {
   restaurantSubInfo,
 } from './restaurant.styled';
 
-// const Restaurant = ({ href }) => {
 const Restaurant = () => {
   return (
     <li css={restaurantItem}>
