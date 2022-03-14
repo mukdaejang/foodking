@@ -1,5 +1,4 @@
-// import styled from '@emotion/styled';
-import { Restaurants, Category, Carousel, Banner } from '@/components';
+import { Restaurants, Carousel, Banner } from '@/components';
 
 const Main = () => {
   return (
