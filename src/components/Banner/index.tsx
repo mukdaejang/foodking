@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import SearchBox from '../Search/SearchBox';
-=======
-import { FC } from 'react';
 import SearchBox from '@/components/Search';
->>>>>>> 392c1a2c7961d0aa1d705e51fae32e14be7c8f9a
 import { banner } from './Banner.styled';
 
 const Banner = () => {
