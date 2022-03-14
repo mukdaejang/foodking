@@ -1,9 +1,12 @@
-import React from 'react';
 import { Banner } from './components';
-import './App.css';
+import { MatjibList } from '@/pages';
 
 function App() {
-  return <Banner />;
+  return (
+    <div className="App">
+      <MatjibList />
+    </div>
+  );
 }
 
 export default App;
