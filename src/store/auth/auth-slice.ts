@@ -2,8 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { login } from './auth-actions';
 
 const initialState = {
-  isLogin: false,
-  loading: false,
+  status: {
+    isLogin: false,
+    loading: false,
+    uid: '',
+  },
 };
 
 const authSlice = createSlice({
@@ -12,21 +15,24 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [login.pending.type]: (state) => {
-      state = {
+      state.status = {
         isLogin: false,
         loading: true,
+        uid: '',
       };
     },
-    [login.fulfilled.type]: (state) => {
-      state = {
+    [login.fulfilled.type]: (state, action) => {
+      state.status = {
         isLogin: true,
         loading: false,
+        uid: action.payload,
       };
     },
     [login.rejected.type]: (state) => {
-      state = {
+      state.status = {
         isLogin: false,
         loading: false,
+        uid: '',
       };
     },
   },
