@@ -1,5 +1,5 @@
 import { FC, useState, useCallback, Fragment, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Modal from '@/components/Modal';
 import logo from '@/assets/img/logo.svg';
 
@@ -50,14 +50,14 @@ const Header: FC = () => {
           </div>
           <ul css={headerUl}>
             <li css={headerLi}>
-              <a href="/" css={headerLink}>
+              <Link to="/matjib_list" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>맛집 리스트</span>
-              </a>
+              </Link>
             </li>
             <li css={headerLi}>
-              <a href="/" css={headerLink}>
+              <Link to="/" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>술집 리스트</span>
-              </a>
+              </Link>
             </li>
           </ul>
           <div css={headerProfile}>
