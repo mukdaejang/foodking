@@ -1,5 +1,5 @@
 import React from 'react';
-import glassSolid from '../../assets/icons/glass-solid.svg';
+import glassSolid from '@/assets/icons/glass-solid.svg';
 
 import { css, jsx } from '@emotion/react';
 import SearchModal from './SearchModal';

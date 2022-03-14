@@ -4,6 +4,7 @@ import { MatjibList } from '@/pages';
 function App() {
   return (
     <div className="App">
+      <Banner></Banner>
       <MatjibList />
     </div>
   );
