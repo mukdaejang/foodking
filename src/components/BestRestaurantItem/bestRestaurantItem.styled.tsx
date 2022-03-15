@@ -1,13 +1,13 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import unstar from '@/assets/icons/un-star.svg';
 
-const restaurantItemLi = css`
+const RestaurantItemLi = styled.li`
   width: 100%;
   border-bottom: 1px solid #b9b9b9;
   padding: 30px;
 `;
 
-const restaurantItem = css`
+const RestaurantItem = styled.figure`
   display: flex;
   position: relative;
 
@@ -17,14 +17,14 @@ const restaurantItem = css`
   }
 `;
 
-const restaurantImg = css`
+const RestaurantImg = styled.a`
   width: 45%;
   & img {
     width: 100%;
   }
 `;
 
-const restaurantInfo = css`
+const RestaurantInfo = styled.figcaption`
   width: 55%;
   padding: 10px;
   padding-left: 40px;
@@ -43,15 +43,15 @@ const restaurantInfo = css`
     margin-right: 10px;
   }
 `;
-const restaurantTitle = css`
+const RestaurantTitle = styled.h3`
   font-size: 2rem;
 `;
-const restaurantScore = css`
+const RestaurantScore = styled.span`
   color: #ff792a;
   margin-left: 15px;
 `;
 
-const restaurantLike = css`
+const RestaurantLike = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -79,12 +79,12 @@ const restaurantLike = css`
   }
 `;
 
-const restaurantSubInfo = css`
+const RestaurantSubInfo = styled.p`
   display: flex;
   margin: 10px 0;
 `;
 
-const restaurantMenu = css`
+const RestaurantMenu = styled.small`
   margin-top: 20px;
   flex-grow: 1;
 
@@ -102,21 +102,21 @@ const restaurantMenu = css`
   }
 `;
 
-const restaurantMore = css`
+const RestaurantMore = styled.small`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
 
 export {
-  restaurantItem,
-  restaurantImg,
-  restaurantInfo,
-  restaurantTitle,
-  restaurantScore,
-  restaurantSubInfo,
-  restaurantMenu,
-  restaurantMore,
-  restaurantLike,
-  restaurantItemLi,
+  RestaurantItemLi,
+  RestaurantItem,
+  RestaurantImg,
+  RestaurantInfo,
+  RestaurantTitle,
+  RestaurantScore,
+  RestaurantSubInfo,
+  RestaurantMenu,
+  RestaurantMore,
+  RestaurantLike,
 };
