@@ -13,7 +13,7 @@ const CopyLink = styled.input`
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.gray400};
+  border: 1px solid ${({ theme }) => theme.colors.gray500};
   border-radius: 20px;
   box-sizing: border-box;
 `;

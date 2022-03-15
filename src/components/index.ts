@@ -12,3 +12,6 @@ export { default as Footer } from './Footer';
 export { default as BestRestaurantItem } from './BestRestaurantItem';
 export { default as MoreButton } from './MoreButton';
 export { default as LinkCopyButton } from './LinkCopyButton';
+export { default as SurroundPopluars } from './SurroundPopulars';
+export { default as SearchModal } from './Search';
+export { default as Portal } from './Portal';

@@ -6,6 +6,18 @@ export const searchBar = css`
   margin-top: 60px;
 `;
 
+export const modalSearchBar = css`
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 60px;
+
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+
+  transform: translate(-50%, 0);
+`;
+
 export const searchBar__field = css`
   margin: 0px;
   padding: 0px;
@@ -19,6 +31,7 @@ export const searchBar__field = css`
 `;
 
 export const findImgStyle = css`
+  box-sizing: content-box;
   width: 30px;
   height: 31px;
   padding: 30px;
@@ -51,7 +64,7 @@ export const searchBar__contents = css`
 `;
 
 export const search__input = css`
-  width: 70%;
+  width: 100%;
   height: 100%;
   font-size: 20px;
 
@@ -82,9 +95,10 @@ export const searh__btn = css`
 export const none = css`
   display: none;
 `;
-export const display = css`
-  display: block;
-  opacity: 0.5;
+export const spanDisplay = css`
+  color: rgba(0, 0, 0, 0.4);
+  margin-right: 20px;
+  cursor: pointer;
 `;
 
 export const position = css`

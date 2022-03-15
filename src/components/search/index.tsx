@@ -1,21 +1,44 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
-
+import { useState, useEffect } from 'react';
+import SearchModal from './SearchModal';
 import {
   searchBar,
-  searchBar__contents,
+  modalSearchBar,
   searchBar__field,
+  searchBar__contents,
   search__input,
   searh__btn,
   position,
   findImgStyle,
-  display,
+  spanDisplay,
+  none,
 } from './SearchBox.styled';
-
-import SearchModal from './SearchModal';
+import Portal from '@/components/Portal';
 
 const SearchBox = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    //fetchData
+    console.log(inputValue);
+  }, [inputValue]);
+
+  const onKeyUp = (e: any) => {
+    console.log(e.key);
+    if (e.key === 'Enter' || e.key === 'Escape') setModalOpen(false);
+  };
+
+  const onChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
+
+  const spanClear = () => {
+    setInputValue('');
+  };
+
   return (
-    <div css={searchBar}>
+    <div css={modalOpen ? modalSearchBar : searchBar}>
       <fieldset css={searchBar__field}>
         <div css={searchBar__contents}>
           <div className="contents__left">
@@ -29,10 +52,19 @@ const SearchBox = () => {
                 id="search__input"
                 className="search__input"
                 placeholder="지역, 식당 또는 음식"
+                value={inputValue}
+                onClick={() => setModalOpen(true)}
+                onKeyUp={onKeyUp}
+                onChange={onChange}
               ></input>
-              <SearchModal icon={glassSolid}></SearchModal>
+              {modalOpen && (
+                <SearchModal modalOpen={true} setModalOpen={setModalOpen} />
+              )}
+              {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
             </div>
-            <span css={display}>CLEAR</span>
+            <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
+              CLEAR
+            </span>
           </div>
           <div className="contents__right">
             <input css={searh__btn} type="submit" value="검색"></input>
