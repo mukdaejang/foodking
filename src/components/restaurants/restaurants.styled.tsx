@@ -1,16 +1,16 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-const restaurantsContent = css`
+const RestaurantsContent = styled.section`
   padding: 30px 0;
 `;
-const restaurantsTitle = css`
-  color: #ff792a;
+const RestaurantsTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.orange};
   font-size: 1.5rem;
   font-weight: 700;
 `;
-const restaurantsList = css`
+const RestaurantsList = styled.ul`
   display: block;
   overflow: hidden;
 `;
 
-export { restaurantsContent, restaurantsTitle, restaurantsList };
+export { RestaurantsContent, RestaurantsTitle, RestaurantsList };

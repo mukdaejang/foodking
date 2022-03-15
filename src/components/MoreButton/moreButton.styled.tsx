@@ -1,13 +1,13 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import arrow from '@/assets/icons/arrow-down.svg';
 
-const buttonItem = css`
+const ButtonItem = styled.button`
   all: unset;
   display: block;
   padding: 10px;
   margin: 0 auto;
   font-size: 1.4rem;
-  color: #ff792a;
+  color: ${({ theme }) => theme.colors.orange};
   cursor: pointer;
 
   &::before {
@@ -24,4 +24,4 @@ const buttonItem = css`
   }
 `;
 
-export { buttonItem };
+export { ButtonItem };

@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { buttonItem } from './moreButton.styled';
+import { ButtonItem } from './moreButton.styled';
 
 const MoreButton = () => {
-  return <button css={buttonItem}>더보기</button>;
+  return <ButtonItem>더보기</ButtonItem>;
 };
 
 export default MoreButton;

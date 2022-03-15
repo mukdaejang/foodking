@@ -1,8 +1,8 @@
 import { Restaurant } from '@/components';
 import {
-  restaurantsContent,
-  restaurantsTitle,
-  restaurantsList,
+  RestaurantsContent,
+  RestaurantsTitle,
+  RestaurantsList,
 } from './restaurants.styled';
 
 interface restaurantChecker {
@@ -11,9 +11,9 @@ interface restaurantChecker {
 
 const Restaurants = ({ title }: restaurantChecker) => {
   return (
-    <section css={restaurantsContent}>
-      <h2 css={restaurantsTitle}>{`평점이 높은 ${title}`}</h2>
-      <ul css={restaurantsList}>
+    <RestaurantsContent>
+      <RestaurantsTitle>{`평점이 높은 ${title}`}</RestaurantsTitle>
+      <RestaurantsList>
         <Restaurant />
         <Restaurant />
         <Restaurant />
@@ -22,8 +22,8 @@ const Restaurants = ({ title }: restaurantChecker) => {
         <Restaurant />
         <Restaurant />
         <Restaurant />
-      </ul>
-    </section>
+      </RestaurantsList>
+    </RestaurantsContent>
   );
 };
 
