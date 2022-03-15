@@ -32,7 +32,7 @@ const BestRestaurantItem = () => {
   return (
     <RestaurantItemLi>
       <RestaurantItem>
-        <RestaurantImg>
+        <RestaurantImg href="/">
           <img src={food} alt="food" />
         </RestaurantImg>
         <RestaurantInfo>
