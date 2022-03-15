@@ -117,15 +117,11 @@ const Carousel = ({ title }: CarouselChecker) => {
   }, [currentSlide]);
 
   const NextSlide = () => {
-    console.log('NextSlide', currentSlide);
-
     if (currentSlide >= TOTAL_SLIDES) setCurrentSlide(0);
     else setCurrentSlide(currentSlide + 1);
   };
 
   const PrevSlide = () => {
-    console.log('PrevSlide', currentSlide);
-
     if (currentSlide === 0) setCurrentSlide(TOTAL_SLIDES);
     else setCurrentSlide(currentSlide - 1);
   };
@@ -135,18 +131,16 @@ const Carousel = ({ title }: CarouselChecker) => {
       <h2 css={categoryTitle}>{`믿고 보는 ${title} 리스트`}</h2>
       <div css={carouselView}>
         <ul css={carouselItems} ref={slideRef}>
-          {categoryComponent.map((element: any, idx: any) => {
-            return (
-              <li key={idx}>
-                <Category categoryItemList={element} />
-              </li>
-            );
-          })}
+          {categoryComponent.map((element: any, idx: any) => (
+            <li key={idx}>
+              <Category categoryItemList={element} />
+            </li>
+          ))}
         </ul>
       </div>
       <ul css={navigationControl} ref={slideDotRef}>
-        {categoryComponent.map((_: any) => (
-          <li></li>
+        {categoryComponent.map((_: any, idx: any) => (
+          <li key={idx}></li>
         ))}
       </ul>
       <button

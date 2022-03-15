@@ -9,8 +9,8 @@ const Category = ({ categoryItemList }: CategoryChecker) => {
   return (
     <section css={categoryContent}>
       <ul css={categoryList}>
-        {categoryItemList.map((categoryItem) => (
-          <CategoryItem categoryData={categoryItem} />
+        {categoryItemList.map((categoryItem, idx: any) => (
+          <CategoryItem key={idx} categoryData={categoryItem} />
         ))}
       </ul>
     </section>
