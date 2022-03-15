@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 import foodImage from '@/assets/img/food.jpg';
 import ModalPortal from './ModalPortal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +6,6 @@ import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
 import SocialLogin from './SocialLogin';
 import {
   ModalContainer,
-  modalBackground,
   modalContent,
   modalFooter,
   modalLi,
@@ -19,6 +18,7 @@ import {
   modalSection,
   modalUl,
   icon,
+  iconX,
   listInfo,
   listScore,
   listTitle,
@@ -31,16 +31,21 @@ type ModalProps = {
 
 const Modal = ({ onClickToggleModal }: ModalProps) => {
   const [modalOpened, setModalOpened] = useState(false);
-
   const handleOpen = () => {
     setModalOpened(true);
   };
   const handleClose = () => {
     setModalOpened(false);
   };
+  const handleBackClose = () => {
+    if (onClickToggleModal) {
+      onClickToggleModal();
+    }
+  };
 
   return (
     <div css={ModalContainer}>
+      <ModalPortal closePortal={handleBackClose}></ModalPortal>
       <div css={modalOpen}>
         <ul css={modalUl}>
           <li css={modalLi}>최근 본 맛집</li>
@@ -52,7 +57,8 @@ const Modal = ({ onClickToggleModal }: ModalProps) => {
               창 닫기
             </button>
             <button css={icon}>
-              <FontAwesomeIcon icon={faXmark} />
+              <FontAwesomeIcon icon={faXmark} css={iconX} />
+              <span>모두 지우기</span>
             </button>
           </div>
           <ul css={modalListUl}>
@@ -86,16 +92,6 @@ const Modal = ({ onClickToggleModal }: ModalProps) => {
           )}
         </footer>
       </div>
-      {/* <div
-        css={modalBackground}
-        onClick={(e: MouseEvent) => {
-          e.preventDefault();
-
-          if (onClickToggleModal) {
-            onClickToggleModal();
-          }
-        }}
-      /> */}
     </div>
   );
 };

@@ -2,12 +2,17 @@ import { css } from '@emotion/react';
 
 export const icon = css`
   border: none;
+  display: flex;
+  align-items: center;
   color: gray;
   background-color: white;
+  text-align: center;
   cursor: pointer;
-  display: flex;
+  padding: 0;
 `;
-
+export const iconX = css`
+  margin-right: 5px;
+`;
 export const ModalContainer = css`
   width: 100%;
   height: 100%;
