@@ -25,7 +25,7 @@ const ModalPortal = ({ children, closePortal }: ModalProps) => {
       <Fragment>
         <div css={modalBackground} onClick={closePortal}></div>
       </Fragment>,
-      document.getElementById('login-modal') as HTMLElement,
+      document.getElementById('overlay') as HTMLElement,
     );
   }
 };
