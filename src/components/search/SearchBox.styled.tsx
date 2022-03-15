@@ -19,6 +19,7 @@ export const searchBar__field = css`
 `;
 
 export const findImgStyle = css`
+  box-sizing: content-box;
   width: 30px;
   height: 31px;
   padding: 30px;

@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, Fragment, useEffect } from 'react';
+import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Modal from '@/components/Modal';
 import logo from '@/assets/img/logo.svg';
@@ -22,7 +22,7 @@ import {
   icon,
 } from './Header.styled';
 
-const Header: FC = () => {
+const Header = () => {
   const [showHeader, setShowHeader] = useState<boolean>(true);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);

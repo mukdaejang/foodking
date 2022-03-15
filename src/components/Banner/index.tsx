@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import SearchBox from '@/components/Search';
 import { banner } from './Banner.styled';
 
