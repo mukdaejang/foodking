@@ -1,10 +1,9 @@
-import { MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import foodImage from '@/assets/img/food.jpg';
+import ModalPortal from './ModalPortal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
-import { loginGoogle, loginFacebook } from '@/firebase';
-import { useAppDispatch } from '@/store/hooks';
-import { login } from '@/store/auth/auth-actions';
+import SocialLogin from './SocialLogin';
 import {
   ModalContainer,
   modalBackground,
@@ -31,17 +30,15 @@ type ModalProps = {
 };
 
 const Modal = ({ onClickToggleModal }: ModalProps) => {
-  const dispatch = useAppDispatch();
+  const [modalOpened, setModalOpened] = useState(false);
 
-  const googleLogin = () => {
-    dispatch(login());
+  const handleOpen = () => {
+    setModalOpened(true);
   };
-  const facebookLogin = () => {
-    loginFacebook().then((result) => {
-      // 리덕스에 상태넣기
-      console.log(result);
-    });
+  const handleClose = () => {
+    setModalOpened(false);
   };
+
   return (
     <div css={ModalContainer}>
       <div css={modalOpen}>
@@ -79,12 +76,17 @@ const Modal = ({ onClickToggleModal }: ModalProps) => {
           </ul>
         </div>
         <footer css={modalFooter}>
-          <button css={loginButton} onClick={googleLogin}>
+          <button css={loginButton} onClick={handleOpen}>
             로그인
           </button>
+          {modalOpened && (
+            <ModalPortal closePortal={handleClose}>
+              <SocialLogin closePortal={handleClose}></SocialLogin>
+            </ModalPortal>
+          )}
         </footer>
       </div>
-      <div
+      {/* <div
         css={modalBackground}
         onClick={(e: MouseEvent) => {
           e.preventDefault();
@@ -93,7 +95,7 @@ const Modal = ({ onClickToggleModal }: ModalProps) => {
             onClickToggleModal();
           }
         }}
-      />
+      /> */}
     </div>
   );
 };
