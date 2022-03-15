@@ -24,9 +24,17 @@ const SearchBox = () => {
     console.log(inputValue);
   }, [inputValue]);
 
+  // const onClick = (e: MouseEvent) => {
+  //   console.log('click event');
+  // };
+
   const onKeyUp = (e: any) => {
     console.log(e.key);
     if (e.key === 'Enter' || e.key === 'Escape') setModalOpen(false);
+  };
+
+  const onFocus = () => {
+    setModalOpen(true);
   };
 
   const onChange = (e: any) => {
@@ -54,6 +62,7 @@ const SearchBox = () => {
                 placeholder="지역, 식당 또는 음식"
                 value={inputValue}
                 onClick={() => setModalOpen(true)}
+                onFocus={onFocus}
                 onKeyUp={onKeyUp}
                 onChange={onChange}
               ></input>
@@ -62,11 +71,20 @@ const SearchBox = () => {
               )}
               {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
             </div>
-            <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
+            <span
+              css={modalOpen ? spanDisplay : none}
+              onClick={spanClear}
+              tabIndex={1}
+            >
               CLEAR
             </span>
           </div>
-          <div className="contents__right">
+          <div
+            className="contents__right"
+            tabIndex={2}
+            // onClick={onClick}
+            onKeyUp={onKeyUp}
+          >
             <input css={searh__btn} type="submit" value="검색"></input>
           </div>
         </div>

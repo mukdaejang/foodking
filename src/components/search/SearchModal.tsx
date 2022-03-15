@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { css } from '@emotion/react';
 import SearchKeyword from './SearchKeyword';
 import { createPortal } from 'react-dom';
@@ -55,7 +55,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
     const $list = e.target.parentNode.childNodes;
 
     if (!e.target.classList.contains('search-selected')) {
-      $list.forEach((elem: any) => {
+      $list.forEach((elem: Element) => {
         if (elem.classList.contains('search-selected')) {
           elem.classList.remove('search-selected');
         }
@@ -64,16 +64,18 @@ const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
     e.target.classList.add('search-selected');
   };
 
-  const ulClick = (e: any) => {
-    console.log(e.target.classList);
+  const ulClick = (e: MouseEvent) => {
+    // 이미 fetch 받은 데이터에서 filtering 해주는 방식으로
+    console.log(e.target);
   };
-  // 이미 fetch 받은 데이터에서 filtering 해주는 방식으로
   return (
     <nav css={modalOpen ? openNavBox : none} onClick={onClick}>
       <ul css={ulStyle} onClick={ulClick}>
-        <li className="search-selected">추천 검색어</li>
-        <li>인기 검색어</li>
-        <li>최근 검색어</li>
+        <li className="search-selected" tabIndex={0}>
+          추천 검색어
+        </li>
+        <li tabIndex={0}>인기 검색어</li>
+        <li tabIndex={0}>최근 검색어</li>
       </ul>
       <div className="keyword-suggester">
         <SearchKeyword></SearchKeyword>

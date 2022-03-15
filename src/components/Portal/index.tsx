@@ -10,11 +10,14 @@ const darkTheme = css`
   height: 1000vh;
 `;
 type SetState = {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOpen: (isOpen: boolean) => void;
+  onClick?: () => void;
 };
 
 const Background = ({ setModalOpen }: SetState) => {
-  return <div css={darkTheme}></div>;
+  const onClick = () => setModalOpen(false);
+  return <div css={darkTheme} onClick={onClick}></div>;
 };
 
 const Portal = ({ setModalOpen }: SetState) => {

@@ -11,11 +11,8 @@ export const modalSearchBar = css`
   margin: 0 auto;
   margin-top: 60px;
 
-  position: absolute;
+  position: relative;
   z-index: 1000;
-  left: 50%;
-
-  transform: translate(-50%, 0);
 `;
 
 export const searchBar__field = css`
