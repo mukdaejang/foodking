@@ -1,4 +1,4 @@
-import { BestRestaurantItem } from '@/components';
+import { BestRestaurantItem, MoreButton } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { css } from '@emotion/react';
 
@@ -7,18 +7,19 @@ const Main = () => {
   console.log(auth);
 
   return (
-    <div>
-      <ul
-        css={css`
-          width: 70%;
-          margin: 0 auto;
-          padding: 20px;
-        `}
-      >
+    <div
+      css={css`
+        width: 70%;
+        margin: 0 auto;
+        padding: 20px;
+      `}
+    >
+      <ul>
         <BestRestaurantItem />
         <BestRestaurantItem />
         <BestRestaurantItem />
       </ul>
+      <MoreButton />
     </div>
   );
 };
