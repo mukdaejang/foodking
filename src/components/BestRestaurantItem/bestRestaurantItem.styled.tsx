@@ -6,11 +6,18 @@ const restaurantItem = css`
   /* overflow: hidden; */
   display: flex;
   position: relative;
+
+  & a {
+    color: #000;
+    text-decoration: none;
+  }
 `;
 
 const restaurantImg = css`
   width: 45%;
-  /* float: left; */
+  & img {
+    width: 100%;
+  }
 `;
 
 const restaurantInfo = css`
@@ -19,10 +26,13 @@ const restaurantInfo = css`
 
   & > address,
   small {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-top: 5px;
     /* font-weight: 400; */
     color: #9b9b9b;
+  }
+  & address {
+    margin-bottom: 20px;
   }
   & small:first-child {
     margin-right: 10px;
@@ -37,29 +47,43 @@ const restaurantScore = css`
 `;
 
 const restaurantLike = css`
-  all: unset;
-  box-sizing: border-box;
-  cursor: pointer;
   position: absolute;
   top: 0;
   right: 0;
   margin: 10px;
-  padding: 10px;
-  width: 40px;
-  height: 40px;
-  background: url('${unstar}') no-repeat center center / cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  & > button {
+    all: unset;
+    box-sizing: border-box;
+    padding: 7px;
+    width: 30px;
+    height: 30px;
+    background: url('${unstar}') no-repeat center center / cover;
+    cursor: pointer;
+  }
+
+  & > span {
+    padding-top: 5px;
+    font-size: 0.7rem;
+    color: #9b9b9b;
+    white-space: nowrap;
+  }
 `;
 
 const restaurantSubInfo = css`
   display: flex;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
 const restaurantMenu = css`
   margin-top: 20px;
   flex-grow: 1;
 
   & p {
-    padding: 5px 0;
+    padding: 3px 0;
     margin-bottom: 10px;
     border-bottom: 1px solid #9b9b9b;
     &:first-child {

@@ -1,4 +1,6 @@
 import food from '@/assets/food.jpeg';
+import { url } from 'inspector';
+import { useState, useEffect, useRef } from 'react';
 import {
   restaurantItem,
   restaurantImg,
@@ -10,25 +12,47 @@ import {
   restaurantMore,
   restaurantLike,
 } from './bestRestaurantItem.styled';
+import unstar from '@/assets/icons/un-star.svg';
+import star from '@/assets/icons/star.svg';
 
 const BestRestaurantItem = () => {
-  const changeStar = (e: any) => {
-    console.log(e.target);
+  const [starState, setStarState] = useState(false);
+  const starRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (starRef.current) {
+      // starRef.current.style.border = starState ? '2px solid black';
+      starRef.current.style.backgroundImage = `url('${
+        starState ? star : unstar
+      }')`;
+    }
+  }, [starState]);
+
+  const changeStar = () => {
+    setStarState(!starState);
   };
+
   return (
     <figure css={restaurantItem}>
-      <img css={restaurantImg} src={food} alt="food" />
+      <a href="/" css={restaurantImg}>
+        <img src={food} alt="food" />
+      </a>
       <figcaption css={restaurantInfo}>
-        <h3 css={restaurantTitle}>
-          까스까스<span css={restaurantScore}>4.5</span>
-        </h3>
-        <button css={restaurantLike} onClick={changeStar}></button>
+        <a href="/">
+          <h3 css={restaurantTitle}>
+            까스까스<span css={restaurantScore}>4.5</span>
+          </h3>
+        </a>
+        <div css={restaurantLike}>
+          <button onClick={changeStar} ref={starRef}></button>
+          <span>가고싶다</span>
+        </div>
         <address>서울특별시 강남구 미왕빌딩</address>
         <p css={restaurantSubInfo}>
           <small>영업시간</small>
           <small>11:30 - 21:00 </small>
         </p>
-        <p css={restaurantSubInfo}>
+        <div css={restaurantSubInfo}>
           <small>대표메뉴</small>
           <small css={restaurantMenu}>
             <p>
@@ -44,8 +68,10 @@ const BestRestaurantItem = () => {
               <span>17000 원</span>
             </p>
           </small>
-        </p>
-        <small css={restaurantMore}>{`${`까스까스`} 더보기 >`}</small>
+        </div>
+        <a href="/">
+          <small css={restaurantMore}>{`${`까스까스`} 더보기 >`}</small>
+        </a>
       </figcaption>
     </figure>
   );
