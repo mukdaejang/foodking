@@ -12,7 +12,7 @@ const LinkCopyButton = () => {
 
   return (
     <CopyForm>
-      <CopyLink type="text" disabled />
+      <CopyLink type="text" disabled value={window.location.href} />
       <CopyButton>
         <CopyButtonIcon />
         공유하기

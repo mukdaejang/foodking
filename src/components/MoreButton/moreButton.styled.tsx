@@ -5,7 +5,7 @@ const ButtonItem = styled.button`
   all: unset;
   display: block;
   padding: 10px;
-  margin: 0 auto;
+  margin: 10px auto;
   font-size: 1.4rem;
   color: ${({ theme }) => theme.colors.orange};
   cursor: pointer;

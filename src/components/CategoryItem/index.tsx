@@ -21,7 +21,7 @@ const CategoryItem = ({
 CategoryItemChecker) => {
   return (
     <CategoryItemLi>
-      <CategoryLink href="/">
+      <CategoryLink href="./bestRestaurants">
         <figure>
           <CategoryImg src={`${food}`} alt="food" />
           <CategoryInfo>
