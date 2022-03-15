@@ -4,7 +4,7 @@ import SearchModal from './SearchModal';
 import {
   searchBar,
   modalSearchBar,
-  searchBar__field,
+  SearchBarField,
   searchBar__contents,
   search__input,
   searh__btn,
@@ -47,7 +47,7 @@ const SearchBox = () => {
 
   return (
     <div css={modalOpen ? modalSearchBar : searchBar}>
-      <fieldset css={searchBar__field}>
+      <SearchBarField>
         <div css={searchBar__contents}>
           <div className="contents__left">
             <label htmlFor="search__input" />
@@ -74,21 +74,21 @@ const SearchBox = () => {
             <span
               css={modalOpen ? spanDisplay : none}
               onClick={spanClear}
-              tabIndex={1}
+              // tabIndex={1}
             >
               CLEAR
             </span>
           </div>
           <div
             className="contents__right"
-            tabIndex={2}
+            // tabIndex={2}
             // onClick={onClick}
             onKeyUp={onKeyUp}
           >
             <input css={searh__btn} type="submit" value="검색"></input>
           </div>
         </div>
-      </fieldset>
+      </SearchBarField>
     </div>
   );
 };

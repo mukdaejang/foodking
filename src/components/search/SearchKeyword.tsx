@@ -17,7 +17,7 @@ const keywordStyle = css`
   }
   :hover {
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.6;
   }
 `;
 

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
 export const searchBar = css`
   width: 60%;
@@ -15,7 +16,7 @@ export const modalSearchBar = css`
   z-index: 1000;
 `;
 
-export const searchBar__field = css`
+export const SearchBarField = styled.fieldset`
   margin: 0px;
   padding: 0px;
 
@@ -23,7 +24,7 @@ export const searchBar__field = css`
   background: white;
 
   margin: 0 auto;
-  border: 1px solid rgba(255, 133, 0, 1);
+  border: 1px solid ${({ theme }) => theme.colors.orange};
   border-radius: 40px;
 `;
 
