@@ -115,15 +115,11 @@ const Carousel = ({ title }: CarouselChecker) => {
   }, [currentSlide]);
 
   const NextSlide = () => {
-    console.log('NextSlide', currentSlide);
-
     if (currentSlide >= TOTAL_SLIDES) setCurrentSlide(0);
     else setCurrentSlide(currentSlide + 1);
   };
 
   const PrevSlide = () => {
-    console.log('PrevSlide', currentSlide);
-
     if (currentSlide === 0) setCurrentSlide(TOTAL_SLIDES);
     else setCurrentSlide(currentSlide - 1);
   };
@@ -143,8 +139,8 @@ const Carousel = ({ title }: CarouselChecker) => {
         </CarouselItems>
       </CarouselView>
       <NavigationControl ref={slideDotRef}>
-        {categoryComponent.map((_: any) => (
-          <li></li>
+        {categoryComponent.map((_: any, idx: any) => (
+          <li key={idx}></li>
         ))}
       </NavigationControl>
       <CarouselControl onClick={PrevSlide}></CarouselControl>
