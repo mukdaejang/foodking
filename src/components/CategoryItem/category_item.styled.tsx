@@ -1,41 +1,44 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-const categoryItem = css`
+const CategoryItemLi = styled.li`
   float: left;
   position: relative;
   width: calc(100% / 3);
   padding: 20px;
   box-sizing: border-box;
 `;
-const categoryLink = css``;
-const categoryImg = css`
+
+const CategoryLink = styled.a``;
+
+const CategoryImg = styled.img`
   width: 100%;
   height: 100%;
 `;
-const categoryInfo = css`
+
+const CategoryInfo = styled.figcaption`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   font-weight: 600;
   text-shadow: 6px 6px 16px rgb(0 0 0 / 90%);
 `;
-const categoryName = css`
+const CategoryTitle = styled.h3`
   white-space: nowrap;
   font-size: 1.8rem;
   text-align: center;
 `;
-const categoryText = css`
+const CategoryText = styled.p`
   font-size: 1rem;
   margin-top: 12px;
   text-align: center;
 `;
 export {
-  categoryItem,
-  categoryLink,
-  categoryImg,
-  categoryInfo,
-  categoryName,
-  categoryText,
+  CategoryItemLi,
+  CategoryLink,
+  CategoryImg,
+  CategoryInfo,
+  CategoryTitle,
+  CategoryText,
 };

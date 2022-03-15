@@ -1,11 +1,11 @@
 import food from '@/assets/food.jpeg';
 import {
-  categoryItem,
-  categoryLink,
-  categoryImg,
-  categoryInfo,
-  categoryName,
-  categoryText,
+  CategoryItemLi,
+  CategoryLink,
+  CategoryImg,
+  CategoryInfo,
+  CategoryTitle,
+  CategoryText,
 } from './category_item.styled';
 
 interface CategoryItemChecker {
@@ -20,17 +20,17 @@ const CategoryItem = ({
 // subTitle,
 CategoryItemChecker) => {
   return (
-    <li css={categoryItem}>
-      <a css={categoryLink} href="/">
+    <CategoryItemLi>
+      <CategoryLink href="/">
         <figure>
-          <img css={categoryImg} src={`${food}`} alt="food" />
-          <figcaption css={categoryInfo}>
-            <h3 css={categoryName}>{categoryData.title}</h3>
-            <p css={categoryText}>{categoryData.subTitle}</p>
-          </figcaption>
+          <CategoryImg src={`${food}`} alt="food" />
+          <CategoryInfo>
+            <CategoryTitle>{categoryData.title}</CategoryTitle>
+            <CategoryText>{categoryData.subTitle}</CategoryText>
+          </CategoryInfo>
         </figure>
-      </a>
-    </li>
+      </CategoryLink>
+    </CategoryItemLi>
   );
 };
 

@@ -3,7 +3,7 @@ import unstar from '@/assets/icons/un-star.svg';
 
 const RestaurantItemLi = styled.li`
   width: 100%;
-  border-bottom: 1px solid #b9b9b9;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
   padding: 30px;
 `;
 
@@ -12,7 +12,7 @@ const RestaurantItem = styled.figure`
   position: relative;
 
   & a {
-    color: #000;
+    color: ${({ theme }) => theme.colors.black};
     text-decoration: none;
   }
 `;
@@ -34,7 +34,7 @@ const RestaurantInfo = styled.figcaption`
     font-size: 0.9rem;
     margin-top: 5px;
     /* font-weight: 400; */
-    color: #9b9b9b;
+    color: ${({ theme }) => theme.colors.gray300};
   }
   & address {
     margin-bottom: 20px;
@@ -47,7 +47,7 @@ const RestaurantTitle = styled.h3`
   font-size: 2rem;
 `;
 const RestaurantScore = styled.span`
-  color: #ff792a;
+  color: ${({ theme }) => theme.colors.orange};
   margin-left: 15px;
 `;
 
@@ -74,7 +74,7 @@ const RestaurantLike = styled.div`
   & > span {
     padding-top: 5px;
     font-size: 0.7rem;
-    color: #9b9b9b;
+    color: ${({ theme }) => theme.colors.gray300};
     white-space: nowrap;
   }
 `;
@@ -91,7 +91,7 @@ const RestaurantMenu = styled.small`
   & p {
     padding: 3px 0;
     margin-bottom: 10px;
-    border-bottom: 1px solid #9b9b9b;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.gray300};
     &:first-of-type {
       padding-top: 0;
     }
