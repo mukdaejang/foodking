@@ -18,7 +18,7 @@ const categoryInfo = css`
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-weight: 700;
+  font-weight: 600;
   text-shadow: 6px 6px 16px rgb(0 0 0 / 90%);
 `;
 const categoryName = css`
