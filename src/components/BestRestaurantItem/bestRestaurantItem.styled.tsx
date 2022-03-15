@@ -1,9 +1,13 @@
 import { css } from '@emotion/react';
 import unstar from '@/assets/icons/un-star.svg';
-import star from '@/assets/icons/star.svg';
+
+const restaurantItemLi = css`
+  width: 100%;
+  border-bottom: 1px solid #b9b9b9;
+  padding: 30px;
+`;
 
 const restaurantItem = css`
-  /* overflow: hidden; */
   display: flex;
   position: relative;
 
@@ -22,11 +26,12 @@ const restaurantImg = css`
 
 const restaurantInfo = css`
   width: 55%;
-  padding: 10px 40px;
+  padding: 10px;
+  padding-left: 40px;
 
   & > address,
   small {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top: 5px;
     /* font-weight: 400; */
     color: #9b9b9b;
@@ -34,7 +39,7 @@ const restaurantInfo = css`
   & address {
     margin-bottom: 20px;
   }
-  & small:first-child {
+  & small:first-of-type {
     margin-right: 10px;
   }
 `;
@@ -78,6 +83,7 @@ const restaurantSubInfo = css`
   display: flex;
   margin: 10px 0;
 `;
+
 const restaurantMenu = css`
   margin-top: 20px;
   flex-grow: 1;
@@ -86,10 +92,11 @@ const restaurantMenu = css`
     padding: 3px 0;
     margin-bottom: 10px;
     border-bottom: 1px solid #9b9b9b;
-    &:first-child {
+    &:first-of-type {
       padding-top: 0;
     }
   }
+
   & span:last-child {
     float: right;
   }
@@ -111,4 +118,5 @@ export {
   restaurantMenu,
   restaurantMore,
   restaurantLike,
+  restaurantItemLi,
 };

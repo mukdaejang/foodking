@@ -15,15 +15,9 @@ const Main = () => {
           padding: 20px;
         `}
       >
-        <li
-          css={css`
-            width: 100%;
-            border: 1px solid gray;
-            padding: 20px;
-          `}
-        >
-          <BestRestaurantItem />
-        </li>
+        <BestRestaurantItem />
+        <BestRestaurantItem />
+        <BestRestaurantItem />
       </ul>
     </div>
   );
