@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { createPortal } from 'react-dom';
 import { css } from '@emotion/react';
 
