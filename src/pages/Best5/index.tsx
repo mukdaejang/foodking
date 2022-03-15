@@ -1,4 +1,4 @@
-import { BestRestaurantItem, MoreButton } from '@/components';
+import { BestRestaurantItem, MoreButton, LinkCopyButton } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { css } from '@emotion/react';
 import React from 'react';
@@ -59,6 +59,7 @@ const Main = () => {
           <BestRestaurantItem />
         </ul>
         <MoreButton />
+        <LinkCopyButton />
       </div>
     </>
   );
