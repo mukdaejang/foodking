@@ -1,9 +1,6 @@
 import React, { MouseEvent } from 'react';
 import { css } from '@emotion/react';
 import SearchKeyword from './SearchKeyword';
-import { createPortal } from 'react-dom';
-
-import glassSolid from '@/assets/icons/glass-solid.svg';
 
 const openNavBox = css`
   position: absolute;
