@@ -7,7 +7,7 @@ import {
   SearchBarField,
   searchBar__contents,
   search__input,
-  searh__btn,
+  SearchBtn,
   position,
   findImgStyle,
   spanDisplay,
@@ -85,7 +85,7 @@ const SearchBox = () => {
             // onClick={onClick}
             onKeyUp={onKeyUp}
           >
-            <input css={searh__btn} type="submit" value="검색"></input>
+            <SearchBtn type="submit" value="검색"></SearchBtn>
           </div>
         </div>
       </SearchBarField>

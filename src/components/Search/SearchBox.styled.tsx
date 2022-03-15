@@ -1,3 +1,4 @@
+import theme from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -74,14 +75,14 @@ export const search__input = css`
   }
 `;
 
-export const searh__btn = css`
+export const SearchBtn = styled.input`
   width: 100%;
   height: 100%;
   font-size: 20px;
   color: white;
   cursor: pointer;
 
-  background-color: #ff7100;
+  background-color: ${({ theme }) => theme.colors.orange};
   outline: none;
   border: none;
   border-radius: 40px;
