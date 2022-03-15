@@ -25,7 +25,7 @@ CategoryItemChecker) => {
         <figure>
           <img css={categoryImg} src={`${food}`} alt="food" />
           <figcaption css={categoryInfo}>
-            <p css={categoryName}>{categoryData.title}</p>
+            <h3 css={categoryName}>{categoryData.title}</h3>
             <p css={categoryText}>{categoryData.subTitle}</p>
           </figcaption>
         </figure>
