@@ -1,4 +1,6 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Theme from '@/styles/theme';
 
 export const searchBar = css`
   width: 60%;
@@ -11,14 +13,11 @@ export const modalSearchBar = css`
   margin: 0 auto;
   margin-top: 60px;
 
-  position: absolute;
+  position: relative;
   z-index: 1000;
-  left: 50%;
-
-  transform: translate(-50%, 0);
 `;
 
-export const searchBar__field = css`
+export const SearchBarField = styled.fieldset`
   margin: 0px;
   padding: 0px;
 
@@ -26,7 +25,7 @@ export const searchBar__field = css`
   background: white;
 
   margin: 0 auto;
-  border: 1px solid rgba(255, 133, 0, 1);
+  border: 1px solid ${({ theme }) => theme.colors.orange};
   border-radius: 40px;
 `;
 
@@ -76,20 +75,24 @@ export const search__input = css`
   }
 `;
 
-export const searh__btn = css`
+export const search__btn = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
+  text-decoration-line: none;
   color: white;
-  cursor: pointer;
 
-  background-color: #ff7100;
+  background-color: ${Theme.colors.orange};
   outline: none;
   border: none;
   border-radius: 40px;
   :hover {
     opacity: 0.6;
   }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const none = css`

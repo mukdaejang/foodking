@@ -7,26 +7,60 @@ export const headerStyle = css`
   box-sizing: border-box;
   box-shadow: 0 4px 11px rgb(0 0 0 / 10%);
   position: relative;
-`;
-export const logoLink = css`
-  margin: 0 25px;
-`;
-export const logoImage = css`
-  width: 100px;
-  height: 33px;
-  color: hotpink;
-`;
-export const headerInput = css`
-  width: 100%;
-  height: 27px;
-  margin-left: 13px;
-  border: none;
-  font-size: 14px;
-  font-weight: 700;
-  &:focus {
-    outline: none;
+
+  a {
+    margin: 0 25px;
+
+    img {
+      width: 100px;
+      height: 33px;
+      color: hotpink;
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 27px;
+    margin-left: 13px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin-left: auto;
+
+    li {
+      width: 130px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #dbdbdb;
+    }
+  }
+
+  div {
+    height: 100%;
+    width: 86px;
+    border-left: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+
+    button {
+      border: none;
+      color: gray;
+      background-color: white;
+      cursor: pointer;
+    }
   }
 `;
+
 export const searchDiv = css`
   display: flex;
   align-items: center;
@@ -36,19 +70,7 @@ export const searchDiv = css`
 export const searchDivNone = css`
   visibility: hidden;
 `;
-export const headerUl = css`
-  display: flex;
-  list-style: none;
-  margin-left: auto;
-`;
-export const headerLi = css`
-  width: 130px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 1px solid #dbdbdb;
-`;
+
 export const liSpan = css`
   color: gray;
   font-size: 14px;
@@ -62,19 +84,7 @@ export const liSpanMain = css`
 export const headerLink = css`
   text-decoration-line: none;
 `;
-export const headerProfile = css`
-  height: 100%;
-  width: 86px;
-  border-left: 1px solid #dbdbdb;
-  display: flex;
-  justify-content: center;
-`;
-export const icon = css`
-  border: none;
-  color: gray;
-  background-color: white;
-  cursor: pointer;
-`;
+
 export const searchIcon = css`
   width: 25px;
   height: 25px;
