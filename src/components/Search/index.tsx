@@ -1,6 +1,6 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import Portal from '@/components/Portal';
 import {
@@ -25,13 +25,32 @@ const SearchBox = () => {
     console.log(inputValue);
   }, [inputValue]);
 
-  // const onClick = (e: MouseEvent) => {
-  //   console.log('click event');
-  // };
+  const searchInput = useRef<any>(null);
+  let navigate = useNavigate();
+
+  const onClick = (e: any) => {
+    if (!inputValue) {
+      alert('검색어를 입력 해주세요!');
+      e.preventDefault();
+    }
+  };
 
   const onKeyUp = (e: any) => {
-    console.log(e.key);
-    if (e.key === 'Enter' || e.key === 'Escape') setModalOpen(false);
+    if (e.key === 'Enter' && !inputValue) {
+      alert('검색어를 입력 해주세요!');
+      setModalOpen(false);
+      return;
+    }
+    if (e.key === 'Enter' || e.key === 'Escape') {
+      if (e.key === 'Escape') {
+        setModalOpen(false);
+        return;
+      }
+      if (inputValue) {
+        console.log(e.key);
+        navigate(`/search/${inputValue}`);
+      } else setModalOpen(false);
+    }
   };
 
   const onFocus = () => {
@@ -57,12 +76,12 @@ const SearchBox = () => {
             </span>
             <div css={position}>
               <input
+                ref={searchInput}
                 css={search__input}
                 id="search__input"
                 className="search__input"
                 placeholder="지역, 식당 또는 음식"
                 value={inputValue}
-                onClick={() => setModalOpen(true)}
                 onFocus={onFocus}
                 onKeyUp={onKeyUp}
                 onChange={onChange}
@@ -83,6 +102,7 @@ const SearchBox = () => {
           <div className="contents__right" onKeyUp={onKeyUp}>
             <Link
               css={search__btn}
+              onClick={onClick}
               to={`/search${inputValue ? `/${inputValue}` : ''}`}
             >
               검색
