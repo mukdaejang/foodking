@@ -1,6 +1,17 @@
-import { BestRestaurantItem, MoreButton, LinkCopyButton } from '@/components';
+import {
+  BestRestaurantItem,
+  MoreButton,
+  LinkCopyButton,
+  MatjibListTags,
+} from '@/components';
+import {
+  Title,
+  GrayContainer,
+  ContainerTitle,
+  ContainerText,
+  SortMiddel70,
+} from '@/components/style';
 import { useAppSelector } from '@/store/hooks';
-import { css } from '@emotion/react';
 import React from 'react';
 
 const Main = () => {
@@ -9,50 +20,11 @@ const Main = () => {
 
   return (
     <>
-      <div
-        css={css`
-          position: relative;
-          width: 100%;
-          height: 250px;
-          background-color: #f7f7f7;
-          border-bottom: 1px solid #dbdbdb;
-        `}
-      >
-        <h3
-          css={css`
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            text-align: center;
-          `}
-        >
-          {'강남역 맛집 베스트 5!'}
-        </h3>
-        <p
-          css={css`
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.3rem;
-            color: #9b9b9b;
-            font-weight: 400;
-            margin-top: 12px;
-            text-align: center;
-          `}
-        >
-          {'"강남역" 점심은 여기서 해결!'}
-        </p>
-      </div>
-      <div
-        css={css`
-          width: 70%;
-          margin: 0 auto;
-          padding: 20px;
-        `}
-      >
+      <GrayContainer>
+        <ContainerTitle>강남역 맛집 베스트 5!</ContainerTitle>
+        <ContainerText>"강남역" 점심은 여기서 해결!</ContainerText>
+      </GrayContainer>
+      <SortMiddel70>
         <ul>
           <BestRestaurantItem />
           <BestRestaurantItem />
@@ -60,7 +32,13 @@ const Main = () => {
         </ul>
         <MoreButton />
         <LinkCopyButton />
-      </div>
+      </SortMiddel70>
+      <GrayContainer>
+        <SortMiddel70>
+          <Title>실시간 인기 키워드</Title>
+          <MatjibListTags />
+        </SortMiddel70>
+      </GrayContainer>
     </>
   );
 };

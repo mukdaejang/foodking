@@ -79,7 +79,7 @@ const RestaurantLike = styled.div`
   }
 `;
 
-const RestaurantSubInfo = styled.p`
+const RestaurantSubInfo = styled.div`
   display: flex;
   margin: 10px 0;
 `;
