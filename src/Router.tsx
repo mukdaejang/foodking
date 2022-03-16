@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { MatjibList, Main, NotFound, SearchResult } from '@/pages';
+import { MatjibList, Main, NotFound, Best5, SearchResult } from '@/pages';
 
 const Router = () => {
   return (
@@ -8,6 +8,7 @@ const Router = () => {
       <Route path="matjib_list" element={<MatjibList />} />
       <Route path="Search/:endpoint" element={<SearchResult />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="bestRestaurants" element={<Best5 />} />
     </Routes>
   );
 };

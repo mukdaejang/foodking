@@ -1,0 +1,22 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { CopyForm, CopyLink, CopyButton } from './linkCopyButton.styled';
+
+const LinkCopyButton = () => {
+  const CopyButtonHandler = (e: any) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href);
+  };
+
+  return (
+    <CopyForm>
+      <CopyLink type="text" disabled value={window.location.href} />
+      <CopyButton onClick={CopyButtonHandler}>
+        <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+        <span>공유하기</span>
+      </CopyButton>
+    </CopyForm>
+  );
+};
+
+export default LinkCopyButton;

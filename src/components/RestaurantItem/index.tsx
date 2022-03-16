@@ -1,30 +1,30 @@
 import food from '@/assets/food.jpeg';
 import {
-  restaurantItem,
-  restaurantLink,
-  restaurantImg,
-  restaurantInfo,
-  restaurantName,
-  restaurantScore,
-  restaurantSubInfo,
+  RestaurantItem,
+  RestaurantLink,
+  RestaurantImg,
+  RestaurantInfo,
+  RestaurantName,
+  RestaurantScore,
+  RestaurantSubInfo,
 } from './restaurant.styled';
 
 const Restaurant = () => {
   return (
-    <li css={restaurantItem}>
-      <a css={restaurantLink} href="/">
+    <RestaurantItem>
+      <RestaurantLink href="/">
         <figure>
-          <img css={restaurantImg} src={`${food}`} alt="food" />
-          <figcaption css={restaurantInfo}>
+          <RestaurantImg src={`${food}`} alt="food" />
+          <RestaurantInfo>
             <p>
-              <span css={restaurantName}>음식점 이름</span>
-              <span css={restaurantScore}>4.5</span>
+              <RestaurantName>음식점 이름</RestaurantName>
+              <RestaurantScore>4.5</RestaurantScore>
             </p>
-            <p css={restaurantSubInfo}>{`${'지역'} - ${'음식종류'}`}</p>
-          </figcaption>
+            <RestaurantSubInfo>{`${'지역'} - ${'음식종류'}`}</RestaurantSubInfo>
+          </RestaurantInfo>
         </figure>
-      </a>
-    </li>
+      </RestaurantLink>
+    </RestaurantItem>
   );
 };
 
