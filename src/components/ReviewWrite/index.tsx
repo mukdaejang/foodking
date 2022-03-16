@@ -10,8 +10,12 @@ import {
   ButtonGroup,
 } from './reviewWrite.styled';
 import { SortMiddel60 } from '@/components/style';
+import { ReviewScoreButton } from './ReviewScore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
+import face from '@/assets/icons/face-icon.png';
 
 const ReviewWrite = () => {
   return (
@@ -22,19 +26,27 @@ const ReviewWrite = () => {
         <ReviewContent>
           <ReviewScoreGroup>
             <li>
-              <ReviewScore>맛있다</ReviewScore>
+              <ReviewScoreButton posX={-1} posY={100}>
+                맛있다
+              </ReviewScoreButton>
             </li>
             <li>
-              <ReviewScore>괜찮다</ReviewScore>
+              <ReviewScoreButton posX={49} posY={100}>
+                괜찮아요
+              </ReviewScoreButton>
             </li>
             <li>
-              <ReviewScore>별로</ReviewScore>
+              <ReviewScoreButton posX={98} posY={100}>
+                별로
+              </ReviewScoreButton>
             </li>
           </ReviewScoreGroup>
-          <ReviewText>리뷰써라 돼지야!</ReviewText>
+          <ReviewText placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"></ReviewText>
         </ReviewContent>
         <ReviewImg>
-          <label htmlFor="file"></label>
+          <label htmlFor="file">
+            <FontAwesomeIcon icon={faPlus} size="2x" color="lightgray" />
+          </label>
           <input id="file" type="file" />
         </ReviewImg>
 
