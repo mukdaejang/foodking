@@ -15,3 +15,4 @@ export { default as LinkCopyButton } from './LinkCopyButton';
 export { default as SurroundPopluars } from './SurroundPopulars';
 export { default as SearchModal } from './Search';
 export { default as Portal } from './Portal';
+export { default as Reviews } from './Reviews';
