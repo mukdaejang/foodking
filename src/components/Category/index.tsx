@@ -1,5 +1,5 @@
 import { CategoryItem } from '@/components';
-import { CategoryContent, CategoryList } from './category.styled';
+import { categoryContent, categoryList } from './category.styled';
 
 interface CategoryChecker {
   categoryItemList: Array<object>;
@@ -7,13 +7,13 @@ interface CategoryChecker {
 
 const Category = ({ categoryItemList }: CategoryChecker) => {
   return (
-    <CategoryContent>
-      <CategoryList>
-        {categoryItemList.map((categoryItem, idx: any) => (
-          <CategoryItem key={idx} categoryData={categoryItem} />
+    <section css={categoryContent}>
+      <ul css={categoryList}>
+        {categoryItemList.map((categoryItem) => (
+          <CategoryItem categoryData={categoryItem} />
         ))}
-      </CategoryList>
-    </CategoryContent>
+      </ul>
+    </section>
   );
 };
 
