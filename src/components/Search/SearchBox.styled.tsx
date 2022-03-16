@@ -1,7 +1,8 @@
-import theme from '@/styles/theme';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import Theme from '@/styles/theme';
 
+console.log(Theme);
 export const searchBar = css`
   width: 60%;
   margin: 0 auto;
@@ -75,20 +76,24 @@ export const search__input = css`
   }
 `;
 
-export const SearchBtn = styled.input`
+export const search__btn = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
+  text-decoration-line: none;
   color: white;
-  cursor: pointer;
 
-  background-color: ${({ theme }) => theme.colors.orange};
+  background-color: ${Theme.colors.orange};
   outline: none;
   border: none;
   border-radius: 40px;
   :hover {
     opacity: 0.6;
   }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const none = css`
