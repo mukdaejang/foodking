@@ -1,6 +1,8 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SearchModal from './SearchModal';
+import Portal from '@/components/Portal';
 import {
   searchBar,
   modalSearchBar,
@@ -13,7 +15,6 @@ import {
   spanDisplay,
   none,
 } from './SearchBox.styled';
-import Portal from '@/components/Portal';
 
 const SearchBox = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -79,13 +80,11 @@ const SearchBox = () => {
               CLEAR
             </span>
           </div>
-          <div
-            className="contents__right"
-            // tabIndex={2}
-            // onClick={onClick}
-            onKeyUp={onKeyUp}
-          >
-            <input css={searh__btn} type="submit" value="검색"></input>
+          <div className="contents__right" onKeyUp={onKeyUp}>
+            <Link to={`/search${inputValue ? `/${inputValue}` : ''}`}>
+              {console.log(`/search${inputValue ? `/${inputValue}` : ''}`)}
+              <input css={searh__btn} type="submit" value="검색"></input>
+            </Link>
           </div>
         </div>
       </SearchBarField>
