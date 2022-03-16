@@ -21,14 +21,12 @@ const keywordStyle = css`
   }
 `;
 
-const SearchKeyword = () => {
+const SearchKeyword = ({ keyword }: any) => {
   return (
     <>
       <li css={keywordStyle}>
-        <img src={glassSolid} alt="glass-solid"></img>test
-      </li>
-      <li css={keywordStyle}>
-        <img src={glassSolid} alt="glass-solid"></img>test
+        <img src={glassSolid} alt="glass-solid"></img>
+        {keyword}
       </li>
     </>
   );
