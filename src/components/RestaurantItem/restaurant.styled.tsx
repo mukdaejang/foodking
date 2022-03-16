@@ -1,6 +1,6 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-const restaurantItem = css`
+const RestaurantItem = styled.li`
   float: left;
   width: 25%;
   padding: 20px;
@@ -8,41 +8,42 @@ const restaurantItem = css`
   box-sizing: border-box;
 `;
 
-const restaurantLink = css`
-  color: #000;
+const RestaurantLink = styled.a`
+  color: ${({ theme }) => theme.colors.black};
   text-decoration: none;
 `;
 
-const restaurantImg = css`
+const RestaurantImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
-const restaurantInfo = css`
+const RestaurantInfo = styled.figcaption`
   margin-top: 6px;
 `;
 
-const restaurantName = css`
+const RestaurantName = styled.span`
   font-size: 1.3rem;
 `;
-const restaurantScore = css`
+const RestaurantScore = styled.span`
   font-size: 1.3rem;
-  color: #ff792a;
+  color: ${({ theme }) => theme.colors.orange};
   margin-left: 5px;
 `;
-const restaurantSubInfo = css`
+const RestaurantSubInfo = styled.p`
   margin-top: 6px;
   font-size: 0.9rem;
-  color: #9b9b9b;
+  color: ${({ theme }) => theme.colors.gray300};
+  ${({ theme }) => theme.colors.orange}
 `;
 
 export {
-  restaurantItem,
-  restaurantLink,
-  restaurantImg,
-  restaurantInfo,
-  restaurantName,
-  restaurantScore,
-  restaurantSubInfo,
+  RestaurantItem,
+  RestaurantLink,
+  RestaurantImg,
+  RestaurantInfo,
+  RestaurantName,
+  RestaurantScore,
+  RestaurantSubInfo,
 };

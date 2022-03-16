@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  GithubAuthProvider,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -29,4 +30,10 @@ export const loginGoogle = () => {
 const providerFacebook = new FacebookAuthProvider();
 export const loginFacebook = () => {
   return signInWithPopup(auth, providerFacebook);
+};
+
+// Github 로그인
+const providerGithub = new GithubAuthProvider();
+export const loginGithub = () => {
+  return signInWithPopup(auth, providerGithub);
 };

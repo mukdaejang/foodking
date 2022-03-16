@@ -1,14 +1,12 @@
 import { Category } from '@/components';
 import { useState, useRef, useEffect } from 'react';
 import {
-  carousel,
-  categoryTitle,
-  carouselView,
-  carouselItems,
-  carouselControl,
-  carouselControlPrev,
-  carouselControlNext,
-  navigationControl,
+  CarouselContent,
+  CategoryTitle,
+  CarouselView,
+  CarouselItems,
+  CarouselControl,
+  NavigationControl,
 } from './carousel.styled';
 
 const mockData = [
@@ -117,24 +115,20 @@ const Carousel = ({ title }: CarouselChecker) => {
   }, [currentSlide]);
 
   const NextSlide = () => {
-    console.log('NextSlide', currentSlide);
-
     if (currentSlide >= TOTAL_SLIDES) setCurrentSlide(0);
     else setCurrentSlide(currentSlide + 1);
   };
 
   const PrevSlide = () => {
-    console.log('PrevSlide', currentSlide);
-
     if (currentSlide === 0) setCurrentSlide(TOTAL_SLIDES);
     else setCurrentSlide(currentSlide - 1);
   };
 
   return (
-    <section css={carousel}>
-      <h2 css={categoryTitle}>{`믿고 보는 ${title} 리스트`}</h2>
-      <div css={carouselView}>
-        <ul css={carouselItems} ref={slideRef}>
+    <CarouselContent>
+      <CategoryTitle>{`믿고 보는 ${title} 리스트`}</CategoryTitle>
+      <CarouselView>
+        <CarouselItems ref={slideRef}>
           {categoryComponent.map((element: any, idx: any) => {
             return (
               <li key={idx}>
@@ -142,22 +136,16 @@ const Carousel = ({ title }: CarouselChecker) => {
               </li>
             );
           })}
-        </ul>
-      </div>
-      <ul css={navigationControl} ref={slideDotRef}>
-        {categoryComponent.map((_: any) => (
-          <li></li>
+        </CarouselItems>
+      </CarouselView>
+      <NavigationControl ref={slideDotRef}>
+        {categoryComponent.map((_: any, idx: any) => (
+          <li key={idx}></li>
         ))}
-      </ul>
-      <button
-        css={[carouselControl, carouselControlPrev]}
-        onClick={PrevSlide}
-      ></button>
-      <button
-        css={[carouselControl, carouselControlNext]}
-        onClick={NextSlide}
-      ></button>
-    </section>
+      </NavigationControl>
+      <CarouselControl onClick={PrevSlide}></CarouselControl>
+      <CarouselControl onClick={NextSlide}></CarouselControl>
+    </CarouselContent>
   );
 };
 
