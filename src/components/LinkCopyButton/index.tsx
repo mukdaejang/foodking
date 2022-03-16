@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { CopyForm, CopyLink, CopyButton } from './linkCopyButton.styled';
@@ -5,7 +6,14 @@ import { CopyForm, CopyLink, CopyButton } from './linkCopyButton.styled';
 const LinkCopyButton = () => {
   const CopyButtonHandler = (e: any) => {
     e.preventDefault();
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert('링크 복사 완료!');
+      })
+      .catch((e) => {
+        alert('링크 복사 실패 - 다시 시도해주세요!');
+      });
   };
 
   return (
