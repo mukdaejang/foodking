@@ -6,20 +6,13 @@ import logo from '@/assets/img/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
-  headerInput,
-  headerLi,
   headerLink,
-  headerProfile,
   headerStyle,
-  headerUl,
   liSpan,
   liSpanMain,
-  logoImage,
-  logoLink,
   searchDiv,
   searchDivNone,
   searchIcon,
-  icon,
 } from './Header.styled';
 
 const Header = () => {
@@ -41,27 +34,27 @@ const Header = () => {
     <Fragment>
       {showHeader && (
         <header css={headerStyle}>
-          <a href="/" css={logoLink}>
-            <img src={logo} alt="먹대장 로고" css={logoImage} />
+          <a href="/">
+            <img src={logo} alt="먹대장 로고" />
           </a>
           <div css={isMainPage ? searchDivNone : searchDiv}>
             <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
-            <input placeholder="지역, 식당 또는 음식" css={headerInput}></input>
+            <input placeholder="지역, 식당 또는 음식"></input>
           </div>
-          <ul css={headerUl}>
-            <li css={headerLi}>
+          <ul>
+            <li>
               <Link to="/matjib_list" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>맛집 리스트</span>
               </Link>
             </li>
-            <li css={headerLi}>
+            <li>
               <Link to="/" css={headerLink}>
                 <span css={isMainPage ? liSpanMain : liSpan}>술집 리스트</span>
               </Link>
             </li>
           </ul>
-          <div css={headerProfile}>
-            <button css={icon}>
+          <div>
+            <button>
               <FontAwesomeIcon
                 icon={faUser}
                 size="2x"
