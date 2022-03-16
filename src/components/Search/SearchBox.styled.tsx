@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Theme from '@/styles/theme';
 
-console.log(Theme);
 export const searchBar = css`
   width: 60%;
   margin: 0 auto;
