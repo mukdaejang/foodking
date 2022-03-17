@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = css`
-  width: 500px;
-  /* background-color: aqua; */
+  width: 40vw;
   margin: 0 auto;
 `;
 
