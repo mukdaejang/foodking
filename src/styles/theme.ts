@@ -12,7 +12,7 @@ const theme = {
   },
   borders: {
     border0: '1px solid #bdbdbd',
-    border1: '2px solid #fd8c2a',
+    border1: '3px solid #fd8c2a',
     radius: '40px',
   },
 };
