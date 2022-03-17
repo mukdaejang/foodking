@@ -6,7 +6,15 @@ export const headerStyle = css`
   align-items: center;
   box-sizing: border-box;
   box-shadow: 0 4px 11px rgb(0 0 0 / 10%);
-  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 900;
+  border-bottom: 0;
+  box-shadow: none;
+  /* background-color: transparent; */
+  background-color: white;
 
   a {
     margin: 0 25px;
@@ -77,7 +85,8 @@ export const liSpan = css`
   font-weight: 700;
 `;
 export const liSpanMain = css`
-  color: #ffffff;
+  /* color: #ffffff; */
+  color: black;
   font-size: 14px;
   font-weight: 700;
 `;
