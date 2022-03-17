@@ -14,7 +14,7 @@ import {
 import { useAppSelector } from '@/store/hooks';
 import React from 'react';
 
-const Main = () => {
+const Best5 = () => {
   const auth = useAppSelector(({ auth }) => auth.status);
   console.log(auth);
 
@@ -43,4 +43,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Best5;
