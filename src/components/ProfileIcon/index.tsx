@@ -9,7 +9,7 @@ import {
   isSelected,
   isNotSelected,
 } from './ProfileIcon.styled';
-
+import { getPostDocs } from '../../firebase';
 interface ProfileIconProps {
   onClickToggleModal: () => void;
 }
@@ -17,51 +17,35 @@ interface ProfileIconProps {
 const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [isLiFirst, setisLiFirst] = useState(true);
-  const [firstLiMockData, setFirstLiMockData] = useState([
-    {
-      title: '올레무스',
-      position: '서대문구',
-      type: '카페',
-      score: 4.4,
-    },
-    {
-      title: '바니프레소',
-      position: '강남구',
-      type: '카페',
-      score: 1.2,
-    },
-    {
-      title: '빽다방',
-      position: '강남구',
-      type: '카페',
-      score: 4.9,
-    },
-  ]);
+  const [firstLiMockData, setFirstLiMockData] = useState<any>([]);
   const [secondLiMockData, setSecondLiMockData] = useState([
     {
-      title: '담소순대국',
-      position: '광진구',
-      type: '한식',
+      name: '담소순대국',
+      address: '광진구',
+      category: '한식',
       score: 4.6,
     },
     {
-      title: '뚱보집',
-      position: '강남구',
-      type: '한식',
+      name: '뚱보집',
+      address: '강남구',
+      category: '한식',
       score: 4.8,
     },
     {
-      title: '서가앤쿡',
-      position: '마포구',
-      type: '양식',
+      name: '서가앤쿡',
+      address: '마포구',
+      category: '양식',
       score: 3.9,
     },
   ]);
 
   // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
-  // useEffect(() => {
-  //   setSecondLiMockData([]);
-  // }, []);
+  useEffect(() => {
+    setSecondLiMockData([]);
+    getPostDocs().then((res) => {
+      setFirstLiMockData(res);
+    });
+  }, []);
 
   const handleOpen = () => {
     setModalOpened(true);
@@ -84,6 +68,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   const deleteBtnClick = () => {
     setFirstLiMockData([]);
   };
+
+  interface ListProps {
+    name: string;
+    address: string;
+    category: string;
+    score: number;
+  }
 
   return (
     <ModalContainer>
@@ -111,13 +102,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
             {isLiFirst ? (
               firstLiMockData.length ? (
                 firstLiMockData.map(
-                  ({ title, position, type, score }, index) => {
+                  ({ name, address, category, score }: ListProps) => {
                     return (
                       <List
-                        key={index}
-                        title={title}
-                        position={position}
-                        type={type}
+                        key={name}
+                        name={name}
+                        address={address}
+                        category={category}
                         score={score}
                       ></List>
                     );
@@ -131,13 +122,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
               )
             ) : secondLiMockData.length ? (
               secondLiMockData.map(
-                ({ title, position, type, score }, index) => {
+                ({ name, address, category, score }, index) => {
                   return (
                     <List
                       key={index}
-                      title={title}
-                      position={position}
-                      type={type}
+                      name={name}
+                      address={address}
+                      category={category}
                       score={score}
                     ></List>
                   );
