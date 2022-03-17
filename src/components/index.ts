@@ -17,4 +17,6 @@ export { default as SurroundPopluars } from './SurroundPopulars';
 export { default as SearchModal } from './Search';
 export { default as Portal } from './Portal';
 export { default as Reviews } from './Reviews';
+export { default as ReviewWrite } from './ReviewWrite';
+export { default as Button } from './Button';
 export { default as Filter } from './Filter';

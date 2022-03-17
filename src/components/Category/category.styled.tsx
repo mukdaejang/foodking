@@ -1,11 +1,11 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-const categoryContent = css`
+const CategoryContent = styled.section`
   padding-top: 30px;
   padding-bottom: 40px;
 `;
-const categoryList = css`
+const CategoryList = styled.ul`
   display: block;
 `;
 
-export { categoryContent, categoryList };
+export { CategoryContent, CategoryList };
