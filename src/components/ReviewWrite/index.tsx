@@ -15,9 +15,39 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
-import face from '@/assets/icons/face-icon.png';
+import { useState, useEffect } from 'react';
 
 const ReviewWrite = () => {
+  const [selectScore, setSelectScore] = useState(null);
+  const [prevSelectScore, setPrevSelectScore] = useState(null);
+
+  useEffect(() => {}, [setSelectScore]);
+
+  const selectScoreHandler = (e: any) => {
+    changeScore(e.currentTarget);
+  };
+
+  const changeScore = (node: any) => {
+    const id = node.id;
+    if (id !== selectScore) {
+      // 이전에 선택된 것은 회색으로 돌려주기
+      if (prevSelectScore) {
+        (
+          prevSelectScore as HTMLElement
+        ).style.color = `${theme.colors.gray300}`;
+        (
+          (prevSelectScore as HTMLElement).children[0] as HTMLElement
+        ).style.backgroundPositionY = '100%';
+      }
+
+      // 선택
+      setSelectScore(id);
+      (node as HTMLElement).style.color = `${theme.colors.orange}`;
+      (node.children[0] as HTMLElement).style.backgroundPositionY = '0%';
+      setPrevSelectScore(node);
+    }
+  };
+
   return (
     <Review>
       <SortMiddel60>
@@ -26,17 +56,32 @@ const ReviewWrite = () => {
         <ReviewContent>
           <ReviewScoreGroup>
             <li>
-              <ReviewScoreButton posX={-1} posY={100}>
+              <ReviewScoreButton
+                onClick={selectScoreHandler}
+                id={'good'}
+                posX={-1}
+                posY={100}
+              >
                 맛있다
               </ReviewScoreButton>
             </li>
             <li>
-              <ReviewScoreButton posX={49} posY={100}>
+              <ReviewScoreButton
+                onClick={selectScoreHandler}
+                id={'middle'}
+                posX={49}
+                posY={100}
+              >
                 괜찮아요
               </ReviewScoreButton>
             </li>
             <li>
-              <ReviewScoreButton posX={98} posY={100}>
+              <ReviewScoreButton
+                onClick={selectScoreHandler}
+                id={'bad'}
+                posX={98}
+                posY={100}
+              >
                 별로
               </ReviewScoreButton>
             </li>
