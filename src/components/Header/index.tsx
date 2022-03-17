@@ -25,9 +25,11 @@ const Header = () => {
   }, [isOpenModal]);
 
   const { pathname } = useLocation();
+  console.log(pathname);
 
   useEffect(() => {
     setShowHeader(!(pathname === '/page-not-found'));
+    pathname === '/' ? setIsMainPage(true) : setIsMainPage(false);
   }, [pathname]);
 
   return (
