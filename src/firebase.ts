@@ -6,6 +6,13 @@ import {
   FacebookAuthProvider,
   GithubAuthProvider,
 } from 'firebase/auth';
+import {
+  getFirestore,
+  CollectionReference,
+  collection,
+  DocumentData,
+  getDocs,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUR_ID,
@@ -19,6 +26,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const firestore = getFirestore();
 
 //Google 로그인
 const providerGoogle = new GoogleAuthProvider();
@@ -37,3 +45,22 @@ const providerGithub = new GithubAuthProvider();
 export const loginGithub = () => {
   return signInWithPopup(auth, providerGithub);
 };
+
+interface Posts {
+  address: string;
+  category: string;
+  name: string;
+  score: number;
+}
+
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(firestore, collectionName) as CollectionReference<T>;
+};
+
+export const postsCol = createCollection<Posts>('posts');
+
+export async function getPostDocs() {
+  const postDocs = await getDocs(postsCol);
+  const postData = postDocs.docs.map((x) => x.data());
+  return postData;
+}
