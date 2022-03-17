@@ -13,6 +13,12 @@ export const SortMiddel70 = styled.div`
   padding: 20px;
 `;
 
+export const SortMiddel60 = styled.div`
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
 export const GrayContainer = styled.div`
   position: relative;
   width: 100%;
