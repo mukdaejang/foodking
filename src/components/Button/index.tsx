@@ -4,11 +4,12 @@ interface ButtonChecker {
   children: string;
   background: string;
   color: string;
+  disabled?: boolean;
 }
 
-const Button = ({ children, background, color }: ButtonChecker) => {
+const Button = ({ children, background, color, disabled }: ButtonChecker) => {
   return (
-    <ButtonStyle background={background} color={color}>
+    <ButtonStyle background={background} color={color} disabled={disabled}>
       {children}
     </ButtonStyle>
   );

@@ -99,7 +99,11 @@ const ReviewWrite = () => {
           <Button background={theme.colors.white} color={theme.colors.gray300}>
             취소
           </Button>
-          <Button background={theme.colors.gray500} color={theme.colors.white}>
+          <Button
+            background={theme.colors.gray500}
+            color={theme.colors.white}
+            disabled
+          >
             리뷰 올리기
           </Button>
         </ButtonGroup>
