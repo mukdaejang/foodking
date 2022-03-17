@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import foodImage from '@/assets/img/food.jpg';
 import Modal from '@/components/Modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
+import List from './List';
 import SocialLogin from '../Modal/SocialLogin';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
   ModalContainer,
   isSelected,
   isNotSelected,
 } from './ProfileIcon.styled';
 
-type ProfileIconProps = {
+interface ProfileIconProps {
   onClickToggleModal: () => void;
-};
+}
 
 const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   const [modalOpened, setModalOpened] = useState(false);
@@ -58,10 +58,10 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
     },
   ]);
 
-  // 빈 데이터 경우를 위한 테스트 코드
-  useEffect(() => {
-    setSecondLiMockData([]);
-  }, []);
+  // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
+  // useEffect(() => {
+  //   setSecondLiMockData([]);
+  // }, []);
 
   const handleOpen = () => {
     setModalOpened(true);
@@ -113,23 +113,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
                 firstLiMockData.map(
                   ({ title, position, type, score }, index) => {
                     return (
-                      <li key={index}>
-                        <section>
-                          <a href="/">
-                            <img src={foodImage} alt="food" />
-                          </a>
-                          <div>
-                            <a href="/">
-                              <h3>{title}</h3>
-                              <span>{score}</span>
-                            </a>
-                            <span>{`${position}-${type}`}</span>
-                          </div>
-                          <button>
-                            <FontAwesomeIcon icon={faStar} size="2x" />
-                          </button>
-                        </section>
-                      </li>
+                      <List
+                        key={index}
+                        title={title}
+                        position={position}
+                        type={type}
+                        score={score}
+                      ></List>
                     );
                   },
                 )
@@ -143,23 +133,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
               secondLiMockData.map(
                 ({ title, position, type, score }, index) => {
                   return (
-                    <li key={index}>
-                      <section>
-                        <a href="/">
-                          <img src={foodImage} alt="food" />
-                        </a>
-                        <div>
-                          <a href="/">
-                            <h3>{title}</h3>
-                            <span>{score}</span>
-                          </a>
-                          <span>{`${position}-${type}`}</span>
-                        </div>
-                        <button>
-                          <FontAwesomeIcon icon={faStar} size="2x" />
-                        </button>
-                      </section>
-                    </li>
+                    <List
+                      key={index}
+                      title={title}
+                      position={position}
+                      type={type}
+                      score={score}
+                    ></List>
                   );
                 },
               )
