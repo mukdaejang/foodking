@@ -15,13 +15,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, forwardRef } from 'react';
 
 const ReviewWrite = () => {
   const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
-
-  useEffect(() => {}, [setSelectScore]);
+  const disabledRef = useRef<HTMLButtonElement>(null);
 
   const selectScoreHandler = (e: any) => {
     changeScore(e.currentTarget);
@@ -46,6 +45,15 @@ const ReviewWrite = () => {
       (node.children[0] as HTMLElement).style.backgroundPositionY = '0%';
       setPrevSelectScore(node);
     }
+  };
+
+  const changeText = (e: any) => {
+    (disabledRef.current as HTMLElement).style.backgroundColor = e.target.value
+      ? `${theme.colors.orange}`
+      : `${theme.colors.gray300}`;
+    (disabledRef.current as HTMLButtonElement).disabled = e.target.value
+      ? false
+      : true;
   };
 
   return (
@@ -86,7 +94,10 @@ const ReviewWrite = () => {
               </ReviewScoreButton>
             </li>
           </ReviewScoreGroup>
-          <ReviewText placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"></ReviewText>
+          <ReviewText
+            onInput={changeText}
+            placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"
+          ></ReviewText>
         </ReviewContent>
         <ReviewImg>
           <label htmlFor="file">
@@ -103,6 +114,7 @@ const ReviewWrite = () => {
             background={theme.colors.gray500}
             color={theme.colors.white}
             disabled
+            forwardRef={disabledRef}
           >
             리뷰 올리기
           </Button>
