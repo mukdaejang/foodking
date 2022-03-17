@@ -5,6 +5,47 @@ const GlobalStyle = () => <Global styles={style} />;
 export default GlobalStyle;
 
 const style = css`
+  /* font - spoqa han sans */
+  @font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 700;
+    src: local('Spoqa Han Sans Bold'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.eot') format('eot'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff2') format('woff2'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff') format('woff'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 400;
+    src: local('Spoqa Han Sans Regular'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.eot') format('eot'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff2') format('woff2'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff') format('woff'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 300;
+    src: local('Spoqa Han Sans Light'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.eot') format('eot'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff2') format('woff2'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff') format('woff'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 100;
+    src: local('Spoqa Han Sans Thin'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.eot') format('eot'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff2') format('woff2'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff') format('woff'),
+      url('./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin') format('truetype');
+  }
+
   /* reset */
   html,
   body,
@@ -113,6 +154,7 @@ const style = css`
   body {
     line-height: 1;
     box-sizing: border-box;
+    font-family: 'Spoqa Han Sans', 'sans-serif';
   }
 
   ol,
