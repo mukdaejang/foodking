@@ -1,6 +1,6 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import Modal from '@/components/Modal';
+import ProfileIcon from '@/components/ProfileIcon';
 import logo from '@/assets/img/logo.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,12 +17,12 @@ import {
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState<boolean>(true);
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenProfile, setIsOpenProfile] = useState<boolean>(false);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
 
   const onClickToggleModal = useCallback(() => {
-    setIsOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+    setIsOpenProfile(!isOpenProfile);
+  }, [isOpenProfile]);
 
   const { pathname } = useLocation();
   console.log(pathname);
@@ -66,7 +66,9 @@ const Header = () => {
           </div>
         </header>
       )}
-      {isOpenModal && <Modal onClickToggleModal={onClickToggleModal}></Modal>}
+      {isOpenProfile && (
+        <ProfileIcon onClickToggleModal={onClickToggleModal}></ProfileIcon>
+      )}
     </Fragment>
   );
 };
