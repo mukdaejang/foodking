@@ -25,21 +25,13 @@ const Local = () => {
     <section css={Section}>
       <SubTitle>지역</SubTitle>
       <p css={Region} onClick={onClick}>
-        <a href="#" data-filter="seoul" className="selected">
+        <button data-filter="seoul" className="selected">
           서울
-        </a>
-        <a href="#" data-filter="kyungido">
-          경기도
-        </a>
-        <a href="#" data-filter="incheon">
-          인천
-        </a>
-        <a href="#" data-filter="busan">
-          부산
-        </a>
-        <a href="#" data-filter="more">
-          더보기
-        </a>
+        </button>
+        <button data-filter="kyungido">경기도</button>
+        <button data-filter="incheon">인천</button>
+        <button data-filter="busan">부산</button>
+        <button data-filter="more">더보기</button>
       </p>
       <div css={City}>
         {curmetro.map((city) => {

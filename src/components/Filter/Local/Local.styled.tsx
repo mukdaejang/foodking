@@ -5,8 +5,9 @@ export const Region = css`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  a {
+  button {
     display: inline-block;
+    background-color: #fff;
     width: 150px;
     font-size: 20px;
     line-height: 59px;

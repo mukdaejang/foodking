@@ -93,6 +93,11 @@ export const search__btn = css`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  button {
+    background-color: inherit;
+    color: inherit;
+  }
 `;
 
 export const none = css`
@@ -102,6 +107,9 @@ export const spanDisplay = css`
   color: rgba(0, 0, 0, 0.4);
   margin-right: 20px;
   cursor: pointer;
+  button {
+    background-color: white;
+  }
 `;
 
 export const position = css`

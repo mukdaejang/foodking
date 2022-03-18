@@ -19,6 +19,9 @@ const keywordStyle = css`
     cursor: pointer;
     opacity: 0.6;
   }
+  button {
+    background-color: white;
+  }
 `;
 
 const SearchKeyword = ({ keyword }: any) => {
@@ -26,7 +29,7 @@ const SearchKeyword = ({ keyword }: any) => {
     <>
       <li css={keywordStyle}>
         <img src={glassSolid} alt="glass-solid"></img>
-        {keyword}
+        <button>{keyword}</button>
       </li>
     </>
   );

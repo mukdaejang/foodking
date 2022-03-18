@@ -49,7 +49,7 @@ const SearchBox = () => {
         return;
       }
       if (inputValue) {
-        console.log(e.key);
+        console.log('Clicked key: ', e.key);
         navigate(`/search/${inputValue}`);
       } else {
         setModalOpen(false);
@@ -97,12 +97,8 @@ const SearchBox = () => {
               )}
               {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
             </div>
-            <span
-              css={modalOpen ? spanDisplay : none}
-              onClick={spanClear}
-              // tabIndex={1}
-            >
-              CLEAR
+            <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
+              <button>CLEAR</button>
             </span>
           </div>
           <div className="contents__right" onKeyUp={onKeyUp}>
@@ -111,7 +107,9 @@ const SearchBox = () => {
               onClick={onClick}
               to={`/search${inputValue ? `/${inputValue}` : ''}`}
             >
-              검색
+              <button onClick={onClick} css={search__btn}>
+                검색
+              </button>
             </Link>
           </div>
         </div>
