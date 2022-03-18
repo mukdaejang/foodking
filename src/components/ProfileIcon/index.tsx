@@ -9,7 +9,10 @@ import {
   isSelected,
   isNotSelected,
 } from './ProfileIcon.styled';
-import { getPostDocs } from '../../firebase';
+import { db } from '../../firebase';
+import { collection, getDoc, getDocs } from 'firebase/firestore';
+import { ListProps } from './List';
+
 interface ProfileIconProps {
   onClickToggleModal: () => void;
 }
@@ -17,7 +20,26 @@ interface ProfileIconProps {
 const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   const [modalOpened, setModalOpened] = useState(false);
   const [isLiFirst, setisLiFirst] = useState(true);
-  const [firstLiMockData, setFirstLiMockData] = useState<any>([]);
+  const [firstLiMockData, setFirstLiMockData] = useState<any>([
+    // {
+    //   title: '올레무스',
+    //   position: '서대문구',
+    //   type: '카페',
+    //   score: 4.4,
+    // },
+    // {
+    //   title: '바니프레소',
+    //   position: '강남구',
+    //   type: '카페',
+    //   score: 1.2,
+    // },
+    // {
+    //   title: '빽다방',
+    //   position: '강남구',
+    //   type: '카페',
+    //   score: 4.9,
+    // },
+  ]);
   const [secondLiMockData, setSecondLiMockData] = useState([
     {
       name: '담소순대국',
@@ -39,12 +61,23 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
     },
   ]);
 
-  // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
-  useEffect(() => {
-    setSecondLiMockData([]);
-    getPostDocs().then((res) => {
-      setFirstLiMockData(res);
+  async function loadPostsData() {
+    const postsData = await getDocs(collection(db, 'posts'));
+    let posts: any = [];
+
+    postsData.forEach((post) => {
+      posts.push({ id: post.id, ...post.data() });
     });
+
+    setFirstLiMockData(posts);
+  }
+
+  useEffect(() => {
+    // setSecondLiMockData([]); // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
+    loadPostsData();
+    // getPostDocs().then((res) => {
+    //   setFirstLiMockData(res);
+    // });
   }, []);
 
   const handleOpen = () => {
@@ -102,10 +135,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
             {isLiFirst ? (
               firstLiMockData.length ? (
                 firstLiMockData.map(
-                  ({ name, address, category, score }: ListProps) => {
+                  (
+                    { name, address, category, score }: ListProps,
+                    index: number,
+                  ) => {
                     return (
                       <List
-                        key={name}
+                        key={index}
                         name={name}
                         address={address}
                         category={category}

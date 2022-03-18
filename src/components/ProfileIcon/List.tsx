@@ -2,7 +2,7 @@ import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-interface ListProps {
+export interface ListProps {
   name: string;
   address: string;
   category: string;
