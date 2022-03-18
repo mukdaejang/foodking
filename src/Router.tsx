@@ -6,6 +6,7 @@ import {
   Best5,
   ReviewWritePage,
   SearchResult,
+  Restaurants,
 } from '@/pages';
 
 const Router = () => {
@@ -13,10 +14,11 @@ const Router = () => {
     <Routes>
       <Route index element={<Main />} />
       <Route path="matjib_list" element={<MatjibList />} />
-      <Route path="Search/:endpoint" element={<SearchResult />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="search/:endpoint" element={<SearchResult />} />
       <Route path="bestRestaurants" element={<Best5 />} />
       <Route path="reviews" element={<ReviewWritePage />} />
+      <Route path="/restaurants/:restaurant" element={<Restaurants />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
