@@ -10,24 +10,20 @@ import {
   RestaurantSubInfo,
   RestaurantMenu,
   RestaurantMore,
-  RestaurantLike,
 } from './bestRestaurantItem.styled';
 import unstar from '@/assets/icons/un-star.svg';
 import star from '@/assets/icons/star.svg';
+import { IconButton } from '@/components';
 
 const BestRestaurantItem = () => {
   const [starState, setStarState] = useState(false);
-  const starRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (starRef.current) {
-      starRef.current.style.backgroundImage = `url('${
-        starState ? star : unstar
-      }')`;
-    }
-  }, [starState]);
-
-  const changeStar = () => setStarState(!starState);
+  const changeStar = (e: any) => {
+    setStarState(!starState);
+    (
+      e.currentTarget.children[0] as HTMLElement
+    ).style.backgroundImage = `url('${!starState ? star : unstar}')`;
+  };
 
   return (
     <RestaurantItemLi>
@@ -41,10 +37,11 @@ const BestRestaurantItem = () => {
               까스까스<RestaurantScore>4.5</RestaurantScore>
             </RestaurantTitle>
           </a>
-          <RestaurantLike>
+          {/* <RestaurantLike>
             <button onClick={changeStar} ref={starRef}></button>
             <span>가고싶다</span>
-          </RestaurantLike>
+          </RestaurantLike> */}
+          <IconButton event={changeStar}></IconButton>
           <address>서울특별시 강남구 미왕빌딩</address>
           <RestaurantSubInfo>
             <small>영업시간</small>
