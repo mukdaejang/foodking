@@ -21,6 +21,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "typeRoots": ["emotion.d.ts"]
 }

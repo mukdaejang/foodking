@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getErrorMessage } from '@/utils';
-import { loginGoogle, loginFacebook, loginGithub } from '@/firebase';
+import { loginGoogle, loginFacebook, loginGithub } from '@/firebase/auth';
 
 export const login = createAsyncThunk(
   'auth/login',

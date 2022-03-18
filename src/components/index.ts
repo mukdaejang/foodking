@@ -20,3 +20,4 @@ export { default as Reviews } from './Reviews';
 export { default as ReviewWrite } from './ReviewWrite';
 export { default as Button } from './Button';
 export { default as Filter } from './Filter';
+export { default as RestaurantInfo } from './RestaurantInfo';
