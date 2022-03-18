@@ -39,22 +39,28 @@ const SearchBox = () => {
     if (e.key === 'Enter' && !inputValue) {
       alert('검색어를 입력 해주세요!');
       setModalOpen(false);
+      document.body.style.overflow = 'unset';
       return;
     }
     if (e.key === 'Enter' || e.key === 'Escape') {
       if (e.key === 'Escape') {
         setModalOpen(false);
+        document.body.style.overflow = 'unset';
         return;
       }
       if (inputValue) {
         console.log(e.key);
         navigate(`/search/${inputValue}`);
-      } else setModalOpen(false);
+      } else {
+        setModalOpen(false);
+        document.body.style.overflow = 'unset';
+      }
     }
   };
 
   const onFocus = () => {
     setModalOpen(true);
+    document.body.style.overflow = 'hidden';
   };
 
   const onChange = (e: any) => {

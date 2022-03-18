@@ -13,7 +13,7 @@ const Router = () => {
     <Routes>
       <Route index element={<Main />} />
       <Route path="matjib_list" element={<MatjibList />} />
-      <Route path="Search/:endpoint" element={<SearchResult />} />
+      <Route path="search/:endpoint" element={<SearchResult />} />
       <Route path="*" element={<NotFound />} />
       <Route path="bestRestaurants" element={<Best5 />} />
       <Route path="reviews" element={<ReviewWritePage />} />
