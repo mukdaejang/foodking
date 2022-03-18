@@ -71,35 +71,42 @@ const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
   };
 
   const onKeywordClick = ({ target }: any) => {
-    if (
-      !target.matches('.keyword-suggester > li') &&
-      !target.matches('.keyword-suggester > li > img')
-    )
-      return;
-
     // 클릭된 것이 li라면 해당 textContent를
     // img일 경우 parentNode의 textContent
-    if (target.matches('.keyword-suggester > li')) {
-      navigate(`/search/${target.textContent}`);
-    } else {
-      navigate(`/search/${target.parentNode.textContent}`);
-    }
+    console.log(target);
+    // if (target.matches('.keyword-suggester > li')) {
+    //   navigate(`/search/${target.textContent}`);
+    // } else {
+    //   navigate(`/search/${target.parentNode.textContent}`);
+    // }
+    navigate(`/search/${target.textContent}`);
   };
 
   return (
     <nav css={modalOpen ? openNavBox : none} onClick={onClick}>
       <ul css={ulStyle} onClick={ulClick}>
-        <li className="search-selected" tabIndex={0}>
-          추천 검색어
-        </li>
-        <li tabIndex={0}>인기 검색어</li>
-        <li tabIndex={0}>최근 검색어</li>
+        <li className="search-selected">추천 검색어</li>
+        <li>인기 검색어</li>
+        <li>최근 검색어</li>
       </ul>
-      <div className="keyword-suggester" onClick={onKeywordClick}>
-        <SearchKeyword keyword={'test'} key={1}></SearchKeyword>
-        <SearchKeyword keyword={'test2'} key={2}></SearchKeyword>
-        <SearchKeyword keyword={'test3'} key={3}></SearchKeyword>
-      </div>
+      <ul className="keyword-suggester" onClick={onKeywordClick}>
+        {/* 리스트 렌더링 파트 */}
+        <SearchKeyword
+          setModalOpen={setModalOpen}
+          keyword={'test'}
+          key={1}
+        ></SearchKeyword>
+        <SearchKeyword
+          setModalOpen={setModalOpen}
+          keyword={'test2'}
+          key={2}
+        ></SearchKeyword>
+        <SearchKeyword
+          setModalOpen={setModalOpen}
+          keyword={'test3'}
+          key={3}
+        ></SearchKeyword>
+      </ul>
     </nav>
   );
 };
