@@ -7,20 +7,31 @@ import {
 
 import { auth } from '.';
 
-// Google 로그인
-const providerGoogle = new GoogleAuthProvider();
-export const loginGoogle = () => {
-  return signInWithPopup(auth, providerGoogle);
+export type SocialType = 'google' | 'facebook' | 'github';
+
+const social = {
+  google: GoogleAuthProvider,
+  facebook: FacebookAuthProvider,
+  github: GithubAuthProvider,
 };
 
-// Facebook 로그인
-const providerFacebook = new FacebookAuthProvider();
-export const loginFacebook = () => {
-  return signInWithPopup(auth, providerFacebook);
-};
+export const loginWithSocial = (company: SocialType) =>
+  signInWithPopup(auth, new social[company]());
 
-// Github 로그인
-const providerGithub = new GithubAuthProvider();
-export const loginGithub = () => {
-  return signInWithPopup(auth, providerGithub);
-};
+// // Google 로그인
+// const providerGoogle = new GoogleAuthProvider();
+// export const loginGoogle = () => {
+//   return signInWithPopup(auth, providerGoogle);
+// };
+
+// // Facebook 로그인
+// const providerFacebook = new FacebookAuthProvider();
+// export const loginFacebook = () => {
+//   return signInWithPopup(auth, providerFacebook);
+// };
+
+// // Github 로그인
+// const providerGithub = new GithubAuthProvider();
+// export const loginGithub = () => {
+//   return signInWithPopup(auth, providerGithub);
+// };

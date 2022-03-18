@@ -1,20 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getErrorMessage } from '@/utils';
-import { loginGoogle, loginFacebook, loginGithub } from '@/firebase/auth';
+import { loginWithSocial, SocialType } from '@/firebase/auth';
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (loginType: string) => {
+  async (loginType: SocialType, { rejectWithValue }) => {
     try {
-      const result =
-        loginType === 'Google'
-          ? await loginGoogle()
-          : loginType === 'Facebook'
-          ? await loginFacebook()
-          : await loginGithub();
-      return result.user.uid;
-    } catch (error) {
-      console.error(getErrorMessage(error));
+      const result = await loginWithSocial(loginType);
+      console.log(result.user.photoURL);
+      return result?.user?.uid;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   },
 );
