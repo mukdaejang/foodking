@@ -51,34 +51,6 @@ const RestaurantScore = styled.span`
   margin-left: 15px;
 `;
 
-const RestaurantLike = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  & > button {
-    all: unset;
-    box-sizing: border-box;
-    padding: 7px;
-    width: 30px;
-    height: 30px;
-    background: url('${unstar}') no-repeat center center / cover;
-    cursor: pointer;
-  }
-
-  & > span {
-    padding-top: 5px;
-    font-size: 0.7rem;
-    color: ${({ theme }) => theme.colors.gray300};
-    white-space: nowrap;
-  }
-`;
-
 const RestaurantSubInfo = styled.div`
   display: flex;
   margin: 10px 0;
@@ -118,5 +90,4 @@ export {
   RestaurantSubInfo,
   RestaurantMenu,
   RestaurantMore,
-  RestaurantLike,
 };
