@@ -6,6 +6,7 @@ import {
   FacebookAuthProvider,
   GithubAuthProvider,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUR_ID,
@@ -19,8 +20,20 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore();
 
-//Google 로그인
+// posts 데이터 가져오는 함수
+// export async function loadPostsData() {
+//   const postsData = await getDocs(collection(db, 'posts'));
+//   // let arr: any = [];
+
+//   // postsData.forEach((b) => {
+//   //   console.log(b.id, b.data());
+//   //   arr.push({ id: b.id, ...b.data() });
+//   // });
+// }
+
+// Google 로그인
 const providerGoogle = new GoogleAuthProvider();
 export const loginGoogle = () => {
   return signInWithPopup(auth, providerGoogle);
