@@ -38,12 +38,18 @@ export const findImgStyle = css`
 `;
 
 export const searchBar__contents = css`
-  margin: 0px;
+  margin: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  form {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .contents__left {
     width: 100%;
