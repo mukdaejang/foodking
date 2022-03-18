@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import unstar from '@/assets/icons/un-star.svg';
 
-const IconButtonStyle = styled.div`
+const IconButtonStyle = styled.div<{ img: string }>`
   position: absolute;
   top: 0;
   right: 0;
@@ -18,7 +17,7 @@ const IconButtonStyle = styled.div`
     padding: 7px;
     width: 30px;
     height: 30px;
-    background: url('${unstar}') no-repeat center center / cover;
+    background: url('${(props) => props.img}') no-repeat center center / cover;
   }
 
   & > span {
