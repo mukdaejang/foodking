@@ -10,6 +10,7 @@ import {
   searchBar__contents,
   search__input,
   search__btn,
+  search__link,
   position,
   findImgStyle,
   spanDisplay,
@@ -49,7 +50,7 @@ const SearchBox = () => {
         return;
       }
       if (inputValue) {
-        console.log(e.key);
+        console.log('Clicked key: ', e.key);
         navigate(`/search/${inputValue}`);
       } else {
         setModalOpen(false);
@@ -97,21 +98,17 @@ const SearchBox = () => {
               )}
               {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
             </div>
-            <span
-              css={modalOpen ? spanDisplay : none}
-              onClick={spanClear}
-              // tabIndex={1}
-            >
-              CLEAR
+            <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
+              <button>CLEAR</button>
             </span>
           </div>
           <div className="contents__right" onKeyUp={onKeyUp}>
             <Link
-              css={search__btn}
               onClick={onClick}
               to={`/search${inputValue ? `/${inputValue}` : ''}`}
+              css={search__link}
             >
-              검색
+              <button css={search__btn}>검색</button>
             </Link>
           </div>
         </div>

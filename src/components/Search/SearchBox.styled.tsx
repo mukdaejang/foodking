@@ -75,16 +75,19 @@ export const search__input = css`
   }
 `;
 
+export const search__link = css`
+  width: 100%;
+  height: 100%;
+
+  text-decoration-line: none;
+  color: white;
+`;
 export const search__btn = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
-  text-decoration-line: none;
-  color: white;
-
   background-color: ${Theme.colors.orange};
-  outline: none;
-  border: none;
+  color: white;
   border-radius: 40px;
   :hover {
     opacity: 0.6;
@@ -102,6 +105,9 @@ export const spanDisplay = css`
   color: rgba(0, 0, 0, 0.4);
   margin-right: 20px;
   cursor: pointer;
+  button {
+    background-color: white;
+  }
 `;
 
 export const position = css`
