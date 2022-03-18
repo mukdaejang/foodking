@@ -22,6 +22,7 @@ const authSlice = createSlice({
       };
     },
     [login.fulfilled.type]: (state, action) => {
+      // navigate
       state.status = {
         isLogin: true,
         loading: false,
@@ -29,6 +30,7 @@ const authSlice = createSlice({
       };
     },
     [login.rejected.type]: (state) => {
+      alert('로그인에 실패하였습니다.');
       state.status = {
         isLogin: false,
         loading: false,
