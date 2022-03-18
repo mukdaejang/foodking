@@ -1,8 +1,9 @@
+import React from 'react';
 import { css } from '@emotion/react';
-
+import { Filter } from '@/components';
 const container = css`
   width: 100vw;
-  height: 100vh;
+  height: 100px;
   font-size: 30px;
 
   display: flex;
@@ -11,7 +12,12 @@ const container = css`
 `;
 
 const SearchResult = () => {
-  return <div css={container}>SearchResult</div>;
+  return (
+    <>
+      <div css={container}>SearchResult</div>
+      <Filter></Filter>
+    </>
+  );
 };
 
 export default SearchResult;

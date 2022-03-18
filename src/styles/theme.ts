@@ -11,6 +11,11 @@ const theme = {
     white: '#ffffff',
     black: '#000000',
   },
+  borders: {
+    border0: '1px solid #bdbdbd',
+    border1: '3px solid #fd8c2a',
+    radius: '40px',
+  },
 };
 
 export default theme;

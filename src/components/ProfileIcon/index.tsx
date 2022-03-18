@@ -75,6 +75,9 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   useEffect(() => {
     // setSecondLiMockData([]); // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
     loadPostsData();
+    // getPostDocs().then((res) => {
+    //   setFirstLiMockData(res);
+    // });
   }, []);
 
   const handleOpen = () => {
@@ -98,6 +101,13 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
   const deleteBtnClick = () => {
     setFirstLiMockData([]);
   };
+
+  interface ListProps {
+    name: string;
+    address: string;
+    category: string;
+    score: number;
+  }
 
   return (
     <ModalContainer>

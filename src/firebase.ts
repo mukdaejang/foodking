@@ -50,3 +50,22 @@ const providerGithub = new GithubAuthProvider();
 export const loginGithub = () => {
   return signInWithPopup(auth, providerGithub);
 };
+
+// interface Posts {
+//   address: string;
+//   category: string;
+//   name: string;
+//   score: number;
+// }
+
+// const createCollection = <T = DocumentData>(collectionName: string) => {
+//   return collection(firestore, collectionName) as CollectionReference<T>;
+// };
+
+// export const postsCol = createCollection<Posts>('posts');
+
+// export async function getPostDocs() {
+//   const postDocs = await getDocs(postsCol);
+//   const postData = postDocs.docs.map((x) => x.data());
+//   return postData;
+// }
