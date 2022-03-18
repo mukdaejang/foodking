@@ -75,16 +75,19 @@ export const search__input = css`
   }
 `;
 
+export const search__link = css`
+  width: 100%;
+  height: 100%;
+
+  text-decoration-line: none;
+  color: white;
+`;
 export const search__btn = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
-  text-decoration-line: none;
-  color: white;
-
   background-color: ${Theme.colors.orange};
-  outline: none;
-  border: none;
+  color: white;
   border-radius: 40px;
   :hover {
     opacity: 0.6;
@@ -93,11 +96,6 @@ export const search__btn = css`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  button {
-    background-color: inherit;
-    color: inherit;
-  }
 `;
 
 export const none = css`

@@ -10,6 +10,7 @@ import {
   searchBar__contents,
   search__input,
   search__btn,
+  search__link,
   position,
   findImgStyle,
   spanDisplay,
@@ -103,13 +104,11 @@ const SearchBox = () => {
           </div>
           <div className="contents__right" onKeyUp={onKeyUp}>
             <Link
-              css={search__btn}
               onClick={onClick}
               to={`/search${inputValue ? `/${inputValue}` : ''}`}
+              css={search__link}
             >
-              <button onClick={onClick} css={search__btn}>
-                검색
-              </button>
+              <button css={search__btn}>검색</button>
             </Link>
           </div>
         </div>
