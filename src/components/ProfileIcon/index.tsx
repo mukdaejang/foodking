@@ -11,13 +11,16 @@ import {
 } from './ProfileIcon.styled';
 import { getPostDocs } from '@/firebase/request';
 import { ListProps } from './List';
-
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 interface ProfileIconProps {
   onClickToggleModal: () => void;
 }
 
 const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
-  const [modalOpened, setModalOpened] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+
   const [isLiFirst, setisLiFirst] = useState(true);
   const [firstLiMockData, setFirstLiMockData] = useState<any>([]);
   const [secondLiMockData, setSecondLiMockData] = useState([
@@ -48,18 +51,8 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
     });
   }, []);
 
-  const handleOpen = () => {
-    setModalOpened(true);
-  };
-
-  const handleClose = () => {
-    setModalOpened(false);
-  };
-
-  const handleBackClose = () => {
-    if (onClickToggleModal) {
-      onClickToggleModal();
-    }
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
   };
 
   const onLiClick = () => {
@@ -72,7 +65,7 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
 
   return (
     <ModalContainer>
-      <Modal closePortal={handleBackClose}></Modal>
+      <Modal closePortal={onClickToggleModal}></Modal>
       <div>
         <ul>
           <li css={isLiFirst ? isSelected : isNotSelected} onClick={onLiClick}>
@@ -144,14 +137,14 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
         </div>
         <footer>
           {isLiFirst ? (
-            <button onClick={handleOpen}>로그인</button>
+            <button onClick={handleSocialModal}>로그인</button>
           ) : (
             <button>내 정보</button>
           )}
 
-          {modalOpened && (
-            <Modal closePortal={handleClose}>
-              <SocialLogin closePortal={handleClose}></SocialLogin>
+          {isSocialModalOpen && (
+            <Modal closePortal={handleSocialModal}>
+              <SocialLogin closePortal={handleSocialModal}></SocialLogin>
             </Modal>
           )}
         </footer>

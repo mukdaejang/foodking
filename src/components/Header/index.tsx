@@ -14,15 +14,20 @@ import {
   searchDivNone,
   searchIcon,
 } from './Header.styled';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
   const [showHeader, setShowHeader] = useState<boolean>(true);
   const [isOpenProfile, setIsOpenProfile] = useState<boolean>(false);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
 
   const onClickToggleModal = useCallback(() => {
-    setIsOpenProfile(!isOpenProfile);
-  }, [isOpenProfile]);
+    // setIsOpenProfile(!isOpenProfile);
+    dispatch(modalActions.handleOverlayModal());
+  }, [dispatch]);
 
   const { pathname } = useLocation();
   console.log(pathname);
@@ -66,7 +71,7 @@ const Header = () => {
           </div>
         </header>
       )}
-      {isOpenProfile && (
+      {isOverlayModalOpen && (
         <ProfileIcon onClickToggleModal={onClickToggleModal}></ProfileIcon>
       )}
     </Fragment>

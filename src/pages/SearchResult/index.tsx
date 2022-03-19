@@ -12,6 +12,7 @@ const container = css`
 `;
 
 const SearchResult = () => {
+  document.body.style.overflow = 'unset';
   return (
     <>
       <div css={container}>SearchResult</div>

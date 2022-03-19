@@ -15,7 +15,10 @@ type SetState = {
 };
 
 const Background = ({ setModalOpen }: SetState) => {
-  const onClick = () => setModalOpen(false);
+  const onClick = () => {
+    setModalOpen(false);
+    document.body.style.overflow = 'unset';
+  };
   return <div css={darkTheme} onClick={onClick}></div>;
 };
 

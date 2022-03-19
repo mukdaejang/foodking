@@ -1,22 +1,34 @@
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { login } from '@/store/auth/auth-actions';
+import { modalActions } from '@/store/modal/modal-slice';
 import { useAppDispatch } from '@/store/hooks';
 import { loginModalDiv, closeBtn } from './Modal.styled';
+import { getErrorMessage } from '@/utils';
 
 interface socialLoginProps {
   closePortal: () => void;
 }
 const SocialLogin = ({ closePortal }: socialLoginProps) => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const googleLogin = () => {
-    dispatch(login('Google'));
+    dispatch(login('google'));
   };
   const facebookLogin = () => {
-    dispatch(login('Facebook'));
+    dispatch(login('facebook'));
   };
-  const githubLogin = () => {
-    dispatch(login('Github'));
+  const githubLogin = async () => {
+    try {
+      await dispatch(login('github')).unwrap();
+      dispatch(modalActions.handleOverlayModal());
+      dispatch(modalActions.handleSocialModal());
+      navigate('/');
+    } catch (error) {
+      console.error(getErrorMessage(error));
+    }
   };
 
   return (
