@@ -12,7 +12,7 @@ import {
 const Restaurant = () => {
   return (
     <RestaurantItem>
-      <RestaurantLink href="/">
+      <RestaurantLink to="/">
         <figure>
           <RestaurantImg src={`${food}`} alt="food" />
           <RestaurantInfo>

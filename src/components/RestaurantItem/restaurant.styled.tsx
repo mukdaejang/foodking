@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 const RestaurantItem = styled.li`
   float: left;
@@ -8,7 +9,7 @@ const RestaurantItem = styled.li`
   box-sizing: border-box;
 `;
 
-const RestaurantLink = styled.a`
+const RestaurantLink = styled(Link)`
   color: ${({ theme }) => theme.colors.black};
   text-decoration: none;
 `;
