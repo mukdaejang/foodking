@@ -34,13 +34,15 @@ const Header = () => {
 
   const { pathname } = useLocation();
   console.log(pathname);
+  console.log(isLogin);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setProfileImage(user?.providerData[0].photoURL);
       setIsLogin(true);
     } else {
-      console.log('no user');
+      // console.log('no user');
+      setIsLogin(false);
     }
   });
 
@@ -90,7 +92,10 @@ const Header = () => {
         </header>
       )}
       {isOverlayModalOpen && (
-        <ProfileIcon onClickToggleModal={onClickToggleModal}></ProfileIcon>
+        <ProfileIcon
+          onClickToggleModal={onClickToggleModal}
+          isLogin={isLogin}
+        ></ProfileIcon>
       )}
     </Fragment>
   );
