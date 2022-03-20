@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 const CategoryItemLi = styled.li`
   float: left;
@@ -8,7 +9,7 @@ const CategoryItemLi = styled.li`
   box-sizing: border-box;
 `;
 
-const CategoryLink = styled.a``;
+const CategoryLink = styled(Link)``;
 
 const CategoryImg = styled.img`
   width: 100%;

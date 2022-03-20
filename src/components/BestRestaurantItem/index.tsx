@@ -1,5 +1,6 @@
 import food from '@/assets/food.jpeg';
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   RestaurantItemLi,
   RestaurantItem,
@@ -28,15 +29,15 @@ const BestRestaurantItem = () => {
   return (
     <RestaurantItemLi>
       <RestaurantItem>
-        <RestaurantImg href="/">
+        <RestaurantImg to="/">
           <img src={food} alt="food" />
         </RestaurantImg>
         <RestaurantInfo>
-          <a href="/">
+          <Link to="/">
             <RestaurantTitle>
               까스까스<RestaurantScore>4.5</RestaurantScore>
             </RestaurantTitle>
-          </a>
+          </Link>
           {/* <RestaurantLike>
             <button onClick={changeStar} ref={starRef}></button>
             <span>가고싶다</span>
@@ -64,9 +65,9 @@ const BestRestaurantItem = () => {
               </p>
             </RestaurantMenu>
           </RestaurantSubInfo>
-          <a href="/">
+          <Link to="/">
             <RestaurantMore>{`${`까스까스`} 더보기 >`}</RestaurantMore>
-          </a>
+          </Link>
         </RestaurantInfo>
       </RestaurantItem>
     </RestaurantItemLi>
