@@ -21,7 +21,7 @@ import theme from '@/styles/theme';
 import { useState, useEffect, useRef, forwardRef } from 'react';
 
 const ReviewWrite = () => {
-  const [selectScore, setSelectScore] = useState(null);
+  const [selectScore, setSelectScore] = useState('good');
   const [prevSelectScore, setPrevSelectScore] = useState(null);
   const disabledRef = useRef<HTMLButtonElement>(null);
 
@@ -58,7 +58,6 @@ const ReviewWrite = () => {
       ? false
       : true;
   };
-  // ----------------------------------
 
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState<Array<string>>([]);
@@ -66,13 +65,21 @@ const ReviewWrite = () => {
   // 파일 저장
   const saveFileImage = (e: any) => {
     setFileImage([...fileImage, URL.createObjectURL(e.target.files[0])]);
-    console.log(fileImage);
+    e.target.value = '';
   };
 
   // 파일 삭제
-  const deleteFileImage = () => {
-    // URL.revokeObjectURL(fileImage);
-    setFileImage([]);
+  const deleteFileImage = (e: any) => {
+    const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
+    setFileImage([...fileImage].filter((file: any) => fileName !== file));
+    URL.revokeObjectURL(fileName);
+  };
+
+  const check = () => {
+    console.log('fileImage', fileImage);
+    console.log('selectScore', selectScore);
+    const text = document.querySelector('textarea')?.value;
+    console.log('text', text);
   };
 
   return (
@@ -121,7 +128,7 @@ const ReviewWrite = () => {
         <ReviewSelectImgs>
           {fileImage.map((file, idx) => {
             return (
-              <ReviewSelectImg key={idx} img={file}>
+              <ReviewSelectImg key={idx} data-id={file} img={file}>
                 <ImgDelete>
                   <FontAwesomeIcon
                     onClick={deleteFileImage}
@@ -136,7 +143,12 @@ const ReviewWrite = () => {
             <label htmlFor="file">
               <FontAwesomeIcon icon={faPlus} size="2x" color="lightgray" />
             </label>
-            <input id="file" type="file" onChange={saveFileImage} />
+            <input
+              id="file"
+              type="file"
+              accept="image/*"
+              onChange={saveFileImage}
+            />
           </ReviewImg>
         </ReviewSelectImgs>
 
@@ -147,8 +159,9 @@ const ReviewWrite = () => {
           <Button
             background={theme.colors.gray500}
             color={theme.colors.white}
-            disabled
+            // disabled
             forwardRef={disabledRef}
+            event={check}
           >
             리뷰 올리기
           </Button>

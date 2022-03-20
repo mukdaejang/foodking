@@ -65,16 +65,18 @@ const ReviewText = styled.textarea`
   width: 100%;
   box-sizing: border-box;
 `;
-const ReviewSelectImgs = styled.div`
+
+const ReviewSelectImgs = styled.ul`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 10px;
 `;
-const ReviewSelectImg = styled.div<{ img: string }>`
+
+const ReviewSelectImg = styled.li<{ img: string }>`
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   background: url('${(props) => props.img}') no-repeat center center / cover;
   box-sizing: border-box;
   border: 1px solid ${({ theme }) => theme.colors.gray500};
@@ -100,10 +102,11 @@ const ImgDelete = styled.div`
   }
 `;
 
-const ReviewImg = styled.div`
-  width: 100px;
-  height: 100px;
+const ReviewImg = styled.li`
+  width: 90px;
+  height: 90px;
   cursor: pointer;
+  transition: all ease 1s;
 
   & > input {
     overflow: hidden;
@@ -113,6 +116,7 @@ const ReviewImg = styled.div`
     width: 1px;
     height: 1px;
     margin: -1px;
+    transition: all ease 1s;
   }
 
   & > label {
@@ -124,6 +128,7 @@ const ReviewImg = styled.div`
     height: 100%;
     border: 1px solid ${({ theme }) => theme.colors.gray500};
     cursor: pointer;
+    transition: all ease 1s;
   }
 `;
 
