@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-export const headerStyle = css`
+interface headerprops {
+  isScroll: boolean;
+  isMain: boolean;
+}
+
+export const StyledHeader = styled.header<headerprops>`
   height: 60px;
   display: flex;
   align-items: center;
@@ -13,8 +19,9 @@ export const headerStyle = css`
   z-index: 900;
   border-bottom: 0;
   box-shadow: none;
-  /* background-color: transparent; */
-  background-color: white;
+
+  background-color: ${({ isScroll, isMain }) =>
+    isMain ? (isScroll ? 'white' : 'transparent') : 'white'};
 
   a {
     margin: 0 25px;
@@ -22,7 +29,6 @@ export const headerStyle = css`
     img {
       width: 100px;
       height: 33px;
-      color: hotpink;
     }
   }
 
@@ -33,6 +39,7 @@ export const headerStyle = css`
     border: none;
     font-size: 14px;
     font-weight: 700;
+
     &:focus {
       outline: none;
     }
@@ -49,30 +56,58 @@ export const headerStyle = css`
       display: flex;
       align-items: center;
       justify-content: center;
-      border-left: 1px solid #dbdbdb;
+      border-left: ${({ isScroll, isMain, theme }) =>
+        isMain
+          ? isScroll
+            ? `1px solid ${theme.colors.gray900}`
+            : 'none'
+          : `1px solid ${theme.colors.gray900}`};
+
+      span {
+        color: ${({ isScroll, isMain, theme }) =>
+          isMain
+            ? isScroll
+              ? `${theme.colors.gray800}`
+              : `${theme.colors.white}`
+            : `${theme.colors.gray800}`};
+
+        font-size: 14px;
+        font-weight: 700;
+      }
     }
   }
 
   div {
     height: 100%;
     width: 86px;
-    border-left: 1px solid #dbdbdb;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-left: ${({ isScroll, isMain, theme }) =>
+      isMain
+        ? isScroll
+          ? `1px solid ${theme.colors.gray900}`
+          : 'none'
+        : `1px solid ${theme.colors.gray900}`};
 
     .profileImgBtn {
-      border: 2px solid #ff792a;
+      border: 2px solid ${({ theme }) => theme.colors.orange};
       border-radius: 34px;
       overflow: hidden;
       width: 38px;
       height: 38px;
     }
+
     button {
       border: none;
-      color: gray;
-      background-color: white;
+      color: ${({ isScroll, isMain, theme }) =>
+        isMain
+          ? isScroll
+            ? `${theme.colors.gray500}`
+            : 'white'
+          : `${theme.colors.gray500}`};
       cursor: pointer;
+      background-color: transparent;
 
       img {
         width: 100%;
@@ -87,27 +122,24 @@ export const blankDiv = css`
   height: 60px;
 `;
 
-export const searchDiv = css`
-  display: flex;
-  align-items: center;
-  padding-left: 27px;
-  flex-grow: 1;
-`;
-export const searchDivNone = css`
-  visibility: hidden;
-`;
+interface headerInputprops {
+  isMain: boolean;
+}
 
-export const liSpan = css`
-  color: gray;
-  font-size: 14px;
-  font-weight: 700;
-`;
-export const liSpanMain = css`
-  /* color: #ffffff; */
-  color: black;
-  font-size: 14px;
-  font-weight: 700;
-`;
+export const HeaderInput = styled.div<headerInputprops>(({ isMain }) =>
+  isMain
+    ? {
+        visibility: 'hidden',
+      }
+    : {
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: '27px',
+        flexGrow: '1',
+        borderLeft: 'none !important',
+      },
+);
+
 export const headerLink = css`
   text-decoration-line: none;
 `;
