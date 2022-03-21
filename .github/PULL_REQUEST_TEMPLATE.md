@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+## Issue Number
+=======
 Please ensure your pull request adheres to the following guidelines:
 
 - [ ] Use the following format: `* [owner/repo](link)`
@@ -10,6 +13,7 @@ Please ensure your pull request adheres to the following guidelines:
 fix #
 resolve #
 close #
+>>>>>>> release/v0.1.0
 
 ## Proposed Changes
 
