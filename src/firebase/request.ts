@@ -8,6 +8,7 @@ import {
 import { db } from '@/firebase';
 import { Posts } from './type';
 import { Reviews } from './type';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
@@ -36,8 +37,6 @@ export const postReviewDocs = async ({
   images,
   text,
 }: Reviews) => {
-  // Add a new document with a generated id.
-
   const docRef = await addDoc(collection(db, 'reviews'), {
     userId,
     postId,
@@ -47,4 +46,16 @@ export const postReviewDocs = async ({
     text,
   });
   console.log('Document written with ID: ', docRef.id);
+};
+
+// storage (이미지)
+const storage = getStorage();
+
+export const postImage = async (file: any) => {
+  const storageRef = ref(storage, file.name);
+
+  await uploadBytes(storageRef, file).then((snapshot) => {
+    console.log('Uploaded a blob or file!');
+    console.log(storageRef);
+  });
 };

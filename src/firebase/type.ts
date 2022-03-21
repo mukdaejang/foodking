@@ -10,6 +10,6 @@ export interface Reviews {
   postId: string;
   date: string;
   score: number;
-  images: Array<string>;
+  images: Array<Blob>;
   text: string;
 }

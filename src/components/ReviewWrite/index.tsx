@@ -19,7 +19,7 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
 import { useState, useEffect, useRef, forwardRef } from 'react';
-import { getReviewDocs, postReviewDocs } from '@/firebase/request';
+import { getReviewDocs, postReviewDocs, postImage } from '@/firebase/request';
 
 const ReviewWrite = () => {
   const [selectScore, setSelectScore] = useState(null);
@@ -61,32 +61,39 @@ const ReviewWrite = () => {
   };
 
   //파일 미리볼 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Array<string>>([]);
+  const [fileImage, setFileImage] = useState<Array<Blob>>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<string>>([]);
 
   // 파일 저장
   const saveFileImage = (e: any) => {
-    setFileImage([...fileImage, URL.createObjectURL(e.target.files[0])]);
+    console.log(e.target.files[0]);
+
+    // setFileImage([...fileImage, URL.createObjectURL(e.target.files[0])]);
+    setFileImage([...fileImage, e.target.files[0]]);
+    setFileImageSrc([...fileImageSrc, URL.createObjectURL(e.target.files[0])]);
     e.target.value = '';
   };
 
   // 파일 삭제
   const deleteFileImage = (e: any) => {
     const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
-    setFileImage([...fileImage].filter((file: any) => fileName !== file));
+    setFileImageSrc([...fileImageSrc].filter((file: any) => fileName !== file));
     URL.revokeObjectURL(fileName);
   };
 
   const check = async () => {
     const text = document.querySelector('textarea')?.value;
 
-    postReviewDocs({
-      postId: '222',
-      userId: '111',
-      date: '2022-03-24',
-      images: fileImage,
-      text: text || '',
-      score: +(selectScore || 0),
-    });
+    const images = fileImage.map((file) => postImage(file));
+
+    // await postReviewDocs({
+    //   postId: '222',
+    //   userId: '111',
+    //   date: '2022-03-24',
+    //   images: images,
+    //   text: text || '',
+    //   score: +(selectScore || 0),
+    // });
   };
 
   // 리뷰 db에서 불러오기
@@ -140,7 +147,7 @@ const ReviewWrite = () => {
           ></ReviewText>
         </ReviewContent>
         <ReviewSelectImgs>
-          {fileImage.map((file, idx) => {
+          {fileImageSrc.map((file, idx) => {
             return (
               <ReviewSelectImg key={idx} data-id={file} img={file}>
                 <ImgDelete>
