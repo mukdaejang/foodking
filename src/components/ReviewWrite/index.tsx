@@ -19,9 +19,10 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
 import { useState, useEffect, useRef, forwardRef } from 'react';
+import { getReviewDocs, postReviewDocs } from '@/firebase/request';
 
 const ReviewWrite = () => {
-  const [selectScore, setSelectScore] = useState('good');
+  const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
   const disabledRef = useRef<HTMLButtonElement>(null);
 
@@ -75,11 +76,24 @@ const ReviewWrite = () => {
     URL.revokeObjectURL(fileName);
   };
 
-  const check = () => {
-    console.log('fileImage', fileImage);
-    console.log('selectScore', selectScore);
+  const check = async () => {
     const text = document.querySelector('textarea')?.value;
-    console.log('text', text);
+
+    postReviewDocs({
+      postId: '222',
+      userId: '111',
+      date: '2022-03-24',
+      images: fileImage,
+      text: text || '',
+      score: +(selectScore || 0),
+    });
+  };
+
+  // 리뷰 db에서 불러오기
+  const reviewLoad = () => {
+    getReviewDocs().then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -92,7 +106,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'good'}
+                id={'5'}
                 posX={-1}
                 posY={100}
               >
@@ -102,7 +116,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'middle'}
+                id={'3'}
                 posX={49}
                 posY={100}
               >
@@ -112,7 +126,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'bad'}
+                id={'1'}
                 posX={98}
                 posY={100}
               >
