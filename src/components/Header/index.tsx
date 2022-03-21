@@ -7,12 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
   headerLink,
-  headerStyle,
-  liSpan,
-  liSpanMain,
-  searchDiv,
-  searchDivNone,
   searchIcon,
+  StyledHeader,
+  HeaderInput,
 } from './Header.styled';
 
 import { auth } from '@/firebase';
@@ -27,7 +24,11 @@ const Header = () => {
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>('');
+  const [scrollPosition, setScrollPosition] = useState(0);
 
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  });
   const onClickToggleModal = useCallback(() => {
     dispatch(modalActions.handleOverlayModal());
   }, [dispatch]);
@@ -35,6 +36,10 @@ const Header = () => {
   const { pathname } = useLocation();
   console.log(pathname);
   console.log(isLogin);
+
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -54,23 +59,26 @@ const Header = () => {
   return (
     <Fragment>
       {showHeader && (
-        <header css={headerStyle}>
+        <StyledHeader
+          isScroll={scrollPosition > 200 ? true : false}
+          isMain={isMainPage}
+        >
           <a href="/">
             <img src={logo} alt="먹대장 로고" />
           </a>
-          <div css={isMainPage ? searchDivNone : searchDiv}>
+          <HeaderInput isMain={isMainPage}>
             <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
             <input placeholder="지역, 식당 또는 음식"></input>
-          </div>
+          </HeaderInput>
           <ul>
             <li>
               <Link to="/matjib_list" css={headerLink}>
-                <span css={isMainPage ? liSpanMain : liSpan}>맛집 리스트</span>
+                <span>맛집 리스트</span>
               </Link>
             </li>
             <li>
               <Link to="/" css={headerLink}>
-                <span css={isMainPage ? liSpanMain : liSpan}>술집 리스트</span>
+                <span>술집 리스트</span>
               </Link>
             </li>
           </ul>
@@ -89,7 +97,7 @@ const Header = () => {
               </button>
             )}
           </div>
-        </header>
+        </StyledHeader>
       )}
       {isOverlayModalOpen && (
         <ProfileIcon
