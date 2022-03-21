@@ -82,6 +82,11 @@ export const headerStyle = css`
   }
 `;
 
+export const blankDiv = css`
+  width: 0px;
+  height: 60px;
+`;
+
 export const searchDiv = css`
   display: flex;
   align-items: center;
