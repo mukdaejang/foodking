@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import unstar from '@/assets/icons/un-star.svg';
+import { Link } from 'react-router-dom';
 
 const RestaurantItemLi = styled.li`
   width: 100%;
@@ -17,7 +17,7 @@ const RestaurantItem = styled.figure`
   }
 `;
 
-const RestaurantImg = styled.a`
+const RestaurantImg = styled(Link)`
   width: 45%;
   & img {
     width: 100%;

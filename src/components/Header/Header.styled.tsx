@@ -59,12 +59,25 @@ export const headerStyle = css`
     border-left: 1px solid #dbdbdb;
     display: flex;
     justify-content: center;
+    align-items: center;
 
+    .profileImgBtn {
+      border: 2px solid #ff792a;
+      border-radius: 34px;
+      overflow: hidden;
+      width: 38px;
+      height: 38px;
+    }
     button {
       border: none;
       color: gray;
       background-color: white;
       cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `;
