@@ -161,7 +161,7 @@ const ReviewWrite = () => {
             color={theme.colors.white}
             // disabled
             forwardRef={disabledRef}
-            event={check}
+            clickEvent={check}
           >
             리뷰 올리기
           </Button>

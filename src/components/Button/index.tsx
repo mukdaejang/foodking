@@ -6,7 +6,7 @@ interface ButtonChecker {
   color: string;
   disabled?: boolean;
   forwardRef?: any;
-  event?: () => void;
+  clickEvent?: () => void;
 }
 
 const Button = ({
@@ -15,11 +15,11 @@ const Button = ({
   color,
   disabled,
   forwardRef,
-  event,
+  clickEvent,
 }: ButtonChecker) => {
   return (
     <ButtonStyle
-      onClick={event}
+      onClick={clickEvent}
       background={background}
       color={color}
       disabled={disabled}
