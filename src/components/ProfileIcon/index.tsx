@@ -10,14 +10,17 @@ import {
   isNotSelected,
 } from './ProfileIcon.styled';
 import { getPostDocs } from '@/firebase/request';
+import { getAuth, signOut } from 'firebase/auth';
 import { ListProps } from './List';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+
 interface ProfileIconProps {
   onClickToggleModal: () => void;
+  isLogin: boolean;
 }
 
-const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
+const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
   const dispatch = useAppDispatch();
   const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
 
@@ -61,6 +64,18 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
 
   const deleteBtnClick = () => {
     setFirstLiMockData([]);
+  };
+
+  const logout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        alert('로그아웃에 성공하였습니다.');
+        dispatch(modalActions.handleOverlayModal());
+      })
+      .catch((error) => {
+        alert('로그아웃에 실패하였습니다.');
+      });
   };
 
   return (
@@ -137,7 +152,11 @@ const ProfileIcon = ({ onClickToggleModal }: ProfileIconProps) => {
         </div>
         <footer>
           {isLiFirst ? (
-            <button onClick={handleSocialModal}>로그인</button>
+            isLogin ? (
+              <button onClick={logout}>로그아웃</button>
+            ) : (
+              <button onClick={handleSocialModal}>로그인</button>
+            )
           ) : (
             <button>내 정보</button>
           )}

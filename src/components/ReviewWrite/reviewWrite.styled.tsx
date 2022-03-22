@@ -66,10 +66,47 @@ const ReviewText = styled.textarea`
   box-sizing: border-box;
 `;
 
-const ReviewImg = styled.div`
-  width: 100px;
-  height: 100px;
+const ReviewSelectImgs = styled.ul`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+const ReviewSelectImg = styled.li<{ img: string }>`
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background: url('${(props) => props.img}') no-repeat center center / cover;
+  box-sizing: border-box;
+  border: 1px solid ${({ theme }) => theme.colors.gray500};
+
+  &:hover > div {
+    display: block;
+  }
+`;
+
+const ImgDelete = styled.div`
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.black};
+  opacity: 0.4;
+
+  & > svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    cursor: pointer;
+  }
+`;
+
+const ReviewImg = styled.li`
+  width: 90px;
+  height: 90px;
   cursor: pointer;
+  transition: all ease 1s;
 
   & > input {
     overflow: hidden;
@@ -79,6 +116,7 @@ const ReviewImg = styled.div`
     width: 1px;
     height: 1px;
     margin: -1px;
+    transition: all ease 1s;
   }
 
   & > label {
@@ -90,6 +128,7 @@ const ReviewImg = styled.div`
     height: 100%;
     border: 1px solid ${({ theme }) => theme.colors.gray500};
     cursor: pointer;
+    transition: all ease 1s;
   }
 `;
 
@@ -111,4 +150,7 @@ export {
   ReviewText,
   ReviewImg,
   ButtonGroup,
+  ReviewSelectImgs,
+  ReviewSelectImg,
+  ImgDelete,
 };

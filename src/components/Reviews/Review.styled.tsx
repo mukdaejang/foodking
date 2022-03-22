@@ -61,25 +61,6 @@ export const contentStyle = css`
   p {
     margin: 0.4rem 0 2rem;
   }
-
-  ul {
-    display: flex;
-
-    li::after {
-      content: '';
-      margin-right: 0.8rem;
-    }
-  }
-
-  button {
-    width: 8rem;
-    height: 8rem;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
 `;
 
 export const GrayTitle = styled.span`
