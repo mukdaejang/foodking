@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import Portal from '@/components/Portal';
+
 import {
   searchBar,
   modalSearchBar,
@@ -13,7 +14,7 @@ import {
   position,
   findImgStyle,
   spanDisplay,
-  none,
+  None,
 } from './SearchBox.styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
@@ -116,7 +117,7 @@ const SearchBox = () => {
                 )} */}
               </div>
               <span
-                css={isSearchBackModalOpen ? spanDisplay : none}
+                css={isSearchBackModalOpen ? spanDisplay : None}
                 onClick={spanClear}
               >
                 <button>CLEAR</button>
