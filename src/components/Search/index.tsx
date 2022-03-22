@@ -10,7 +10,6 @@ import {
   searchBar__contents,
   search__input,
   search__btn,
-  search__link,
   position,
   findImgStyle,
   spanDisplay,
