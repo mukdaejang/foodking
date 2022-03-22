@@ -113,7 +113,7 @@ export const AbsolutePosition = css`
 `;
 
 // SearchModal
-export const openNavBox = css`
+export const OpenNavBox = css`
   position: absolute;
   width: 110%;
 
@@ -150,7 +150,7 @@ interface searchKeywordProps {
   key: string;
 }
 
-export const selectedMenu = css`
+export const SelectedMenu = css`
   color: #ff7100;
   border-bottom: 3px solid #ff7100;
 `;

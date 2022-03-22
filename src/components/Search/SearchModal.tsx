@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import SearchKeyword from './SearchKeyword';
 import {
   UlContainer,
-  openNavBox,
-  selectedMenu,
+  OpenNavBox,
+  SelectedMenu,
   None,
 } from './SearchBox.styled';
 
@@ -34,12 +34,12 @@ const SearchModal = () => {
   };
 
   return (
-    <nav css={isSearchBackModalOpen ? openNavBox : None}>
+    <nav css={isSearchBackModalOpen ? OpenNavBox : None}>
       <ul css={UlContainer}>
         {searchMenuKeywords.map((keyword) => (
           <li
             onClick={onClick}
-            css={keyword === isSelectedMenu ? selectedMenu : ''}
+            css={keyword === isSelectedMenu ? SelectedMenu : ''}
             key={keyword}
           >
             {keyword}
