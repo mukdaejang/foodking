@@ -18,12 +18,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
-import { useState, useEffect, useRef, forwardRef } from 'react';
+import { useState, useRef } from 'react';
+import { postReviewDocs, postImage } from '@/firebase/request';
+import { useAppSelector } from '@/store/hooks';
 
 const ReviewWrite = () => {
-  const [selectScore, setSelectScore] = useState('good');
+  const userId = useAppSelector(({ auth }) => auth.status.uid);
+  const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
   const disabledRef = useRef<HTMLButtonElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const selectScoreHandler = (e: any) => {
     changeScore(e.currentTarget);
@@ -59,28 +64,66 @@ const ReviewWrite = () => {
       : true;
   };
 
-  //파일 미리볼 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Array<string>>([]);
+  // 이미지 미리보기 할 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState<Array<Blob>>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<string>>([]);
 
   // 파일 저장
   const saveFileImage = (e: any) => {
-    setFileImage([...fileImage, URL.createObjectURL(e.target.files[0])]);
-    e.target.value = '';
+    if (fileRef.current?.files) {
+      // console.log(fileRef.current?.files[0]);
+      setFileImage([...fileImage, fileRef.current?.files[0]]);
+      setFileImageSrc([
+        ...fileImageSrc,
+        URL.createObjectURL(fileRef.current?.files[0]),
+      ]);
+      e.target.value = '';
+    }
   };
 
   // 파일 삭제
   const deleteFileImage = (e: any) => {
     const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
-    setFileImage([...fileImage].filter((file: any) => fileName !== file));
+    setFileImageSrc([...fileImageSrc].filter((file: any) => fileName !== file));
     URL.revokeObjectURL(fileName);
   };
 
-  const check = () => {
-    console.log('fileImage', fileImage);
-    console.log('selectScore', selectScore);
-    const text = document.querySelector('textarea')?.value;
-    console.log('text', text);
+  const craeteReview = async () => {
+    // 현재 시간
+    const today = new Date();
+    const date = `${today.getFullYear()}-${
+      today.getMonth() + 1
+    }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+
+    // 이미지
+    const images = await Promise.all(
+      fileImage.map(async (file) => await postImage(file)),
+    );
+
+    // text
+    const text = textRef.current?.value || '';
+
+    // 점수
+    const score = +(selectScore || 0);
+
+    // firebase insert
+    await postReviewDocs({
+      // 현재 포스트의 아이디를 넣어주자
+      postId: '222',
+      userId,
+      date,
+      images,
+      text,
+      score,
+    });
   };
+
+  // 리뷰 db에서 불러오기
+  // const reviewLoad = () => {
+  //   getReviewDocs().then((res) => {
+  //     console.log(res);
+  //   });
+  // };
 
   return (
     <Review>
@@ -92,7 +135,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'good'}
+                id={'5'}
                 posX={-1}
                 posY={100}
               >
@@ -102,7 +145,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'middle'}
+                id={'3'}
                 posX={49}
                 posY={100}
               >
@@ -112,7 +155,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'bad'}
+                id={'1'}
                 posX={98}
                 posY={100}
               >
@@ -121,12 +164,13 @@ const ReviewWrite = () => {
             </li>
           </ReviewScoreGroup>
           <ReviewText
+            ref={textRef}
             onInput={changeText}
             placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"
           ></ReviewText>
         </ReviewContent>
         <ReviewSelectImgs>
-          {fileImage.map((file, idx) => {
+          {fileImageSrc.map((file, idx) => {
             return (
               <ReviewSelectImg key={idx} data-id={file} img={file}>
                 <ImgDelete>
@@ -148,6 +192,7 @@ const ReviewWrite = () => {
               type="file"
               accept="image/*"
               onChange={saveFileImage}
+              ref={fileRef}
             />
           </ReviewImg>
         </ReviewSelectImgs>
@@ -161,7 +206,7 @@ const ReviewWrite = () => {
             color={theme.colors.white}
             // disabled
             forwardRef={disabledRef}
-            event={check}
+            clickEvent={craeteReview}
           >
             리뷰 올리기
           </Button>
