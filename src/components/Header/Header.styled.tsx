@@ -13,8 +13,12 @@ export const StyledHeader = styled.header<headerprops>`
   box-sizing: border-box;
   border-bottom: ${({ isMain, theme }) =>
     isMain ? 'none' : `${theme.colors.gray900}`};
-  box-shadow: ${({ isMain }) =>
-    isMain ? 'none' : '0 4px 11px rgb(0 0 0 / 10%)'};
+  box-shadow: ${({ isMain, isScroll }) =>
+    isMain
+      ? isScroll
+        ? '0 4px 11px rgb(0 0 0 / 10%)'
+        : 'none'
+      : '0 4px 11px rgb(0 0 0 / 10%)'};
   position: fixed;
   width: 100%;
   top: 0;
