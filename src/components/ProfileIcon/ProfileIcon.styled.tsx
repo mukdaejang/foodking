@@ -1,17 +1,22 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-export const ModalContainer = styled.div`
+interface modalContainerProps {
+  scroll: number;
+}
+
+export const ModalContainer = styled.div<modalContainerProps>`
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   > div {
     position: absolute;
     right: 20px;
-    top: 70px;
+    top: ${({ scroll }) => `${scroll + 70}px`};
     width: 320px;
     height: 534px;
 

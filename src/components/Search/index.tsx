@@ -15,9 +15,14 @@ import {
   spanDisplay,
   none,
 } from './SearchBox.styled';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 
 const SearchBox = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+
+  // const [modalOpen, setModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -28,40 +33,42 @@ const SearchBox = () => {
   const searchInput = useRef<any>(null);
   let navigate = useNavigate();
 
+  const handleSearchBackModal = () => {
+    dispatch(modalActions.handleSearchBackModal());
+  };
+
   const onSubmit = (e: any) => {
     e.preventDefault();
-    if (!inputValue) {
+
+    if (inputValue) {
+      handleSearchBackModal();
+      navigate(`/search/${inputValue}`);
+    } else {
       alert('검색어를 입력 해주세요!');
-      e.preventDefault();
     }
   };
 
   const onKeyUp = (e: any) => {
     if (e.key === 'Enter' && !inputValue) {
       alert('검색어를 입력 해주세요!');
-      setModalOpen(false);
-      document.body.style.overflow = 'unset';
       return;
     }
     if (e.key === 'Enter' || e.key === 'Escape') {
       if (e.key === 'Escape') {
-        setModalOpen(false);
-        document.body.style.overflow = 'unset';
+        handleSearchBackModal();
         return;
-      }
-      if (inputValue) {
+      } else if (inputValue) {
         console.log('Clicked key: ', e.key);
+        handleSearchBackModal();
         navigate(`/search/${inputValue}`);
       } else {
-        setModalOpen(false);
-        document.body.style.overflow = 'unset';
+        alert('검색어를 입력 해주세요!');
       }
     }
   };
 
   const onFocus = () => {
-    setModalOpen(true);
-    document.body.style.overflow = 'hidden';
+    handleSearchBackModal();
   };
 
   const onChange = (e: any) => {
@@ -73,7 +80,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div css={modalOpen ? modalSearchBar : searchBar}>
+    <div css={isSearchBackModalOpen ? modalSearchBar : searchBar}>
       <SearchBarField>
         <div css={searchBar__contents}>
           <form onSubmit={onSubmit}>
@@ -98,12 +105,20 @@ const SearchBox = () => {
                   onKeyUp={onKeyUp}
                   onChange={onChange}
                 ></input>
-                {modalOpen && (
-                  <SearchModal modalOpen={true} setModalOpen={setModalOpen} />
+                {isSearchBackModalOpen && (
+                  <SearchModal
+                    modalOpen={isSearchBackModalOpen}
+                    setModalOpen={handleSearchBackModal}
+                  />
                 )}
-                {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
+                {/* {isSearchBackModalOpen && (
+                  <Portal setModalOpen={handleSearchBackModal}></Portal>
+                )} */}
               </div>
-              <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
+              <span
+                css={isSearchBackModalOpen ? spanDisplay : none}
+                onClick={spanClear}
+              >
                 <button>CLEAR</button>
               </span>
             </div>

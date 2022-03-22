@@ -1,25 +1,13 @@
 import { createPortal } from 'react-dom';
-import { css } from '@emotion/react';
+import { modalBackground } from '../Modal/Modal.styled';
 
-const darkTheme = css`
-  background: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 1000vh;
-`;
 type SetState = {
-  // setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalOpen: (isOpen: boolean) => void;
+  setModalOpen: () => void;
   onClick?: () => void;
 };
 
 const Background = ({ setModalOpen }: SetState) => {
-  const onClick = () => {
-    setModalOpen(false);
-    document.body.style.overflow = 'unset';
-  };
-  return <div css={darkTheme} onClick={onClick}></div>;
+  return <div css={modalBackground} onClick={setModalOpen}></div>;
 };
 
 const Portal = ({ setModalOpen }: SetState) => {
