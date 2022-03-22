@@ -6,7 +6,6 @@ import SearchKeyword from './SearchKeyword';
 const openNavBox = css`
   position: absolute;
   width: 110%;
-
   z-index: 1000;
   background: white;
   color: black;

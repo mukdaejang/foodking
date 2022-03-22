@@ -18,9 +18,14 @@ import { modalActions } from '@/store/modal/modal-slice';
 interface ProfileIconProps {
   onClickToggleModal: () => void;
   isLogin: boolean;
+  scroll: number;
 }
 
-const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
+const ProfileIcon = ({
+  onClickToggleModal,
+  isLogin,
+  scroll,
+}: ProfileIconProps) => {
   const dispatch = useAppDispatch();
   const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
 
@@ -79,7 +84,7 @@ const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer scroll={scroll}>
       <Modal closePortal={onClickToggleModal}></Modal>
       <div>
         <ul>

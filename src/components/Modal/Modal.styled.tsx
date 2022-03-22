@@ -5,7 +5,7 @@ export const modalBackground = css`
   height: 100vh;
   position: fixed;
   top: 0;
-  z-index: 9997;
+  z-index: 200;
   background-color: rgba(0, 0, 0, 0.6);
 `;
 export const loginModalBackground = css`
