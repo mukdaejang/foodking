@@ -8,6 +8,7 @@ import {
 import { db } from '@/firebase';
 import { Posts } from './type';
 import { Reviews } from './type';
+import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
@@ -52,10 +53,15 @@ export const postReviewDocs = async ({
 const storage = getStorage();
 
 export const postImage = async (file: any) => {
-  const storageRef = ref(storage, file.name);
+  try {
+    const storageRef = ref(storage, file.name);
 
-  await uploadBytes(storageRef, file).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-    console.log(storageRef);
-  });
+    await uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
+
+    return file.name;
+  } catch (e) {
+    console.log(getErrorMessage('파일이 정상적으로 업로드되지 않았습니다.'));
+  }
 };
