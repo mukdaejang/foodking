@@ -8,17 +8,21 @@ import {
   None,
 } from './SearchBox.styled';
 
-type Display = {
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 
-const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
+const SearchModal = () => {
   const searchMenuKeywords = ['추천 검색어', '인기 검색어', '최근 검색어'];
   const searchSuggestKeywords = ['강남 맛집', '수원 맛집', '분당 맛집'];
-
   const [isSelectedMenu, setIsSelectedMenu] = useState('추천 검색어');
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleSearchBackModal = () => {
+    dispatch(modalActions.handleSearchBackModal());
+  };
 
   const onClick = (e: any) => {
     setIsSelectedMenu(e.target.textContent);
@@ -26,10 +30,11 @@ const SearchModal = ({ modalOpen, setModalOpen }: Display) => {
 
   const onKeywordClick = ({ target }: any) => {
     navigate(`/search/${target.textContent}`);
+    handleSearchBackModal();
   };
 
   return (
-    <nav css={modalOpen ? openNavBox : None}>
+    <nav css={isSearchBackModalOpen ? openNavBox : None}>
       <ul css={UlContainer}>
         {searchMenuKeywords.map((keyword) => (
           <li

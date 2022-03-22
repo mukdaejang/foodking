@@ -1,5 +1,5 @@
 import glassSolid from '@/assets/icons/glass-solid.svg';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 import Portal from '@/components/Portal';
@@ -16,6 +16,7 @@ import {
   spanDisplay,
   None,
 } from './SearchBox.styled';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
@@ -23,7 +24,6 @@ const SearchBox = () => {
   const dispatch = useAppDispatch();
   const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
 
-  // const [modalOpen, setModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const SearchBox = () => {
     dispatch(modalActions.handleSearchBackModal());
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
     if (inputValue) {
@@ -59,7 +59,6 @@ const SearchBox = () => {
         handleSearchBackModal();
         return;
       } else if (inputValue) {
-        console.log('Clicked key: ', e.key);
         handleSearchBackModal();
         navigate(`/search/${inputValue}`);
       } else {
@@ -106,15 +105,7 @@ const SearchBox = () => {
                   onKeyUp={onKeyUp}
                   onChange={onChange}
                 ></input>
-                {isSearchBackModalOpen && (
-                  <SearchModal
-                    modalOpen={isSearchBackModalOpen}
-                    setModalOpen={handleSearchBackModal}
-                  />
-                )}
-                {/* {isSearchBackModalOpen && (
-                  <Portal setModalOpen={handleSearchBackModal}></Portal>
-                )} */}
+                {isSearchBackModalOpen && <SearchModal />}
               </div>
               <span
                 css={isSearchBackModalOpen ? spanDisplay : None}

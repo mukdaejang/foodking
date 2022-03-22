@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { keywordStyle } from './SearchKeyword.styled';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 
-const SearchKeyword = ({ suggest }: any) => {
+interface PropType {
+  suggest: string;
+}
+
+const SearchKeyword = ({ suggest }: PropType) => {
   const URLTEXT = suggest.replace(' ', '').trim();
   const navigate = useNavigate();
 
