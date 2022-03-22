@@ -81,13 +81,6 @@ export const search__input = css`
   }
 `;
 
-export const search__link = css`
-  width: 100%;
-  height: 100%;
-
-  text-decoration-line: none;
-  color: white;
-`;
 export const search__btn = css`
   width: 100%;
   height: 100%;
