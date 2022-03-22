@@ -8,6 +8,7 @@ import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
   headerLink,
   searchIcon,
+  blankDiv,
   StyledHeader,
   HeaderInput,
 } from './Header.styled';
@@ -59,45 +60,48 @@ const Header = () => {
   return (
     <Fragment>
       {showHeader && (
-        <StyledHeader
-          isScroll={scrollPosition > 200 ? true : false}
-          isMain={isMainPage}
-        >
-          <a href="/">
-            <img src={logo} alt="먹대장 로고" />
-          </a>
-          <HeaderInput isMain={isMainPage}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
-            <input placeholder="지역, 식당 또는 음식"></input>
-          </HeaderInput>
-          <ul>
-            <li>
-              <Link to="/matjib_list" css={headerLink}>
-                <span>맛집 리스트</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/" css={headerLink}>
-                <span>술집 리스트</span>
-              </Link>
-            </li>
-          </ul>
-          <div>
-            {isLogin ? (
-              <button className="profileImgBtn" onClick={onClickToggleModal}>
-                <img src={profileImage!} alt="프로필이미지"></img>
-              </button>
-            ) : (
-              <button>
-                <FontAwesomeIcon
-                  icon={faUser}
-                  size="2x"
-                  onClick={onClickToggleModal}
-                />
-              </button>
-            )}
-          </div>
-        </StyledHeader>
+        <Fragment>
+          <StyledHeader
+            isScroll={scrollPosition > 200 ? true : false}
+            isMain={isMainPage}
+          >
+            <a href="/">
+              <img src={logo} alt="먹대장 로고" />
+            </a>
+            <HeaderInput isMain={isMainPage}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
+              <input placeholder="지역, 식당 또는 음식"></input>
+            </HeaderInput>
+            <ul>
+              <li>
+                <Link to="/matjib_list" css={headerLink}>
+                  <span>맛집 리스트</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/" css={headerLink}>
+                  <span>술집 리스트</span>
+                </Link>
+              </li>
+            </ul>
+            <div>
+              {isLogin ? (
+                <button className="profileImgBtn" onClick={onClickToggleModal}>
+                  <img src={profileImage!} alt="프로필이미지"></img>
+                </button>
+              ) : (
+                <button>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    size="2x"
+                    onClick={onClickToggleModal}
+                  />
+                </button>
+              )}
+            </div>
+          </StyledHeader>
+          {isMainPage ? '' : <div css={blankDiv}></div>}
+        </Fragment>
       )}
       {isOverlayModalOpen && (
         <ProfileIcon

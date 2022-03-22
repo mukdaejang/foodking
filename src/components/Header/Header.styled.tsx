@@ -117,6 +117,11 @@ export const StyledHeader = styled.header<headerprops>`
   }
 `;
 
+export const blankDiv = css`
+  width: 0px;
+  height: 60px;
+`;
+
 interface headerInputprops {
   isMain: boolean;
 }
