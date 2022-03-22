@@ -23,7 +23,7 @@ export const StyledHeader = styled.header<headerprops>`
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 900;
+  z-index: 100;
 
   background-color: ${({ isScroll, isMain }) =>
     isMain ? (isScroll ? 'white' : 'transparent') : 'white'};
