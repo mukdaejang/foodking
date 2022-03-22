@@ -107,6 +107,7 @@ const Header = () => {
         <ProfileIcon
           onClickToggleModal={onClickToggleModal}
           isLogin={isLogin}
+          scroll={scrollPosition}
         ></ProfileIcon>
       )}
     </Fragment>

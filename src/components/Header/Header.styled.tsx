@@ -11,14 +11,15 @@ export const StyledHeader = styled.header<headerprops>`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  box-shadow: 0 4px 11px rgb(0 0 0 / 10%);
+  border-bottom: ${({ isMain, theme }) =>
+    isMain ? 'none' : `${theme.colors.gray900}`};
+  box-shadow: ${({ isMain }) =>
+    isMain ? 'none' : '0 4px 11px rgb(0 0 0 / 10%)'};
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 900;
-  border-bottom: 0;
-  box-shadow: none;
 
   background-color: ${({ isScroll, isMain }) =>
     isMain ? (isScroll ? 'white' : 'transparent') : 'white'};
