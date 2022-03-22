@@ -1,6 +1,7 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import ProfileIcon from '@/components/ProfileIcon';
+import Portal from '@/components/Portal';
 import logo from '@/assets/img/logo.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,13 +31,19 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
+
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+
+  const onClickToggleSearchBackModal = useCallback(() => {
+    dispatch(modalActions.handleSearchBackModal());
+  }, [dispatch]);
   const onClickToggleModal = useCallback(() => {
     dispatch(modalActions.handleOverlayModal());
   }, [dispatch]);
 
   const { pathname } = useLocation();
-  console.log(pathname);
-  console.log(isLogin);
+  // console.log(pathname);
+  // console.log(isLogin);
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -70,7 +77,14 @@ const Header = () => {
             </a>
             <HeaderInput isMain={isMainPage}>
               <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
-              <input placeholder="지역, 식당 또는 음식"></input>
+              <input
+                placeholder="지역, 식당 또는 음식"
+                onClick={onClickToggleSearchBackModal}
+              ></input>
+
+              {isSearchBackModalOpen && (
+                <Portal setModalOpen={onClickToggleSearchBackModal}></Portal>
+              )}
             </HeaderInput>
             <ul>
               <li>
@@ -107,6 +121,7 @@ const Header = () => {
         <ProfileIcon
           onClickToggleModal={onClickToggleModal}
           isLogin={isLogin}
+          scroll={scrollPosition}
         ></ProfileIcon>
       )}
     </Fragment>
