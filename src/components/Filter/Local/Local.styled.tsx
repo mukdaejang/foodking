@@ -1,26 +1,57 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Region = css`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  button {
-    display: inline-block;
-    background-color: #fff;
-    width: 150px;
-    font-size: 20px;
-    line-height: 59px;
+`;
 
-    border-bottom: ${theme.borders.border0};
-    color: ${theme.colors.gray300};
-    text-align: center;
-    text-decoration: none;
-  }
-  .selected {
-    color: ${theme.colors.orange};
-    border-bottom: ${theme.borders.border1};
-  }
+interface PropsType {
+  curCity: string;
+  key: string;
+}
+
+// export const CityButton = styled.button<PropsType>`
+//   display: inline-block;
+//   background-color: #fff;
+//   width: 150px;
+//   font-size: 20px;
+//   line-height: 59px;
+//   text-align: center;
+//   text-decoration: none;
+
+//   border-bottom: ${({ curCity, key }) =>
+//     curCity === key ? theme.borders.border1 : theme.borders.border0};
+//   color: ${({ curCity, key }) =>
+//     curCity === key ?  : theme.colors.gray300};
+// `;
+
+export const SelectedCityButton = css`
+  display: inline-block;
+  background-color: #fff;
+  width: 150px;
+  font-size: 20px;
+  line-height: 59px;
+  text-align: center;
+  text-decoration: none;
+
+  border-bottom: ${theme.borders.border1};
+  color: ${theme.colors.orange};
+`;
+
+export const UnSelectedCityButton = css`
+  display: inline-block;
+  background-color: #fff;
+  width: 150px;
+  font-size: 20px;
+  line-height: 59px;
+  text-align: center;
+  text-decoration: none;
+
+  border-bottom: ${theme.borders.border0};
+  color: ${theme.colors.gray300};
 `;
 
 export const City = css`
