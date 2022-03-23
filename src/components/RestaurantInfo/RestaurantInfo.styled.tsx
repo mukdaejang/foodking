@@ -22,10 +22,16 @@ export const TitleHeader = styled.header<{ status: Status }>`
       h1 {
         margin-right: 1rem;
       }
+    }
+  }
 
-      span {
-        color: ${({ theme }) => theme.colors.orange};
-      }
+  .orange {
+    color: ${({ theme }) => theme.colors.orange};
+  }
+
+  div.icon-btns {
+    div {
+      position: relative;
     }
   }
 

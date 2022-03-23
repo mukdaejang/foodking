@@ -22,8 +22,8 @@ const Restaurants = () => {
       {/* <div css={imageContainer}>
         <Images images={images} size="big" />
       </div> */}
-      <SurroundPopluars />
-      <Reviews />
+      {/* <SurroundPopluars />
+      <Reviews /> */}
       <RestaurantInfo />
     </div>
   );
