@@ -19,7 +19,11 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
 import { useState, useRef } from 'react';
-import { postReviewDocs, postImage } from '@/firebase/request';
+import {
+  postReviewDocs,
+  postImage,
+  postRestaurantsDocs,
+} from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 
 const ReviewWrite = () => {
@@ -88,6 +92,26 @@ const ReviewWrite = () => {
     URL.revokeObjectURL(fileName);
   };
 
+  // const restaurants = [
+  //   { address: '강남구', name: '까스까스', category: '일식', score: 4.0 },
+  //   { address: '강남구', name: '빽다방', category: '카페', score: 4.5 },
+  //   { address: '강남구', name: '육쌈냉면', category: '한식', score: 3.5 },
+  //   { address: '가로수길', name: '좋은초밥', category: '일식', score: 4.5 },
+  //   { address: '가로수길', name: '오늘의 초밥', category: '일식', score: 4.8 },
+  //   { address: '가로수길', name: '맛나분식', category: '분식', score: 4.9 },
+  //   { address: '홍대', name: '무지개맥주', category: '주점', score: 4.9 },
+  //   { address: '홍대', name: '도미노', category: '양식', score: 4.2 },
+  //   { address: '홍대', name: '홍콩반점', category: '중식', score: 4.0 },
+  //   { address: '이태원', name: '피자헛', category: '양식', score: 4.3 },
+  //   { address: '이태원', name: '우동전문', category: '일식', score: 4.1 },
+  //   { address: '건대', name: '빕스', category: '양식', score: 3.9 },
+  //   { address: '건대', name: '쿠우쿠우', category: '일식', score: 5.0 },
+  //   { address: '신촌', name: '1943', category: '주점', score: 4.5 },
+  //   { address: '삼청', name: '인생맥주', category: '주점', score: 4.1 },
+  //   { address: '종로', name: '소주한잔', category: '주점', score: 4.2 },
+  //   { address: '종로', name: '오늘동', category: '일식', score: 4.8 },
+  // ];
+
   const craeteReview = async () => {
     // 현재 시간
     const today = new Date();
@@ -116,6 +140,11 @@ const ReviewWrite = () => {
       text,
       score,
     });
+
+    // 데이터 집어넣는 부분
+    // restaurants.forEach(async (obj) => {
+    //   await postRestaurantsDocs(obj);
+    // });
   };
 
   // 리뷰 db에서 불러오기

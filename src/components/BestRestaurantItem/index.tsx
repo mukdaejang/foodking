@@ -42,7 +42,9 @@ const BestRestaurantItem = () => {
             <button onClick={changeStar} ref={starRef}></button>
             <span>가고싶다</span>
           </RestaurantLike> */}
-          <IconButton img={unstar} event={changeStar}></IconButton>
+          <IconButton img={unstar} event={changeStar}>
+            가고싶다
+          </IconButton>
           <address>서울특별시 강남구 미왕빌딩</address>
           <RestaurantSubInfo>
             <small>영업시간</small>

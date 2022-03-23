@@ -10,6 +10,7 @@ import { Posts } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { query, orderBy, limit, where } from 'firebase/firestore';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
@@ -19,7 +20,23 @@ const postsCol = createCollection<Posts>('posts');
 
 export const getPostDocs = async () => {
   const postDocs = await getDocs(postsCol);
-  const postData = postDocs.docs.map((x) => x.data());
+  const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
+  return postData;
+};
+
+export const getTopScore8PostDocs = async () => {
+  const q = query(
+    postsCol,
+    // where('category', '==', '주점'),
+    orderBy('score', 'desc'),
+    limit(8),
+  );
+  const postDocs = await getDocs(q);
+  const postData = postDocs.docs.map((x) => ({
+    ...x.data(),
+    id: x.id,
+  }));
+
   return postData;
 };
 
@@ -64,4 +81,20 @@ export const postImage = async (file: any) => {
   } catch (e) {
     console.log(getErrorMessage('파일이 정상적으로 업로드되지 않았습니다.'));
   }
+};
+
+// restaurant data 넣기 (임시)
+export const postRestaurantsDocs = async ({
+  address,
+  category,
+  name,
+  score,
+}: Posts) => {
+  const docRef = await addDoc(collection(db, 'posts'), {
+    address,
+    category,
+    name,
+    score,
+  });
+  console.log('Document written with ID: ', docRef.id);
 };
