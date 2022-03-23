@@ -11,6 +11,7 @@ interface restaurantChecker {
   title: string;
 }
 export interface infoType {
+  id: string;
   address: string;
   category: string;
   name: string;
@@ -21,23 +22,18 @@ const Restaurants = ({ title }: restaurantChecker) => {
   const [restaurants, setRestaurants] = useState<Array<infoType>>([]);
   const restaurantsRef = useRef<HTMLUListElement>(null);
 
-  // const postData = async () => {
-  //   await getPostDocs().then((res) => setRestaurants([...res]));
-  //   console.log(restaurants);
-  // };
-
   useEffect(() => {
     getPostDocs().then((res) => setRestaurants([...res]));
   }, []);
 
-  // console.log(restaurants);
   return (
     <RestaurantsContent>
       <RestaurantsTitle>{`평점이 높은 ${title}`}</RestaurantsTitle>
       <RestaurantsList ref={restaurantsRef}>
-        {restaurants.map((restaurant) => (
-          <Restaurant key={restaurant.name} info={restaurant} />
-        ))}
+        {restaurants.map((restaurant) => {
+          console.log(restaurant);
+          return <Restaurant key={restaurant.id} info={restaurant} />;
+        })}
       </RestaurantsList>
     </RestaurantsContent>
   );

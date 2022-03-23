@@ -19,7 +19,9 @@ const postsCol = createCollection<Posts>('posts');
 
 export const getPostDocs = async () => {
   const postDocs = await getDocs(postsCol);
-  const postData = postDocs.docs.map((x) => x.data());
+  const postData = postDocs.docs.map((x) => {
+    return { ...x.data(), id: x.id };
+  });
   return postData;
 };
 
@@ -65,3 +67,5 @@ export const postImage = async (file: any) => {
     console.log(getErrorMessage('파일이 정상적으로 업로드되지 않았습니다.'));
   }
 };
+
+// restaurant data 넣기
