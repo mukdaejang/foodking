@@ -6,13 +6,14 @@ import { textSpanContainsPosition } from 'typescript';
 interface IconButtonType {
   event: (e: any) => void;
   img: string;
+  children: string;
 }
 
-const IconButton = ({ event, img }: IconButtonType) => {
+const IconButton = ({ children, event, img }: IconButtonType) => {
   return (
     <IconButtonStyle img={img} onClick={event}>
       <button></button>
-      <span>가고싶다</span>
+      <span>{children}</span>
     </IconButtonStyle>
   );
 };

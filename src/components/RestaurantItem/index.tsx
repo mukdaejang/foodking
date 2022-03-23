@@ -8,8 +8,13 @@ import {
   RestaurantScore,
   RestaurantSubInfo,
 } from './restaurant.styled';
+import { infoType } from '@/components/Restaurants';
 
-const Restaurant = () => {
+interface RestaurantType {
+  info: infoType;
+}
+
+const Restaurant = ({ info }: RestaurantType) => {
   return (
     <RestaurantItem>
       <RestaurantLink to="/">
@@ -17,10 +22,10 @@ const Restaurant = () => {
           <RestaurantImg src={`${food}`} alt="food" />
           <RestaurantInfo>
             <p>
-              <RestaurantName>음식점 이름</RestaurantName>
-              <RestaurantScore>4.5</RestaurantScore>
+              <RestaurantName>{info.name}</RestaurantName>
+              <RestaurantScore>{info.score}</RestaurantScore>
             </p>
-            <RestaurantSubInfo>{`${'지역'} - ${'음식종류'}`}</RestaurantSubInfo>
+            <RestaurantSubInfo>{`${info.address} - ${info.category}`}</RestaurantSubInfo>
           </RestaurantInfo>
         </figure>
       </RestaurantLink>
