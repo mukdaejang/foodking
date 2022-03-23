@@ -7,9 +7,7 @@ export const Sorting = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  input {
-    display: none;
-  }
+
   label {
     display: inline-block;
     width: 150px;

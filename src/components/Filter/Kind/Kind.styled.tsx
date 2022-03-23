@@ -37,10 +37,6 @@ export const SelectedLabel = css`
   border-radius: ${theme.borders.radius};
 `;
 
-export const Input = css`
-  display: none;
-`;
-
 export const Img = css`
   width: 60%;
 `;

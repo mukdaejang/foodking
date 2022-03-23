@@ -1,6 +1,6 @@
 import {} from './Kind.styled';
 import { Section, SubTitle } from '../Filter.styled';
-import { Kind, Label, Span, Input, Img } from './Kind.styled';
+import { Kind, Label, Span, Img } from './Kind.styled';
 
 const FoodKind = () => {
   const foodKind = ['한식', '일식', '중식', '양식', '카페', '주점'];
@@ -22,7 +22,12 @@ const FoodKind = () => {
                 ></img>
               </label>
               <span css={Span}>{food}</span>
-              <input id={food} value={food} type="checkbox" css={Input}></input>
+              <input
+                id={food}
+                value={food}
+                type="checkbox"
+                className="a11yHidden"
+              ></input>
             </li>
           );
         })}
