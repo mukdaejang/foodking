@@ -5,17 +5,6 @@ const GlobalStyle = () => <Global styles={style} />;
 export default GlobalStyle;
 
 const style = css`
-  /* a11yHidden */
-  .a11yHidden {
-    overflow: hidden;
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-  }
-
   /* font - spoqa han sans */
   @font-face {
     font-family: 'Spoqa Han Sans';
