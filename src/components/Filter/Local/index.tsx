@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Section, SubTitle } from '../Filter.styled';
-import { Region, City, Label, Input } from './Local.styled';
+import { Region, City, Label } from './Local.styled';
 
 const Local = () => {
   const seoul = [
@@ -41,7 +41,12 @@ const Local = () => {
               <label htmlFor={city} css={Label}>
                 {city}
               </label>
-              <input id={city} value={city} type="checkbox" css={Input}></input>
+              <input
+                id={city}
+                value={city}
+                type="checkbox"
+                className="a11yHidden"
+              ></input>
             </li>
           );
         })}

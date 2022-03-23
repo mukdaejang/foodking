@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Title, Section, SubTitle } from '../Filter.styled';
+import { Section, SubTitle } from '../Filter.styled';
 import { Sorting, sortActive, sortDeactive } from './Sort.styled';
 
 const Sort = () => {
@@ -19,6 +19,7 @@ const Sort = () => {
             평점순
             <input
               id="sorting__asc"
+              className="a11yHidden"
               type="radio"
               name="asc"
               defaultValue="asc"
@@ -36,6 +37,7 @@ const Sort = () => {
             인기순
             <input
               id="sorting__desc"
+              className="a11yHidden"
               type="radio"
               name="desc"
               value="desc"

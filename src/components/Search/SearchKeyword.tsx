@@ -1,50 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { css } from '@emotion/react';
+import { keywordStyle } from './SearchKeyword.styled';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 
-const keywordStyle = css`
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  font-size: 25px;
-  img {
-    opacity: 0.6;
-    padding: 10px;
-    box-sizing: content-box;
-    margin-right: 10px;
-    padding: 10px;
-  }
-  :hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
-  button {
-    background-color: white;
-  }
-`;
-
-interface KeywordPropsType {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  // setModalOpen: (state: boolean) => void;
-  keyword: string;
+interface PropType {
+  suggest: string;
 }
 
-const SearchKeyword = ({ keyword, setModalOpen }: KeywordPropsType) => {
-  let navigate = useNavigate();
+const SearchKeyword = ({ suggest }: PropType) => {
+  const URLTEXT = suggest.replace(' ', '').trim();
+  const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/search/${keyword}`);
+    navigate(`/search/${URLTEXT}`);
   };
   const onKeyUp = (e: any) => {
-    console.log(e.key);
-    if (e.key === 'Escape') setModalOpen(false);
+    if (e.key === 'Escape') console.log('Escape');
   };
   return (
     <li css={keywordStyle} onClick={onClick} onKeyUp={onKeyUp}>
       <img src={glassSolid} alt="glass-solid"></img>
-      <button>{keyword}</button>
+      <button>{suggest}</button>
     </li>
   );
 };

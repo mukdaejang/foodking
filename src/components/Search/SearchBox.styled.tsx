@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Theme from '@/styles/theme';
 
-export const searchBar = css`
+export const SearchBar = css`
   width: 60%;
   margin: 0 auto;
   margin-top: 60px;
 `;
 
-export const modalSearchBar = css`
+export const ModalSearchBar = css`
   width: 60%;
   margin: 0 auto;
   margin-top: 60px;
@@ -37,7 +37,7 @@ export const findImgStyle = css`
   opacity: 0.5;
 `;
 
-export const searchBar__contents = css`
+export const SearchBarContents = css`
   margin: 0;
   width: 100%;
   height: 100%;
@@ -68,7 +68,7 @@ export const searchBar__contents = css`
   }
 `;
 
-export const search__input = css`
+export const SearchInput = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
@@ -81,14 +81,7 @@ export const search__input = css`
   }
 `;
 
-export const search__link = css`
-  width: 100%;
-  height: 100%;
-
-  text-decoration-line: none;
-  color: white;
-`;
-export const search__btn = css`
+export const SearchBtn = css`
   width: 100%;
   height: 100%;
   font-size: 20px;
@@ -104,10 +97,7 @@ export const search__btn = css`
   align-items: center;
 `;
 
-export const none = css`
-  display: none;
-`;
-export const spanDisplay = css`
+export const SpanDisplay = css`
   color: rgba(0, 0, 0, 0.4);
   margin-right: 20px;
   cursor: pointer;
@@ -116,8 +106,64 @@ export const spanDisplay = css`
   }
 `;
 
-export const position = css`
+export const AbsolutePosition = css`
   position: relative;
   width: 100%;
   height: 100%;
 `;
+
+// SearchModal
+export const OpenNavBox = css`
+  position: absolute;
+  width: 110%;
+
+  z-index: 1000;
+  background: white;
+  color: black;
+  margin: 0 auto;
+
+  .keyword-suggester img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+  }
+`;
+
+export const UlContainer = css`
+  list-style-type: none;
+  margin: 10px 0;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+
+  li {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  li:hover {
+    opacity: 0.6;
+  }
+`;
+
+interface searchKeywordProps {
+  isSelectedMenu: string;
+  key: string;
+}
+
+export const SelectedMenu = css`
+  color: #ff7100;
+  border-bottom: 3px solid #ff7100;
+`;
+
+export const None = css`
+  display: none;
+`;
+
+// export const List = styled.li<searchKeywordProps>(({ isSelectedMenu, key }) =>
+//   isSelectedMenu === key
+//     ? {
+//         color: '#ff7100',
+//         borderBottom: '3px solid #ff7100',
+//       }
+//     : { color: 'inherit', borderBottom: '3px solid inherit' },
+// );
