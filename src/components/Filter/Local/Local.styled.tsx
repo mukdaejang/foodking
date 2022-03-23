@@ -47,7 +47,3 @@ export const SelectedLabel = css`
   border: ${theme.borders.border1};
   border-radius: ${theme.borders.radius};
 `;
-
-export const Input = css`
-  display: none;
-`;
