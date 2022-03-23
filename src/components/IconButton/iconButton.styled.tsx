@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const IconButtonStyle = styled.div<{ img: string }>`
+const IconButtonStyle = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -14,10 +14,8 @@ const IconButtonStyle = styled.div<{ img: string }>`
   & > button {
     all: unset;
     box-sizing: border-box;
-    padding: 7px;
     width: 30px;
     height: 30px;
-    background: url('${(props) => props.img}') no-repeat center center / cover;
   }
 
   & > span {
