@@ -4,12 +4,13 @@ import {
   RestaurantsTitle,
   RestaurantsList,
 } from './restaurants.styled';
-import { getPostDocs } from '@/firebase/request';
+import { getTopScore8PostDocs } from '@/firebase/request';
 import { useState, useRef, useEffect } from 'react';
 
 interface restaurantChecker {
   title: string;
 }
+
 export interface infoType {
   id: string;
   address: string;
@@ -23,17 +24,19 @@ const Restaurants = ({ title }: restaurantChecker) => {
   const restaurantsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    getPostDocs().then((res) => setRestaurants([...res]));
+    getTopScore8PostDocs().then((res) => {
+      console.log(res);
+      setRestaurants(res);
+    });
   }, []);
 
   return (
     <RestaurantsContent>
       <RestaurantsTitle>{`평점이 높은 ${title}`}</RestaurantsTitle>
       <RestaurantsList ref={restaurantsRef}>
-        {restaurants.map((restaurant) => {
-          console.log(restaurant);
-          return <Restaurant key={restaurant.id} info={restaurant} />;
-        })}
+        {restaurants.map((restaurant) => (
+          <Restaurant key={restaurant.id} info={restaurant} />
+        ))}
       </RestaurantsList>
     </RestaurantsContent>
   );
