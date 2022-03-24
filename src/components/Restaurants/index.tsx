@@ -4,7 +4,7 @@ import {
   RestaurantsTitle,
   RestaurantsList,
 } from './restaurants.styled';
-import { getTopScore8PostDocs } from '@/firebase/request';
+import { getTopScorePostDocs } from '@/firebase/request';
 import { useState, useRef, useEffect } from 'react';
 
 interface restaurantChecker {
@@ -24,10 +24,7 @@ const Restaurants = ({ title }: restaurantChecker) => {
   const restaurantsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    getTopScore8PostDocs().then((res) => {
-      console.log(res);
-      setRestaurants(res);
-    });
+    getTopScorePostDocs(8).then((res) => setRestaurants(res));
   }, []);
 
   return (

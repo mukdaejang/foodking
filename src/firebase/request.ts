@@ -24,12 +24,12 @@ export const getPostDocs = async () => {
   return postData;
 };
 
-export const getTopScore8PostDocs = async () => {
+export const getTopScorePostDocs = async (num: number) => {
   const q = query(
     postsCol,
     // where('category', '==', '주점'),
     orderBy('score', 'desc'),
-    limit(8),
+    limit(num),
   );
   const postDocs = await getDocs(q);
   const postData = postDocs.docs.map((x) => ({
