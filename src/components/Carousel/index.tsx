@@ -8,6 +8,7 @@ import {
   CarouselControl,
   NavigationControl,
 } from './carousel.styled';
+import { getFoodListDocs } from '@/firebase/request';
 
 const mockData = [
   {
@@ -85,7 +86,7 @@ const Carousel = ({ title }: CarouselChecker) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef<HTMLUListElement>(null);
   const slideDotRef = useRef<HTMLUListElement>(null);
-
+  // const [categoryComponent, setCategoryComponent] = useState<any>([]);
   const categoryComponent: any = [];
   let temp: any = [];
 
@@ -96,7 +97,14 @@ const Carousel = ({ title }: CarouselChecker) => {
       temp = [];
     }
   });
-  if (temp.length) categoryComponent.push(temp);
+  // useEffect(() => {
+  //   getFoodListDocs().then((res) => {
+  //     console.log(res);
+  //     setCategoryComponent(res);
+  //   });
+  // }, []);
+
+  // if (temp.length) categoryComponent.push(temp);
 
   const TOTAL_SLIDES = categoryComponent.length - 1;
 
@@ -123,18 +131,15 @@ const Carousel = ({ title }: CarouselChecker) => {
     if (currentSlide === 0) setCurrentSlide(TOTAL_SLIDES);
     else setCurrentSlide(currentSlide - 1);
   };
-
+  console.log(categoryComponent);
   return (
     <CarouselContent>
       <CategoryTitle>{`믿고 보는 ${title} 리스트`}</CategoryTitle>
       <CarouselView>
         <CarouselItems ref={slideRef}>
           {categoryComponent.map((element: any, idx: any) => {
-            return (
-              <li key={idx}>
-                <Category categoryItemList={element} />
-              </li>
-            );
+            console.log(categoryComponent);
+            return <Category key={idx} categoryItemList={element} />;
           })}
         </CarouselItems>
       </CarouselView>
