@@ -5,6 +5,11 @@ export interface Posts {
   score: number;
 }
 
+export interface Users {
+  userId: string;
+  favorites: string[];
+}
+
 export interface Reviews {
   userId: string;
   postId: string;
