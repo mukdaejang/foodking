@@ -6,7 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists } from './type';
+import { Posts, FoodLists, Users } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
@@ -18,6 +18,7 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 
 const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
+const usersCol = createCollection<Users>('users');
 
 export const getPostDocs = async () => {
   const postDocs = await getDocs(postsCol);
@@ -50,6 +51,25 @@ export const getTopScore8PostDocs = async () => {
   return postData;
 };
 
+export const registUser = async (userId: string) => {
+  try {
+    const q = query(usersCol, where('userId', '==', userId));
+    const userData = await getDocs(q);
+    const [user] = userData.docs;
+
+    if (user) {
+      return;
+    }
+
+    await addUsersDocs({
+      userId: userId,
+      favorites: [],
+    });
+  } catch (err) {
+    console.log(getErrorMessage(err));
+  }
+};
+
 const reviewsCol = createCollection<Reviews>('reviews');
 export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
@@ -74,6 +94,13 @@ export const postReviewDocs = async ({
     text,
   });
   console.log('Document written with ID: ', docRef.id);
+};
+
+export const addUsersDocs = async ({ userId, favorites }: Users) => {
+  await addDoc(collection(db, 'users'), {
+    userId,
+    favorites,
+  });
 };
 
 // storage (이미지)
