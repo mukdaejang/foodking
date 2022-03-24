@@ -3,8 +3,12 @@ import { Section, SubTitle } from '../Filter.styled';
 import { Sorting, sortActive, sortDeactive } from './Sort.styled';
 import a11yHidden from '@/styles/a11yHidden';
 
-const Sort = () => {
-  const [order, setOrder] = useState(0);
+interface PropsType {
+  order: boolean;
+  setOrder: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Sort = ({ order, setOrder }: PropsType) => {
   return (
     <>
       <section css={Section}>
@@ -12,9 +16,9 @@ const Sort = () => {
         <Sorting role="none">
           <label
             htmlFor="sorting__asc"
-            css={order === 0 ? sortActive : sortDeactive}
+            css={order === false ? sortActive : sortDeactive}
             onClick={() => {
-              setOrder(0);
+              setOrder(false);
             }}
           >
             평점순
@@ -32,7 +36,7 @@ const Sort = () => {
             htmlFor="sorting__desc"
             css={order ? sortActive : sortDeactive}
             onClick={() => {
-              setOrder(1);
+              setOrder(true);
             }}
           >
             인기순
@@ -42,7 +46,7 @@ const Sort = () => {
               type="radio"
               name="desc"
               value="desc"
-              checked={order === 0 ? false : true}
+              checked={order === false ? false : true}
               readOnly
             ></input>
           </label>
