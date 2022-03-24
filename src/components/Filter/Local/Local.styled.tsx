@@ -2,10 +2,12 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
-export const Region = css`
+export const Province = css`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  position: relative;
 `;
 
 interface PropsType {
@@ -62,6 +64,7 @@ export const City = css`
   flex-wrap: wrap;
 `;
 
+/** 도시 클릭시 라벨 */
 export const Label = css`
   display: flex;
   justify-content: center;
@@ -70,6 +73,7 @@ export const Label = css`
   width: 120px;
   height: 50px;
   margin: 10px;
+  color: ${theme.colors.gray300};
   border: ${theme.borders.border0};
   border-radius: ${theme.borders.radius};
 `;
@@ -77,4 +81,29 @@ export const Label = css`
 export const SelectedLabel = css`
   border: ${theme.borders.border1};
   border-radius: ${theme.borders.radius};
+`;
+
+/* 더보기 클릭시 */
+export const ProvinceMoreUl = css`
+  position: absolute;
+  right: 0;
+  top: 60px;
+  padding: 20px;
+  color: ${theme.colors.gray300};
+  background-color: white;
+  border: ${theme.borders.border0};
+  font-size: 20px;
+  li:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ProvinceMoreList = css`
+  color: ${theme.colors.gray300};
+  padding: 5px 10px;
+  font-size: 20px;
+`;
+
+export const None = css`
+  display: none;
 `;
