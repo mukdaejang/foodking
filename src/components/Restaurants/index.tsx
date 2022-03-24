@@ -25,7 +25,6 @@ const Restaurants = ({ title }: restaurantChecker) => {
 
   useEffect(() => {
     getTopScore8PostDocs().then((res) => {
-      console.log(res);
       setRestaurants(res);
     });
   }, []);

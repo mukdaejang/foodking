@@ -7,13 +7,15 @@ interface CategoryChecker {
 
 const Category = ({ categoryItemList }: CategoryChecker) => {
   return (
-    <CategoryContent>
-      <CategoryList>
-        {categoryItemList.map((categoryItem, idx: any) => (
-          <CategoryItem key={idx} categoryData={categoryItem} />
-        ))}
-      </CategoryList>
-    </CategoryContent>
+    <li>
+      <CategoryContent>
+        <CategoryList>
+          {categoryItemList.map((categoryItem, idx: any) => (
+            <CategoryItem key={idx} categoryData={categoryItem} />
+          ))}
+        </CategoryList>
+      </CategoryContent>
+    </li>
   );
 };
 
