@@ -13,3 +13,9 @@ export interface Reviews {
   images: Array<Blob>;
   text: string;
 }
+
+export interface FoodLists {
+  title: string;
+  description: string;
+  list: string[];
+}
