@@ -57,7 +57,7 @@ const RestaurantInfo = () => {
             <div>
               <IconButton
                 onClick={toggleIconColor(setPenColor)}
-                message="가고싶다"
+                message="리뷰쓰기"
               >
                 <Pen width="30" height="30" fill={penColor} />
               </IconButton>
