@@ -6,7 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts } from './type';
+import { Posts, FoodLists } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
@@ -17,11 +17,21 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 };
 
 const postsCol = createCollection<Posts>('posts');
+const foodListsCol = createCollection<FoodLists>('foodList');
 
 export const getPostDocs = async () => {
   const postDocs = await getDocs(postsCol);
   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
   return postData;
+};
+
+export const getFoodListDocs = async () => {
+  const foodListDocs = await getDocs(foodListsCol);
+  const foodListData = foodListDocs.docs.map((x) => ({
+    ...x.data(),
+    id: x.id,
+  }));
+  return foodListData;
 };
 
 export const getTopScorePostDocs = async (num: number) => {
