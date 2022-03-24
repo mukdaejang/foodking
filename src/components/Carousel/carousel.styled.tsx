@@ -59,7 +59,8 @@ const CarouselControl = styled.button`
 //   background-position: -40px 0;
 //   right: 15px;
 // `;
-const NavigationControl = styled.ul`
+
+const NavigationControl = styled.ul<{ nowSlide: number }>`
   position: absolute;
   bottom: 35px;
   left: 50%;
@@ -74,6 +75,9 @@ const NavigationControl = styled.ul`
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.orange};
     cursor: pointer;
+    &:nth-of-type(${(props) => props.nowSlide + 1}) {
+      background-color: ${({ theme }) => theme.colors.orange};
+    }
   }
 `;
 export {

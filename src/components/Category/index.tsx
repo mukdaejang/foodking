@@ -1,8 +1,9 @@
 import { CategoryItem } from '@/components';
 import { CategoryContent, CategoryList } from './category.styled';
+import { categoryDataType } from '@/components/Carousel';
 
 interface CategoryChecker {
-  categoryItemList: Array<object>;
+  categoryItemList: categoryDataType[];
 }
 
 const Category = ({ categoryItemList }: CategoryChecker) => {
@@ -10,8 +11,8 @@ const Category = ({ categoryItemList }: CategoryChecker) => {
     <li>
       <CategoryContent>
         <CategoryList>
-          {categoryItemList.map((categoryItem, idx: any) => (
-            <CategoryItem key={idx} categoryData={categoryItem} />
+          {categoryItemList.map((categoryItem) => (
+            <CategoryItem key={categoryItem.id} categoryData={categoryItem} />
           ))}
         </CategoryList>
       </CategoryContent>

@@ -7,18 +7,13 @@ import {
   CategoryTitle,
   CategoryText,
 } from './category_item.styled';
+import { categoryDataType } from '@/components/Carousel';
 
 interface CategoryItemChecker {
-  categoryData: any;
-  // title: string;
-  // subTitle: string;
-  // restaurants: any;
+  categoryData: categoryDataType;
 }
-const CategoryItem = ({
-  categoryData,
-}: // title,
-// subTitle,
-CategoryItemChecker) => {
+
+const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
   return (
     <CategoryItemLi>
       <CategoryLink to="./bestRestaurants">
@@ -26,7 +21,7 @@ CategoryItemChecker) => {
           <CategoryImg src={`${food}`} alt="food" />
           <CategoryInfo>
             <CategoryTitle>{categoryData.title}</CategoryTitle>
-            <CategoryText>{categoryData.subTitle}</CategoryText>
+            <CategoryText>{categoryData.description}</CategoryText>
           </CategoryInfo>
         </figure>
       </CategoryLink>

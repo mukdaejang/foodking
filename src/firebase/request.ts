@@ -26,18 +26,39 @@ export const getPostDocs = async () => {
 };
 
 export const getFoodListDocs = async () => {
+  let temp: any = [];
+
   const foodListDocs = await getDocs(foodListsCol);
   const foodListData = foodListDocs.docs.map((x) => ({
     ...x.data(),
     id: x.id,
   }));
-  return foodListData;
+
+  const arrFoodListData = [];
+  foodListData.forEach((category) => {
+    temp.push(category);
+    if (temp.length === 6) {
+      arrFoodListData.push(temp);
+      temp = [];
+    }
+  });
+  if (temp.length) arrFoodListData.push(temp);
+
+  return arrFoodListData;
 };
+
+// export const getPostListDocs = async (posts) => {
+//   const q = query(postsCol, where('id', 'in', posts));
+//   const postDocs = await getDocs(q);
+//   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
+
+//   return postData;
+// };
 
 export const getTopScorePostDocs = async (num: number) => {
   const q = query(
     postsCol,
-    // where('category', '==', '주점'),
+    where('category', '==', '주점'),
     orderBy('score', 'desc'),
     limit(num),
   );
