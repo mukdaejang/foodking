@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { Section, SubTitle } from '../Filter.styled';
 import {
   Province,
@@ -164,6 +164,7 @@ const jeonlado = [
 
 const provinceList = ['서울', '경기도', '인천', '부산', '더보기'];
 const provinceMore = ['강원도', '충청도', '전라도'];
+
 const provinceKorToEng: { [key: string]: string[] } = {
   서울: seoul,
   경기도: kyungido,
@@ -179,20 +180,37 @@ const Local = () => {
   const [curProvince, setCurProvince] = useState('서울');
   const [curCity, setCurCity] = useState(seoul);
   const [onMoreButton, setOnMoreButton] = useState(false);
+  const [selectedCity, setSelectedCity] = useState([]);
+  const WrapperRef = useRef<HTMLUListElement>(null);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
     // if ((e.target as HTMLLIElement).textContent !== null) {
     //   setCurProvince((e.target as HTMLLIElement).textContent);
     // }
+
     let TEXT = (e.target as HTMLLIElement).textContent as string;
     if (TEXT === '더보기') {
-      setOnMoreButton(true);
+      onMoreButton ? setOnMoreButton(false) : setOnMoreButton(true);
     } else {
       setCurCity(provinceKorToEng[TEXT]);
       setOnMoreButton(false);
     }
     setCurProvince(TEXT);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e: any) => {
+      if (WrapperRef.current && !WrapperRef.current.contains(e.target)) {
+        setOnMoreButton(false);
+      }
+    };
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [WrapperRef]);
 
   return (
     <section css={Section}>
@@ -211,7 +229,7 @@ const Local = () => {
             {province}
           </button>
         ))}
-        <ul css={onMoreButton ? ProvinceMoreUl : None}>
+        <ul ref={WrapperRef} css={onMoreButton ? ProvinceMoreUl : None}>
           {onMoreButton &&
             provinceMore.map((province) => (
               <li css={ProvinceMoreList} key={province}>

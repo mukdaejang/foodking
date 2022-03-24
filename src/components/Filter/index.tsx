@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, ButtonContainer } from './Filter.styled';
 import Sort from './Sort';
 import Local from './Local';
 import FoodKind from './Kind';
 
 const Filter = () => {
+  const [order, setOrder] = useState(false);
+  useEffect(() => {}, []);
   const onClick = () => {};
   return (
     <div css={Container}>
-      <Sort></Sort>
+      <Sort order={order} setOrder={setOrder}></Sort>
       <Local></Local>
       <FoodKind></FoodKind>
       <div css={ButtonContainer} role="none">
