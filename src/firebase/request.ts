@@ -9,7 +9,7 @@ import { db } from '@/firebase';
 import { Posts, FoodLists, Users } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
@@ -59,7 +59,7 @@ export const getBestPostListDocs = async (posts: string[]) => {
 export const getTopScorePostDocs = async (num: number) => {
   const q = query(
     postsCol,
-    where('category', '==', '주점'),
+    // where('category', '==', '주점'),
     orderBy('score', 'desc'),
     limit(num),
   );
@@ -96,6 +96,25 @@ export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
   const reviewData = reviewDocs.docs.map((x) => x.data());
   return reviewData;
+};
+
+export const getImageDocs = async (fileName: string) => {
+  const imagesRef = ref(storage, fileName);
+
+  return await getDownloadURL(imagesRef)
+    .then((url) => {
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = (event) => {
+        const blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+      return url;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const postReviewDocs = async ({
