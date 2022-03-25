@@ -1,7 +1,7 @@
 import {} from './Kind.styled';
 import { Section, SubTitle } from '../Filter.styled';
 import { Kind, Label, Span, Img } from './Kind.styled';
-
+import a11yHidden from '@/styles/a11yHidden';
 const FoodKind = () => {
   const foodKind = ['한식', '일식', '중식', '양식', '카페', '주점'];
   const foodImg = ['kor', 'japan', 'china', 'pizza', 'coffee', 'beer'];
@@ -26,7 +26,7 @@ const FoodKind = () => {
                 id={food}
                 value={food}
                 type="checkbox"
-                className="a11yHidden"
+                css={a11yHidden}
               ></input>
             </li>
           );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Section, SubTitle } from '../Filter.styled';
 import { Sorting, sortActive, sortDeactive } from './Sort.styled';
+import a11yHidden from '@/styles/a11yHidden';
 
 const Sort = () => {
   const [order, setOrder] = useState(0);
@@ -19,7 +20,7 @@ const Sort = () => {
             평점순
             <input
               id="sorting__asc"
-              className="a11yHidden"
+              css={a11yHidden}
               type="radio"
               name="asc"
               defaultValue="asc"
@@ -37,7 +38,7 @@ const Sort = () => {
             인기순
             <input
               id="sorting__desc"
-              className="a11yHidden"
+              css={a11yHidden}
               type="radio"
               name="desc"
               value="desc"
