@@ -20,7 +20,7 @@ export interface PostsOther {
   phone: string;
   category: string;
   time: string[];
-  break: string;
+  breakTime: string;
   menu: [];
   score: number;
   description: string;
