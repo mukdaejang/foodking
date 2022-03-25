@@ -1,4 +1,3 @@
-import food from '@/assets/food.jpeg';
 import {
   CategoryItemLi,
   CategoryLink,

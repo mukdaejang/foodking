@@ -24,13 +24,13 @@ export interface BestRestaurantType {
   id: string;
 }
 
-interface LocationParams {
-  pathname: string;
-  state: categoryDataType;
-  search: string;
-  hash: string;
-  key: string;
-}
+// interface LocationParams {
+//   pathname: string;
+//   state: categoryDataType;
+//   search: string;
+//   hash: string;
+//   key: string;
+// }
 
 const BestRestaurants = () => {
   const location = useLocation();

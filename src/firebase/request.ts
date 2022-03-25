@@ -6,8 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users } from './type';
-import { Reviews } from './type';
+import { Posts, FoodLists, Users, PostsOther, Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -167,15 +166,25 @@ export const postImage = async (file: any) => {
 // restaurant data 넣기 (임시)
 export const postRestaurantsDocs = async ({
   address,
-  category,
   name,
+  phone,
+  category,
+  time,
+  breakTime,
+  menu,
   score,
-}: Posts) => {
+  description,
+}: PostsOther) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     address,
-    category,
     name,
+    phone,
+    category,
+    time,
+    breakTime,
+    menu,
     score,
+    description,
   });
   console.log('Document written with ID: ', docRef.id);
 };
