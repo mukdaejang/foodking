@@ -49,7 +49,7 @@ const SearchModal = () => {
       </ul>
       <ul className="keyword-suggester" onClick={onKeywordClick}>
         {searchSuggestKeywords.map((suggest) => (
-          <SearchKeyword suggest={suggest}></SearchKeyword>
+          <SearchKeyword suggest={suggest} key={suggest}></SearchKeyword>
         ))}
       </ul>
     </nav>
