@@ -14,6 +14,18 @@ export const List = styled.li`
   color: ${theme.colors.orange};
 `;
 
+export const SelectedLabel = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 120px;
+  height: 120px;
+  margin: 10px;
+  border: ${theme.borders.border1};
+  border-radius: ${theme.borders.radiusCircle};
+`;
+
 export const Label = css`
   display: flex;
   justify-content: center;
@@ -30,11 +42,6 @@ export const Span = css`
   display: flex;
   justify-content: center;
   width: 100%;
-`;
-
-export const SelectedLabel = css`
-  border: ${theme.borders.border1};
-  border-radius: ${theme.borders.radius};
 `;
 
 export const Img = css`

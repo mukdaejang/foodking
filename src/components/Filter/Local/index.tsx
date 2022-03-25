@@ -175,13 +175,39 @@ const provinceKorToEng: { [key: string]: string[] } = {
   충청도: jungchungdo,
   전라도: jeonlado,
 };
-const Local = () => {
+
+interface PropsType {
+  local: string[];
+  setLocal: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const Local = ({ local, setLocal }: PropsType) => {
   // province: 도, city: 시
-  const [curProvince, setCurProvince] = useState('서울');
-  const [curCity, setCurCity] = useState(seoul);
-  const [onMoreButton, setOnMoreButton] = useState(false);
-  const [selectedCity, setSelectedCity] = useState([]);
+  const [curProvince, setCurProvince] = useState<string>('서울');
+  const [curCity, setCurCity] = useState<string[]>(seoul);
+  const [onMoreButton, setOnMoreButton] = useState<boolean>(false);
+
+  // 외부의 클릭 이벤트를 위한 ref
   const WrapperRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: any) => {
+      console.log(e.target, WrapperRef.current);
+      if (WrapperRef.current === e.target) {
+        setOnMoreButton(false);
+        return;
+      }
+      if (WrapperRef.current && !WrapperRef.current.contains(e.target)) {
+        setOnMoreButton(false);
+      }
+    };
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [WrapperRef]);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
     // if ((e.target as HTMLLIElement).textContent !== null) {
@@ -195,27 +221,26 @@ const Local = () => {
       setCurCity(provinceKorToEng[TEXT]);
       setOnMoreButton(false);
     }
-    setCurProvince(TEXT);
+    if (provinceMore.includes(TEXT)) setCurProvince('더보기');
+    else setCurProvince(TEXT);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (WrapperRef.current && !WrapperRef.current.contains(e.target)) {
-        setOnMoreButton(false);
-      }
-    };
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [WrapperRef]);
+  const onClickLabel = (e: MouseEvent<HTMLElement>) => {
+    let City = (e.target as HTMLLIElement).textContent;
+    if (City && local.includes(City)) {
+      let temp = [...local];
+      temp = temp.filter((e) => e !== City);
+      setLocal([...temp]);
+    } else {
+      let set = new Set([...local, City]);
+      set && setLocal([...(set as any)]);
+    }
+  };
 
   return (
     <section css={Section}>
       <SubTitle>지역</SubTitle>
-      <p css={Province} onClick={onClick}>
+      <div css={Province} onClick={onClick}>
         {provinceList.map((province: string) => (
           // <CityButton>
           <button
@@ -237,14 +262,18 @@ const Local = () => {
               </li>
             ))}
         </ul>
-      </p>
+      </div>
 
       <div css={City}>
         {curCity.map((city) => {
           return (
             <li key={city}>
               {/* 체크박스 선택시 로직 추가해야함 */}
-              <label htmlFor={city} css={Label}>
+              <label
+                htmlFor={city}
+                css={local.includes(city) ? SelectedLabel : Label}
+                onClick={onClickLabel}
+              >
                 {city}
               </label>
               <input
