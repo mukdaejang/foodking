@@ -32,7 +32,7 @@ const Restaurant = ({ info }: RestaurantType) => {
           <RestaurantInfo>
             <p>
               <RestaurantName>{info.name}</RestaurantName>
-              <RestaurantScore>{info.score}</RestaurantScore>
+              <RestaurantScore>{info.score.toFixed(1)}</RestaurantScore>
             </p>
             <RestaurantSubInfo>{`${info.address} - ${info.category}`}</RestaurantSubInfo>
           </RestaurantInfo>
