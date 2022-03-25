@@ -4,6 +4,27 @@ export interface Posts {
   name: string;
   score: number;
 }
+interface Address {
+  city: string;
+  district: string;
+  detail: string;
+}
+interface menu {
+  city: string;
+  district: string;
+  detail: string;
+}
+export interface PostsOther {
+  address: Address;
+  name: string;
+  phone: string;
+  category: string;
+  time: string[];
+  break: string;
+  menu: [];
+  score: number;
+  description: string;
+}
 
 export interface Users {
   userId: string;

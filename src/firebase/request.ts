@@ -6,10 +6,9 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users } from './type';
-import { Reviews } from './type';
+import { Posts, FoodLists, Users, PostsOther, Reviews } from './type';
 import { getErrorMessage } from '@/utils';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
@@ -56,10 +55,14 @@ export const getBestPostListDocs = async (posts: string[]) => {
   return postData;
 };
 
-export const getTopScorePostDocs = async (num: number) => {
+export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
     postsCol,
-    where('category', '==', '주점'),
+    where(
+      'category',
+      'in',
+      category === '술집' ? ['주점'] : ['일식', '한식', '양식', '카페', '분식'],
+    ),
     orderBy('score', 'desc'),
     limit(num),
   );
@@ -96,6 +99,25 @@ export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
   const reviewData = reviewDocs.docs.map((x) => x.data());
   return reviewData;
+};
+
+export const getImageDocs = async (fileName: string) => {
+  const imagesRef = ref(storage, fileName);
+
+  return await getDownloadURL(imagesRef)
+    .then((url) => {
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = (event) => {
+        const blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+      return url;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const postReviewDocs = async ({
@@ -144,15 +166,25 @@ export const postImage = async (file: any) => {
 // restaurant data 넣기 (임시)
 export const postRestaurantsDocs = async ({
   address,
-  category,
   name,
+  phone,
+  category,
+  time,
+  breakTime,
+  menu,
   score,
-}: Posts) => {
+  description,
+}: PostsOther) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     address,
-    category,
     name,
+    phone,
+    category,
+    time,
+    breakTime,
+    menu,
     score,
+    description,
   });
   console.log('Document written with ID: ', docRef.id);
 };
