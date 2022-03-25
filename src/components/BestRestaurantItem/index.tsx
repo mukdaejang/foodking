@@ -16,8 +16,13 @@ import {
 import { IconButton } from '@/components';
 import { Star } from '@/components/IconButton';
 import theme from '@/styles/theme';
+import { BestRestaurantType } from '@/components/BestRestaurants';
 
-const BestRestaurantItem = () => {
+interface BestRestaurantItemType {
+  restaurant: BestRestaurantType;
+}
+
+const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   const [starState, setStarState] = useState(false);
 
   const changeStar = (e: MouseEvent) => {
@@ -33,13 +38,14 @@ const BestRestaurantItem = () => {
         <RestaurantInfo>
           <Link to="/">
             <RestaurantTitle>
-              까스까스<RestaurantScore>4.5</RestaurantScore>
+              {restaurant.name}
+              <RestaurantScore>{restaurant.score}</RestaurantScore>
             </RestaurantTitle>
           </Link>
           <IconButton onClick={changeStar} message="가고싶다">
             <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
           </IconButton>
-          <address>서울특별시 강남구 미왕빌딩</address>
+          <address>{restaurant.address}</address>
           <RestaurantSubInfo>
             <small>영업시간</small>
             <small>11:30 - 21:00 </small>
@@ -62,7 +68,7 @@ const BestRestaurantItem = () => {
             </RestaurantMenu>
           </RestaurantSubInfo>
           <Link to="/">
-            <RestaurantMore>{`${`까스까스`} 더보기 >`}</RestaurantMore>
+            <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
           </Link>
         </RestaurantInfo>
       </RestaurantItem>

@@ -33,6 +33,7 @@ const CopyButton = styled.button`
   border: 1.5px solid ${({ theme }) => theme.colors.orange};
   cursor: pointer;
   padding: 0 5px;
+  background-color: ${({ theme }) => theme.colors.white};
 
   & span {
     padding-left: 5px;

@@ -10,7 +10,7 @@ import { Posts, FoodLists, Users } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { query, orderBy, limit, where } from 'firebase/firestore';
+import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
@@ -27,20 +27,41 @@ export const getPostDocs = async () => {
 };
 
 export const getFoodListDocs = async () => {
+  let temp: any = [];
+
   const foodListDocs = await getDocs(foodListsCol);
   const foodListData = foodListDocs.docs.map((x) => ({
     ...x.data(),
     id: x.id,
   }));
-  return foodListData;
+
+  const arrFoodListData = [];
+  foodListData.forEach((category) => {
+    temp.push(category);
+    if (temp.length === 6) {
+      arrFoodListData.push(temp);
+      temp = [];
+    }
+  });
+  if (temp.length) arrFoodListData.push(temp);
+
+  return arrFoodListData;
 };
 
-export const getTopScore8PostDocs = async () => {
+export const getBestPostListDocs = async (posts: string[]) => {
+  const q = query(postsCol, where(documentId(), 'in', posts));
+  const postDocs = await getDocs(q);
+  const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
+
+  return postData;
+};
+
+export const getTopScorePostDocs = async (num: number) => {
   const q = query(
     postsCol,
-    // where('category', '==', '주점'),
+    where('category', '==', '주점'),
     orderBy('score', 'desc'),
-    limit(8),
+    limit(num),
   );
   const postDocs = await getDocs(q);
   const postData = postDocs.docs.map((x) => ({
