@@ -56,10 +56,14 @@ export const getBestPostListDocs = async (posts: string[]) => {
   return postData;
 };
 
-export const getTopScorePostDocs = async (num: number) => {
+export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
     postsCol,
-    // where('category', '==', '주점'),
+    where(
+      'category',
+      'in',
+      category === '술집' ? ['주점'] : ['일식', '한식', '양식', '카페', '분식'],
+    ),
     orderBy('score', 'desc'),
     limit(num),
   );
