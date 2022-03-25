@@ -144,7 +144,7 @@ const RestaurantInfo = () => {
           </dd>
         </dl>
         <p>업데이트: 2018 2.2</p>
-        <dl>
+        <dl className="introduce">
           <dt>식당 소개</dt>
           <dd>
             로스가스, 브라운돈가스, 치킨가스, 가쓰오 우동 등을 파는 돈까스

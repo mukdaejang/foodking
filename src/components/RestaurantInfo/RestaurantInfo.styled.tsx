@@ -10,7 +10,6 @@ export const TitleHeader = styled.header<{ status: Status }>`
   div.title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
 
     div {
       display: flex;
@@ -69,6 +68,13 @@ export const Descriptions = styled.div`
   dl {
     display: flex;
     margin-bottom: 1rem;
+
+    &.introduce {
+      margin-top: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid ${({ theme }) => theme.colors.gray900};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray900};
+    }
   }
 
   dt {
