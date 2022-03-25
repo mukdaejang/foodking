@@ -45,7 +45,7 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
           <Link to="/">
             <RestaurantTitle>
               {restaurant.name}
-              <RestaurantScore>{restaurant.score}</RestaurantScore>
+              <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>
             </RestaurantTitle>
           </Link>
           <IconButton onClick={changeStar} message="가고싶다">

@@ -24,7 +24,7 @@ const Restaurants = ({ title }: restaurantChecker) => {
   const restaurantsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    getTopScorePostDocs(8).then((res) => setRestaurants(res));
+    getTopScorePostDocs(8, title).then((res) => setRestaurants(res));
   }, []);
 
   return (
