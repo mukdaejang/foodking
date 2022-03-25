@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Star } from '@/components/IconButton';
 import theme from '@/styles/theme';
+import { useAppSelector } from '@/store/hooks';
 
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,10 +18,15 @@ export interface ListProps {
 }
 
 const List = ({ id, name, address, category, score }: ListProps) => {
+  const { isUserLogin } = useAppSelector(({ user }) => user);
   const [starState, setStarState] = useState(false);
 
   const changeStar = (e: MouseEvent) => {
-    setStarState(!starState);
+    if (isUserLogin) {
+      setStarState(!starState);
+    } else {
+      alert('로그인한 사용자만 사용할 수 있는 기능입니다.');
+    }
   };
 
   return (

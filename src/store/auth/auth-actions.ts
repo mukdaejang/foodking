@@ -7,6 +7,11 @@ export const login = createAsyncThunk(
   async (loginType: SocialType, { rejectWithValue }) => {
     try {
       const result = await loginWithSocial(loginType);
+      console.log(result);
+      if (!result) {
+        return;
+      }
+
       await registUser(result?.user?.uid);
       return result?.user?.uid;
     } catch (error: any) {
