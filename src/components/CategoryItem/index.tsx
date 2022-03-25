@@ -18,7 +18,7 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
     <CategoryItemLi>
       <CategoryLink
         to={`./bestRestaurants/${categoryData.title}`}
-        state={categoryData.list}
+        state={categoryData}
       >
         <figure>
           <CategoryImg src={`${food}`} alt="food" />

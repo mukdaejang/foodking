@@ -32,7 +32,7 @@ const Carousel = ({ title }: CarouselChecker) => {
 
   const [totalSlides, setTotalslides] = useState<number>(0);
   useEffect(() => {
-    getFoodListDocs().then((res: any) => {
+    getFoodListDocs().then((res) => {
       setCategoryComponent(res);
       setTotalslides(res.length - 1);
     });

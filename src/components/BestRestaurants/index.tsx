@@ -11,28 +11,48 @@ import {
   ContainerText,
   SortMiddel70,
 } from '@/components/style';
-import { useAppSelector } from '@/store/hooks';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { categoryDataType } from '@/components/Carousel';
+import { getBestPostListDocs } from '@/firebase/request';
+
+export interface BestRestaurantType {
+  name: string;
+  address: string;
+  score: number;
+  category: string;
+  id: string;
+}
+
+interface LocationParams {
+  pathname: string;
+  state: categoryDataType;
+  search: string;
+  hash: string;
+  key: string;
+}
 
 const BestRestaurants = () => {
-  const auth = useAppSelector(({ auth }) => auth.status);
-  console.log(auth);
-
   const location = useLocation();
-  console.log(location.state);
+  const data: any = location.state;
+
+  const [postList, setPostList] = useState<BestRestaurantType[]>([]);
+
+  useEffect(() => {
+    getBestPostListDocs(data.list).then((res) => setPostList(res));
+  }, []);
 
   return (
     <>
       <GrayContainer>
-        <ContainerTitle>강남역 맛집 베스트 5!</ContainerTitle>
-        <ContainerText>"강남역" 점심은 여기서 해결!</ContainerText>
+        <ContainerTitle>{data.title}</ContainerTitle>
+        <ContainerText>{data.description}</ContainerText>
       </GrayContainer>
       <SortMiddel70>
         <ul>
-          <BestRestaurantItem />
-          <BestRestaurantItem />
-          <BestRestaurantItem />
+          {postList.map((restaurant: BestRestaurantType) => (
+            <BestRestaurantItem key={restaurant.id} restaurant={restaurant} />
+          ))}
         </ul>
         <MoreButton />
         <LinkCopyButton />

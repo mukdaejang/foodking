@@ -10,7 +10,7 @@ import { Posts, FoodLists } from './type';
 import { Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { query, orderBy, limit, where } from 'firebase/firestore';
+import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 
 const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(db, collectionName) as CollectionReference<T>;
@@ -47,13 +47,13 @@ export const getFoodListDocs = async () => {
   return arrFoodListData;
 };
 
-// export const getPostListDocs = async (posts) => {
-//   const q = query(postsCol, where('id', 'in', posts));
-//   const postDocs = await getDocs(q);
-//   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
+export const getBestPostListDocs = async (posts: string[]) => {
+  const q = query(postsCol, where(documentId(), 'in', posts));
+  const postDocs = await getDocs(q);
+  const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
 
-//   return postData;
-// };
+  return postData;
+};
 
 export const getTopScorePostDocs = async (num: number) => {
   const q = query(
