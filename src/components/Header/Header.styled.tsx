@@ -30,6 +30,7 @@ export const StyledHeader = styled.header<headerprops>`
 
   a {
     margin: 0 25px;
+    text-decoration-line: none;
 
     img {
       width: 100px;
@@ -144,10 +145,6 @@ export const HeaderInput = styled.div<headerInputprops>(({ isMain }) =>
         borderLeft: 'none !important',
       },
 );
-
-export const headerLink = css`
-  text-decoration-line: none;
-`;
 
 export const searchIcon = css`
   width: 25px;

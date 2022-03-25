@@ -7,7 +7,6 @@ import logo from '@/assets/img/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
-  headerLink,
   searchIcon,
   blankDiv,
   StyledHeader,
@@ -16,23 +15,25 @@ import {
 
 import { auth } from '@/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+import { userActions } from '@/store/user/user-slice';
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
+
   const [showHeader, setShowHeader] = useState<boolean>(true);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
-  const [isLogin, setIsLogin] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>('');
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
-
-  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
 
   const onClickToggleSearchBackModal = useCallback(() => {
     dispatch(modalActions.handleSearchBackModal());
@@ -42,8 +43,6 @@ const Header = () => {
   }, [dispatch]);
 
   const { pathname } = useLocation();
-  // console.log(pathname);
-  // console.log(isLogin);
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -52,10 +51,9 @@ const Header = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setProfileImage(user?.providerData[0].photoURL);
-      setIsLogin(true);
+      dispatch(userActions.handleUserLogin(true));
     } else {
-      // console.log('no user');
-      setIsLogin(false);
+      dispatch(userActions.handleUserLogin(false));
     }
   });
 
@@ -88,18 +86,18 @@ const Header = () => {
             </HeaderInput>
             <ul>
               <li>
-                <Link to="/matjib_list" css={headerLink}>
+                <Link to="/matjib_list">
                   <span>맛집 리스트</span>
                 </Link>
               </li>
               <li>
-                <Link to="/" css={headerLink}>
+                <Link to="/">
                   <span>술집 리스트</span>
                 </Link>
               </li>
             </ul>
             <div>
-              {isLogin ? (
+              {isUserLogin ? (
                 <button className="profileImgBtn" onClick={onClickToggleModal}>
                   <img src={profileImage!} alt="프로필이미지"></img>
                 </button>
@@ -120,7 +118,7 @@ const Header = () => {
       {isOverlayModalOpen && (
         <ProfileIcon
           onClickToggleModal={onClickToggleModal}
-          isLogin={isLogin}
+          isLogin={isUserLogin}
           scroll={scrollPosition}
         ></ProfileIcon>
       )}
