@@ -2,7 +2,13 @@ import {} from './Kind.styled';
 import { Section, SubTitle } from '../Filter.styled';
 import { Kind, Label, Span, Img } from './Kind.styled';
 import a11yHidden from '@/styles/a11yHidden';
-const FoodKind = () => {
+
+interface PropsType {
+  kind: string[];
+  setKind: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const FoodKind = ({ kind, setKind }: PropsType) => {
   const foodKind = ['한식', '일식', '중식', '양식', '카페', '주점'];
   const foodImg = ['kor', 'japan', 'china', 'pizza', 'coffee', 'beer'];
   return (
