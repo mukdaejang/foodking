@@ -2,6 +2,7 @@ import glassSolid from '@/assets/icons/glass-solid.svg';
 import {
   useState,
   useEffect,
+  useCallback,
   FormEvent,
   KeyboardEvent,
   ChangeEvent,
@@ -37,9 +38,9 @@ const SearchBox = () => {
     console.log(inputValue);
   }, [inputValue]);
 
-  const handleSearchBackModal = () => {
+  const handleSearchBackModal = useCallback(() => {
     dispatch(modalActions.handleSearchBackModal());
-  };
+  }, [dispatch]);
 
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
@@ -59,11 +60,13 @@ const SearchBox = () => {
     }
     if (e.key === 'Enter' || e.key === 'Escape') {
       if (e.key === 'Escape') {
+        setInputValue('');
+        (document.activeElement as HTMLElement).blur();
         handleSearchBackModal();
         return;
       } else if (inputValue) {
         handleSearchBackModal();
-        navigate(`/search/${inputValue}`);
+        navigate(`/search/${inputValue.replace(/[ ]/gi, '')}`);
       } else {
         alert('검색어를 입력 해주세요!');
       }
@@ -71,7 +74,12 @@ const SearchBox = () => {
   };
 
   const onFocus = () => {
+    setInputValue('');
     handleSearchBackModal();
+  };
+
+  const onBlur = () => {
+    setInputValue('');
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +109,9 @@ const SearchBox = () => {
                   css={SearchInput}
                   id="SearchInput"
                   placeholder="지역, 식당 또는 음식"
+                  value={inputValue}
                   onFocus={onFocus}
+                  onBlur={onBlur}
                   onKeyUp={onKeyUp}
                   onChange={onChange}
                 ></input>
@@ -111,7 +121,9 @@ const SearchBox = () => {
                 css={isSearchBackModalOpen ? SpanDisplay : None}
                 onClick={onSpanClear}
               >
-                <button>CLEAR</button>
+                <button type="reset" onClick={onSpanClear}>
+                  CLEAR
+                </button>
               </span>
             </div>
             <div className="contents__right">
