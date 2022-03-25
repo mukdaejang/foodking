@@ -66,8 +66,7 @@ const SearchBox = () => {
         return;
       } else if (inputValue) {
         handleSearchBackModal();
-        setInputValue(inputValue.replace(' ', ''));
-        navigate(`/search/${inputValue}`);
+        navigate(`/search/${inputValue.replace(/[ ]/gi, '')}`);
       } else {
         alert('검색어를 입력 해주세요!');
       }

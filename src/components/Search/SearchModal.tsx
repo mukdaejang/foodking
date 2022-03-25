@@ -30,7 +30,7 @@ const SearchModal = () => {
   };
 
   const onKeywordClick = ({ target }: any) => {
-    navigate(`/search/${target.textContent}`);
+    navigate(`/search/${target.textContent.replace(/[ ]/gi, '')}`);
     handleSearchBackModal();
   };
 
