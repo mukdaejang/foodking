@@ -29,7 +29,7 @@ export const ButtonContainer = css`
   justify-content: center;
   align-items: center;
   margin: 40px 0;
-
+  font-size: 30px;
   button {
     width: 60%;
     height: 60px;

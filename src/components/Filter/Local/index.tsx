@@ -228,9 +228,9 @@ const Local = ({ local, setLocal }: PropsType) => {
   const onClickLabel = (e: MouseEvent<HTMLElement>) => {
     let City = (e.target as HTMLLIElement).textContent;
     if (City && local.includes(City)) {
-      let temp = [...local];
-      temp = temp.filter((e) => e !== City);
-      setLocal([...temp]);
+      let temp_local = [...local];
+      temp_local = temp_local.filter((e) => e !== City);
+      setLocal([...temp_local]);
     } else {
       let set = new Set([...local, City]);
       set && setLocal([...(set as any)]);

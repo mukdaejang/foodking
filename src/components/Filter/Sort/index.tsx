@@ -7,6 +7,10 @@ interface PropsType {
   order: boolean;
   setOrder: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const booleanToSort = {
+  false: '평점순',
+  true: '인기순',
+};
 
 const Sort = ({ order, setOrder }: PropsType) => {
   return (
