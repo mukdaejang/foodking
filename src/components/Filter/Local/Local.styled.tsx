@@ -79,6 +79,13 @@ export const Label = css`
 `;
 
 export const SelectedLabel = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 50px;
+  margin: 10px;
+
   border: ${theme.borders.border1};
   border-radius: ${theme.borders.radius};
 `;
