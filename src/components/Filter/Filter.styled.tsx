@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = css`
-  width: 40vw;
+  width: 600px;
   margin: 0 auto;
 `;
 
@@ -29,7 +29,7 @@ export const ButtonContainer = css`
   justify-content: center;
   align-items: center;
   margin: 40px 0;
-
+  font-size: 30px;
   button {
     width: 60%;
     height: 60px;
