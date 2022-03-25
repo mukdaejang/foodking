@@ -89,19 +89,6 @@ export const Descriptions = styled.div`
       &:last-of-type {
         margin-top: 0.5rem;
       }
-
-      &.address_jibun {
-        color: ${({ theme }) => theme.colors.gray300};
-
-        &::before {
-          content: '지번';
-          border: 1px solid ${({ theme }) => theme.colors.gray400};
-          border-radius: 3px;
-          margin-right: 0.5rem;
-          font-size: 0.6rem;
-          padding: 0.1rem;
-        }
-      }
     }
 
     ul.menus {
