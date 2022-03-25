@@ -45,11 +45,11 @@ export const loginModalDiv = css`
       margin: 0 auto 12px;
       border: none;
     }
-    button:nth-child(2) {
+    button:nth-of-type(2) {
       color: #ffffff;
       background-color: #4150bf;
     }
-    button:nth-child(3) {
+    button:nth-of-type(3) {
       color: #ffffff;
       background-color: #000000;
     }

@@ -1,19 +1,22 @@
 import { CategoryItem } from '@/components';
 import { CategoryContent, CategoryList } from './category.styled';
+import { categoryDataType } from '@/components/Carousel';
 
 interface CategoryChecker {
-  categoryItemList: Array<object>;
+  categoryItemList: categoryDataType[];
 }
 
 const Category = ({ categoryItemList }: CategoryChecker) => {
   return (
-    <CategoryContent>
-      <CategoryList>
-        {categoryItemList.map((categoryItem, idx: any) => (
-          <CategoryItem key={idx} categoryData={categoryItem} />
-        ))}
-      </CategoryList>
-    </CategoryContent>
+    <li>
+      <CategoryContent>
+        <CategoryList>
+          {categoryItemList.map((categoryItem) => (
+            <CategoryItem key={categoryItem.id} categoryData={categoryItem} />
+          ))}
+        </CategoryList>
+      </CategoryContent>
+    </li>
   );
 };
 

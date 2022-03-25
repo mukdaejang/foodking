@@ -1,6 +1,11 @@
+import { useState, MouseEvent } from 'react';
+
+import { Star } from '@/components/IconButton';
+import theme from '@/styles/theme';
+
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export interface ListProps {
   name: string;
@@ -10,6 +15,12 @@ export interface ListProps {
 }
 
 const List = ({ name, address, category, score }: ListProps) => {
+  const [starState, setStarState] = useState(false);
+
+  const changeStar = (e: MouseEvent) => {
+    setStarState(!starState);
+  };
+
   return (
     <li>
       <section>
@@ -23,8 +34,9 @@ const List = ({ name, address, category, score }: ListProps) => {
           </a>
           <span>{`${address}-${category}`}</span>
         </div>
-        <button>
-          <FontAwesomeIcon icon={faStar} size="2x" />
+        <button onClick={changeStar}>
+          <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
+          <FontAwesomeIcon className="xIcon" icon={faXmark} />
         </button>
       </section>
     </li>

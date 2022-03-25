@@ -33,6 +33,7 @@ export const ModalContainer = styled.div<modalContainerProps>`
       height: 413px;
       border-top: 1px solid ${({ theme }) => theme.colors.gray500};
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray500};
+      overflow-y: auto;
 
       > div {
         display: flex;
@@ -62,7 +63,6 @@ export const ModalContainer = styled.div<modalContainerProps>`
         width: 294px;
         height: 86px;
         margin-top: 16px;
-        margin-right: 10px;
         box-sizing: border-box;
 
         section {
@@ -104,12 +104,26 @@ export const ModalContainer = styled.div<modalContainerProps>`
           }
           button {
             border: none;
+            width: 40px;
+            height: 28px;
             display: flex;
-            color: ${({ theme }) => theme.colors.gray500};
             background-color: ${({ theme }) => theme.colors.white};
             text-align: center;
+            align-items: center;
             cursor: pointer;
             padding: 0;
+
+            svg {
+              width: 80%;
+              height: 80%;
+              margin-right: 5px;
+            }
+
+            .xIcon {
+              width: 50%;
+              height: 50%;
+              color: ${({ theme }) => theme.colors.gray500};
+            }
           }
         }
 

@@ -1,7 +1,13 @@
+import { useState, useCallback } from 'react';
+
 import { TitleHeader, Descriptions } from './RestaurantInfo.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPen, faStar } from '@fortawesome/free-solid-svg-icons';
 import foodImage from '@/assets/img/food.jpg';
+
+import { IconButton } from '@/components';
+import { Pen, Star } from '@/components/IconButton';
+import theme from '@/styles/theme';
 
 const RestaurantInfo = () => {
   const status = {
@@ -25,17 +31,45 @@ const RestaurantInfo = () => {
     { name: '크림우동', price: 9000 },
   ].map((menu, id) => ({ ...menu, id }));
 
+  const [starColor, setStarColor] = useState(theme.colors.gray1000);
+  const [penColor, setPenColor] = useState(theme.colors.gray1000);
+  const toggleIconColor = useCallback(
+    (setState) => () => {
+      const {
+        colors: { gray1000, orange },
+      } = theme;
+      setState((prevColor: string) =>
+        prevColor === gray1000 ? orange : gray1000,
+      );
+    },
+    [],
+  );
+
   return (
     <div>
       <TitleHeader status={status}>
         <div className="title">
           <div>
             <h1>북천</h1>
-            <span>4.6</span>
+            <span className="orange">4.6</span>
           </div>
-          <div>
-            <button>리뷰쓰기</button>
-            <button>가고싶다</button>
+          <div className="icon-btns">
+            <div>
+              <IconButton
+                onClick={toggleIconColor(setPenColor)}
+                message="리뷰쓰기"
+              >
+                <Pen width="30" height="30" fill={penColor} />
+              </IconButton>
+            </div>
+            <div>
+              <IconButton
+                onClick={toggleIconColor(setStarColor)}
+                message="가고싶다"
+              >
+                <Star fill={starColor} />
+              </IconButton>
+            </div>
           </div>
         </div>
         <div>
@@ -98,7 +132,7 @@ const RestaurantInfo = () => {
           <dd>
             <ul className="menus">
               {menus.map(({ name, price }) => (
-                <li>
+                <li key={name}>
                   <span>{name}</span>
                   <span>{price.toLocaleString()}원</span>
                 </li>

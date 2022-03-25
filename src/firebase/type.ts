@@ -5,6 +5,11 @@ export interface Posts {
   score: number;
 }
 
+export interface Users {
+  userId: string;
+  favorites: string[];
+}
+
 export interface Reviews {
   userId: string;
   postId: string;
@@ -12,4 +17,10 @@ export interface Reviews {
   score: number;
   images: Array<Blob>;
   text: string;
+}
+
+export interface FoodLists {
+  title: string;
+  description: string;
+  list: string[];
 }

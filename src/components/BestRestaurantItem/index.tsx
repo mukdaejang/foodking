@@ -1,5 +1,5 @@
 import food from '@/assets/food.jpeg';
-import { useState, useEffect, useRef } from 'react';
+import { useState, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
   RestaurantItemLi,
@@ -12,18 +12,21 @@ import {
   RestaurantMenu,
   RestaurantMore,
 } from './bestRestaurantItem.styled';
-import unstar from '@/assets/icons/un-star.svg';
-import star from '@/assets/icons/star.svg';
-import { IconButton } from '@/components';
 
-const BestRestaurantItem = () => {
+import { IconButton } from '@/components';
+import { Star } from '@/components/IconButton';
+import theme from '@/styles/theme';
+import { BestRestaurantType } from '@/components/BestRestaurants';
+
+interface BestRestaurantItemType {
+  restaurant: BestRestaurantType;
+}
+
+const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   const [starState, setStarState] = useState(false);
 
-  const changeStar = (e: any) => {
+  const changeStar = (e: MouseEvent) => {
     setStarState(!starState);
-    (
-      e.currentTarget.children[0] as HTMLElement
-    ).style.backgroundImage = `url('${!starState ? star : unstar}')`;
   };
 
   return (
@@ -35,15 +38,14 @@ const BestRestaurantItem = () => {
         <RestaurantInfo>
           <Link to="/">
             <RestaurantTitle>
-              까스까스<RestaurantScore>4.5</RestaurantScore>
+              {restaurant.name}
+              <RestaurantScore>{restaurant.score}</RestaurantScore>
             </RestaurantTitle>
           </Link>
-          {/* <RestaurantLike>
-            <button onClick={changeStar} ref={starRef}></button>
-            <span>가고싶다</span>
-          </RestaurantLike> */}
-          <IconButton img={unstar} event={changeStar}></IconButton>
-          <address>서울특별시 강남구 미왕빌딩</address>
+          <IconButton onClick={changeStar} message="가고싶다">
+            <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
+          </IconButton>
+          <address>{restaurant.address}</address>
           <RestaurantSubInfo>
             <small>영업시간</small>
             <small>11:30 - 21:00 </small>
@@ -66,7 +68,7 @@ const BestRestaurantItem = () => {
             </RestaurantMenu>
           </RestaurantSubInfo>
           <Link to="/">
-            <RestaurantMore>{`${`까스까스`} 더보기 >`}</RestaurantMore>
+            <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
           </Link>
         </RestaurantInfo>
       </RestaurantItem>
