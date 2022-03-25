@@ -16,7 +16,10 @@ interface CategoryItemChecker {
 const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
   return (
     <CategoryItemLi>
-      <CategoryLink to="./bestRestaurants">
+      <CategoryLink
+        to={`./bestRestaurants/${categoryData.title}`}
+        state={categoryData.list}
+      >
         <figure>
           <CategoryImg src={`${food}`} alt="food" />
           <CategoryInfo>
