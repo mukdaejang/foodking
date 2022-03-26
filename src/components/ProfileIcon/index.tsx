@@ -30,21 +30,24 @@ const ProfileIcon = ({
   const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
 
   const [isLiFirst, setisLiFirst] = useState(true);
-  const [firstLiMockData, setFirstLiMockData] = useState<any>([]);
-  const [secondLiMockData, setSecondLiMockData] = useState([
+  const [firstLiMockData, setFirstLiMockData] = useState<ListProps[]>([]);
+  const [secondLiMockData, setSecondLiMockData] = useState<ListProps[]>([
     {
+      id: '1',
       name: '담소순대국',
       address: '광진구',
       category: '한식',
       score: 4.6,
     },
     {
+      id: '2',
       name: '뚱보집',
       address: '강남구',
       category: '한식',
       score: 4.8,
     },
     {
+      id: '3',
       name: '서가앤쿡',
       address: '마포구',
       category: '양식',
@@ -109,12 +112,10 @@ const ProfileIcon = ({
             {isLiFirst ? (
               firstLiMockData.length ? (
                 firstLiMockData.map(
-                  (
-                    { name, address, category, score }: ListProps,
-                    index: number,
-                  ) => {
+                  ({ id, name, address, category, score }, index: number) => {
                     return (
                       <List
+                        id={id}
                         key={index}
                         name={name}
                         address={address}
@@ -132,9 +133,10 @@ const ProfileIcon = ({
               )
             ) : secondLiMockData.length ? (
               secondLiMockData.map(
-                ({ name, address, category, score }, index) => {
+                ({ id, name, address, category, score }, index) => {
                   return (
                     <List
+                      id={id}
                       key={index}
                       name={name}
                       address={address}

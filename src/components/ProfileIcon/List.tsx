@@ -1,4 +1,5 @@
 import { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Star } from '@/components/IconButton';
 import theme from '@/styles/theme';
@@ -9,13 +10,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export interface ListProps {
+  id: string;
   name: string;
   address: string;
   category: string;
   score: number;
 }
 
-const List = ({ name, address, category, score }: ListProps) => {
+const List = ({ id, name, address, category, score }: ListProps) => {
   const { isUserLogin } = useAppSelector(({ user }) => user);
   const [starState, setStarState] = useState(false);
 
@@ -30,14 +32,14 @@ const List = ({ name, address, category, score }: ListProps) => {
   return (
     <li>
       <section>
-        <a href="/">
+        <Link to={`/restaurants/${id}`}>
           <img src={foodImage} alt="food" />
-        </a>
+        </Link>
         <div>
-          <a href="/">
+          <Link to={`/restaurants/${id}`}>
             <h3>{name}</h3>
             <span>{score}</span>
-          </a>
+          </Link>
           <span>{`${address}-${category}`}</span>
         </div>
         <button onClick={changeStar}>

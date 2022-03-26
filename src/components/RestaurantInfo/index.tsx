@@ -1,4 +1,7 @@
 import { useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import { useFetch } from '@/firebase/hooks';
+import { Posts } from '@/firebase/type';
 
 import { TitleHeader, Descriptions } from './RestaurantInfo.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -45,13 +48,17 @@ const RestaurantInfo = () => {
     [],
   );
 
+  const { postId = '' } = useParams();
+
+  const post = useFetch<Posts>({ docName: 'posts', id: postId });
+
   return (
     <div>
       <TitleHeader status={status}>
         <div className="title">
           <div>
-            <h1>북천</h1>
-            <span className="orange">4.6</span>
+            <h1>{post?.name}</h1>
+            <span className="orange">{post?.score}</span>
           </div>
           <div className="icon-btns">
             <div>
@@ -88,12 +95,7 @@ const RestaurantInfo = () => {
         <dl>
           <dt>주소</dt>
           <dd>
-            <span>{restaurantInfo.address[0]}</span>
-            {restaurantInfo.address[1] ? (
-              <span className="address_jibun">{restaurantInfo.address[1]}</span>
-            ) : (
-              ''
-            )}
+            <span>{post?.address}</span>
           </dd>
         </dl>
         <dl>
@@ -103,14 +105,6 @@ const RestaurantInfo = () => {
         <dl>
           <dt>음식 종류</dt>
           <dd>까스 요리</dd>
-        </dl>
-        <dl>
-          <dt>가격대</dt>
-          <dd>만원 미만</dd>
-        </dl>
-        <dl>
-          <dt>주차</dt>
-          <dd>주차공간없음</dd>
         </dl>
         <dl>
           <dt>영업시간</dt>
@@ -144,7 +138,7 @@ const RestaurantInfo = () => {
           </dd>
         </dl>
         <p>업데이트: 2018 2.2</p>
-        <dl>
+        <dl className="introduce">
           <dt>식당 소개</dt>
           <dd>
             로스가스, 브라운돈가스, 치킨가스, 가쓰오 우동 등을 파는 돈까스

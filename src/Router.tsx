@@ -17,7 +17,7 @@ const Router = () => {
       <Route path="search/:endpoint" element={<SearchResult />} />
       <Route path="bestRestaurants/:category" element={<Best5 />} />
       <Route path="reviews" element={<ReviewWritePage />} />
-      <Route path="/restaurants/:restaurant" element={<Restaurants />} />
+      <Route path="/restaurants/:postId" element={<Restaurants />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
