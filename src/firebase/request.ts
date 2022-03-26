@@ -6,7 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, PostsOther, Reviews } from './type';
+import { Posts, PostsOther, FoodLists, Users, Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -54,13 +54,35 @@ export const getBestPostListDocs = async (posts: string[]) => {
   return postData;
 };
 
+export const getPostTitleDocs = async (posts: string[]) => {
+  const q = query(postsCol, where(documentId(), 'in', posts), limit(2));
+  const postDocs = await getDocs(q);
+  const fileData = postDocs.docs.map((x: any) => x.data().images[0]);
+  console.log(fileData);
+
+  return fileData;
+};
+
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
     postsCol,
     where(
       'category',
       'in',
-      category === '술집' ? ['주점'] : ['일식', '한식', '양식', '카페', '분식'],
+      category === '술집'
+        ? ['주점', '이자카야', '호프', '칵테일']
+        : [
+            '일식',
+            '한식',
+            '양식',
+            '카페',
+            '분식',
+            '베이커리',
+            '브런치',
+            '스테이크',
+            '베트남',
+            '남미',
+          ],
     ),
     orderBy('score', 'desc'),
     limit(num),
@@ -173,6 +195,7 @@ export const postRestaurantsDocs = async ({
   menu,
   score,
   description,
+  images,
 }: PostsOther) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     address,
@@ -184,6 +207,7 @@ export const postRestaurantsDocs = async ({
     menu,
     score,
     description,
+    images,
   });
   console.log('Document written with ID: ', docRef.id);
 };

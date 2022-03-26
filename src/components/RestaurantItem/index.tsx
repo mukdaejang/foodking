@@ -7,6 +7,7 @@ import {
   RestaurantName,
   RestaurantScore,
   RestaurantSubInfo,
+  RestaurantImgBox,
 } from './restaurant.styled';
 import { infoType } from '@/components/Restaurants';
 import { useState, useEffect } from 'react';
@@ -20,21 +21,21 @@ const Restaurant = ({ info }: RestaurantType) => {
   const [imageSrc, setImageSrc] = useState<string>('');
 
   useEffect(() => {
-    getImageDocs('스크린샷 2022-03-21 오후 8.43.28.png').then(
-      (res: any) => setImageSrc(res),
-    );
+    getImageDocs(info.images[0]).then((res: any) => setImageSrc(res));
   }, []);
   return (
     <RestaurantItem>
       <RestaurantLink to="/">
         <figure>
-          <RestaurantImg src={`${imageSrc}`} alt="food" />
+          <RestaurantImgBox>
+            <RestaurantImg src={`${imageSrc}`} alt="food" />
+          </RestaurantImgBox>
           <RestaurantInfo>
             <p>
               <RestaurantName>{info.name}</RestaurantName>
               <RestaurantScore>{info.score.toFixed(1)}</RestaurantScore>
             </p>
-            <RestaurantSubInfo>{`${info.address} - ${info.category}`}</RestaurantSubInfo>
+            <RestaurantSubInfo>{`${info.address.district} - ${info.category}`}</RestaurantSubInfo>
           </RestaurantInfo>
         </figure>
       </RestaurantLink>

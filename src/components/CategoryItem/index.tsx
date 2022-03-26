@@ -5,9 +5,10 @@ import {
   CategoryInfo,
   CategoryTitle,
   CategoryText,
+  CategoryImgBox,
 } from './category_item.styled';
 import { categoryDataType } from '@/components/Carousel';
-import { getImageDocs } from '@/firebase/request';
+import { getImageDocs, getPostTitleDocs } from '@/firebase/request';
 import { useState, useEffect } from 'react';
 
 interface CategoryItemChecker {
@@ -15,12 +16,14 @@ interface CategoryItemChecker {
 }
 
 const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
-  const [imageSrc, setImageSrc] = useState<string>('');
+  const [imageSrc1, setImageSrc1] = useState<string>();
+  const [imageSrc2, setImageSrc2] = useState<string>();
 
   useEffect(() => {
-    getImageDocs('스크린샷 2022-03-21 오후 8.43.28.png').then(
-      (res: any) => setImageSrc(res),
-    );
+    getPostTitleDocs(categoryData.list.slice(0, 2)).then((res) => {
+      getImageDocs(res[0]).then((res: any) => setImageSrc1(res));
+      getImageDocs(res[1]).then((res: any) => setImageSrc2(res));
+    });
   }, []);
 
   return (
@@ -30,7 +33,10 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
         state={categoryData}
       >
         <figure>
-          <CategoryImg src={`${imageSrc}`} alt="food" />
+          <CategoryImgBox>
+            <img src={imageSrc1} alt={imageSrc1} />
+            <img src={imageSrc2} alt={imageSrc2} />
+          </CategoryImgBox>
           <CategoryInfo>
             <CategoryTitle>{categoryData.title}</CategoryTitle>
             <CategoryText>{categoryData.description}</CategoryText>

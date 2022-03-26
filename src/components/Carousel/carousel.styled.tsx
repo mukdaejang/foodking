@@ -62,7 +62,7 @@ const CarouselControl = styled.button`
 
 const NavigationControl = styled.ul<{ nowSlide: number }>`
   position: absolute;
-  bottom: 35px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -70,8 +70,8 @@ const NavigationControl = styled.ul<{ nowSlide: number }>`
   justify-content: center;
   & li {
     margin: 0 4px;
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.orange};
     cursor: pointer;
