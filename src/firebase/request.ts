@@ -54,11 +54,19 @@ export const getBestPostListDocs = async (posts: string[]) => {
   return postData;
 };
 
+// food list의 link로 post 리스트 가져오기
+export const getBestRestaurantsIdDocs = async (category: string) => {
+  const q = query(foodListsCol, where('link', '==', category));
+  const postDocs = await getDocs(q);
+  const postListData = postDocs.docs.map((x) => x.data());
+
+  return postListData;
+};
+
 export const getPostTitleDocs = async (posts: string[]) => {
   const q = query(postsCol, where(documentId(), 'in', posts), limit(2));
   const postDocs = await getDocs(q);
   const fileData = postDocs.docs.map((x: any) => x.data().images[0]);
-  console.log(fileData);
 
   return fileData;
 };

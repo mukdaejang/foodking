@@ -7,6 +7,11 @@ export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.orange};
 `;
 
+export const SortMiddel95 = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+`;
 export const SortMiddel70 = styled.div`
   width: 70%;
   margin: 0 auto;

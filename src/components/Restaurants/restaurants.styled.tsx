@@ -5,7 +5,7 @@ const RestaurantsContent = styled.section`
 `;
 const RestaurantsTitle = styled.h2`
   color: ${({ theme }) => theme.colors.orange};
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
 `;
 const RestaurantsList = styled.ul`

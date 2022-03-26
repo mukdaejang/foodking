@@ -11,42 +11,53 @@ import {
   ContainerText,
   SortMiddel70,
 } from '@/components/style';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { categoryDataType } from '@/components/Carousel';
-import { getBestPostListDocs } from '@/firebase/request';
+import {
+  getBestPostListDocs,
+  getBestRestaurantsIdDocs,
+} from '@/firebase/request';
 
 export interface BestRestaurantType {
-  name: string;
-  address: string;
-  score: number;
-  category: string;
   id: string;
+  address: { city: string; district: string; detail: string };
+  name: string;
+  phone: string;
+  category: string;
+  time: string[];
+  breakTime: string;
+  menu: string[];
+  score: number;
+  description: string;
+  images: string[];
 }
-
-// interface LocationParams {
-//   pathname: string;
-//   state: categoryDataType;
-//   search: string;
-//   hash: string;
-//   key: string;
-// }
 
 const BestRestaurants = () => {
   const location = useLocation();
-  const data: any = location.state;
+  const category = location.pathname.replace('/bestRestaurants/', '');
 
   const [postList, setPostList] = useState<BestRestaurantType[]>([]);
+  const [categoryData, setCategoryData] = useState<categoryDataType>();
 
   useEffect(() => {
-    getBestPostListDocs(data.list).then((res) => setPostList(res));
+    getBestRestaurantsIdDocs(category).then((res: any) => {
+      setCategoryData(res[0]);
+      getBestPostListDocs(res[0].list).then((res: any) => {
+        setPostList(res);
+      });
+    });
   }, []);
 
   return (
     <>
       <GrayContainer>
-        <ContainerTitle>{data.title}</ContainerTitle>
-        <ContainerText>{data.description}</ContainerText>
+        <ContainerTitle>
+          {categoryData ? categoryData.title : '맛집 베스트'}
+        </ContainerTitle>
+        <ContainerText>
+          {categoryData ? categoryData.description : '맛집 베스트'}
+        </ContainerText>
       </GrayContainer>
       <SortMiddel70>
         <ul>
