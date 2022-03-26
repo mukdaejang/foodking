@@ -15,6 +15,7 @@ const CategoryImgBox = styled.div`
   position: relative;
   width: 100%;
   padding-top: 50%;
+  box-shadow: 0 0 15px rgb(0 0 0 / 10%);
   & img {
     position: absolute;
     top: 0;
@@ -42,11 +43,12 @@ const CategoryInfo = styled.figcaption`
 `;
 const CategoryTitle = styled.h3`
   white-space: nowrap;
-  font-size: 1.8rem;
+  font-size: 2.2vw;
+  /* font-size: 1.8rem; */
   text-align: center;
 `;
 const CategoryText = styled.p`
-  font-size: 1.3rem;
+  font-size: 1.3vw;
   margin-top: 18px;
   text-align: center;
 `;

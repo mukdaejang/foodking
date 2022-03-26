@@ -18,6 +18,7 @@ const RestaurantImgBox = styled.div`
   width: 100%;
   padding-top: calc(100% / 3 * 2);
   position: relative;
+  box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 `;
 
 const RestaurantImg = styled.img`
