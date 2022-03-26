@@ -38,11 +38,11 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   return (
     <RestaurantItemLi>
       <RestaurantItem>
-        <RestaurantImg to="/">
+        <RestaurantImg to={`/restaurants/${restaurant.id}`}>
           <img src={food} alt="food" />
         </RestaurantImg>
         <RestaurantInfo>
-          <Link to="/">
+          <Link to={`/restaurants/${restaurant.id}`}>
             <RestaurantTitle>
               {restaurant.name}
               <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>

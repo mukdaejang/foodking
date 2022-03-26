@@ -11,9 +11,8 @@ import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 
-const createCollection = <T = DocumentData>(collectionName: string) => {
-  return collection(db, collectionName) as CollectionReference<T>;
-};
+const createCollection = <T = DocumentData>(collectionName: string) =>
+  collection(db, collectionName) as CollectionReference<T>;
 
 const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
