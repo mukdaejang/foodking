@@ -11,16 +11,28 @@ interface restaurantChecker {
   title: string;
 }
 
+export interface addressType {
+  city: string;
+  district: string;
+  detail: string;
+}
+
 export interface infoType {
   id: string;
-  address: string;
-  category: string;
+  address: addressType;
   name: string;
+  phone: string;
+  category: string;
+  time: string[];
+  breakTime: string;
+  menu: string[];
   score: number;
+  description: string;
+  images: string[];
 }
 
 const Restaurants = ({ title }: restaurantChecker) => {
-  const [restaurants, setRestaurants] = useState<Array<infoType>>([]);
+  const [restaurants, setRestaurants] = useState<Array<any>>([]);
   const restaurantsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {

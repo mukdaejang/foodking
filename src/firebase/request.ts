@@ -61,7 +61,20 @@ export const getTopScorePostDocs = async (num: number, category: string) => {
     where(
       'category',
       'in',
-      category === '술집' ? ['주점'] : ['일식', '한식', '양식', '카페', '분식'],
+      category === '술집'
+        ? ['주점', '이자카야', '호프', '칵테일']
+        : [
+            '일식',
+            '한식',
+            '양식',
+            '카페',
+            '분식',
+            '베이커리',
+            '브런치',
+            '스테이크',
+            '베트남',
+            '남미',
+          ],
     ),
     orderBy('score', 'desc'),
     limit(num),
@@ -174,6 +187,7 @@ export const postRestaurantsDocs = async ({
   menu,
   score,
   description,
+  images,
 }: PostsOther) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     address,
@@ -185,6 +199,7 @@ export const postRestaurantsDocs = async ({
     menu,
     score,
     description,
+    images,
   });
   console.log('Document written with ID: ', docRef.id);
 };

@@ -25,6 +25,7 @@ import {
   postRestaurantsDocs,
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
+import { restaurants } from './obj';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
@@ -92,38 +93,20 @@ const ReviewWrite = () => {
     URL.revokeObjectURL(fileName);
   };
 
-  const restaurants = [
-    {
-      address: { city: '', district: '', detail: '' },
-      name: '까스까스',
-      phone: '',
-      category: '일식',
-      time: [],
-      breakTime: '',
-      menu: {},
-      score: 4.0,
-      description: '',
-    },
-  ];
-
   const craeteReview = async () => {
     // 현재 시간
     const today = new Date();
     const date = `${today.getFullYear()}-${
       today.getMonth() + 1
     }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-
     // 이미지
     const images = await Promise.all(
       fileImage.map(async (file) => await postImage(file)),
     );
-
     // text
     const text = textRef.current?.value || '';
-
     // 점수
     const score = +(selectScore || 0);
-
     // firebase insert
     await postReviewDocs({
       // 현재 포스트의 아이디를 넣어주자
@@ -136,8 +119,8 @@ const ReviewWrite = () => {
     });
 
     // 데이터 집어넣는 부분
-    // restaurants.forEach(async (obj) => {
-    //   await postRestaurantsDocs(obj);
+    // restaurants.forEach(async (obj: any) => {
+    //   await postRestaurantsDocs({ ...obj, images: [...images] });
     // });
   };
 
