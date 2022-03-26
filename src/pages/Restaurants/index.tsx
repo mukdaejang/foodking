@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
+
 import { css } from '@emotion/react';
 
 import { SurroundPopluars, Reviews, RestaurantInfo } from '@/components';
@@ -9,6 +13,15 @@ const imageContainer = css`
 `;
 
 const Restaurants = () => {
+  const dispatch = useAppDispatch();
+  const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
+
+  useEffect(() => {
+    if (isOverlayModalOpen) {
+      dispatch(modalActions.handleOverlayModal());
+    }
+  }, [dispatch, isOverlayModalOpen]);
+
   const images = Array(5)
     .fill(null)
     .map((_, i) => ({
@@ -19,12 +32,12 @@ const Restaurants = () => {
 
   return (
     <div>
-      {/* <div css={imageContainer}>
+      <div css={imageContainer}>
         <Images images={images} size="big" />
-      </div> */}
-      {/* <SurroundPopluars />
-      <Reviews /> */}
+      </div>
       <RestaurantInfo />
+      <Reviews />
+      <SurroundPopluars />
     </div>
   );
 };

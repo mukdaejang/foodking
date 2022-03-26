@@ -14,7 +14,17 @@ const RestaurantLink = styled(Link)`
   text-decoration: none;
 `;
 
+const RestaurantImgBox = styled.div`
+  width: 100%;
+  padding-top: calc(100% / 3 * 2);
+  position: relative;
+  box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+`;
+
 const RestaurantImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -47,4 +57,5 @@ export {
   RestaurantName,
   RestaurantScore,
   RestaurantSubInfo,
+  RestaurantImgBox,
 };

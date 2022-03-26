@@ -21,9 +21,10 @@ export interface PostsOther {
   category: string;
   time: string[];
   breakTime: string;
-  menu: [];
+  menu: string[];
   score: number;
   description: string;
+  images: string[];
 }
 
 export interface Users {
