@@ -29,7 +29,7 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
   return (
     <CategoryItemLi>
       <CategoryLink
-        to={`./bestRestaurants/${categoryData.title}`}
+        to={`./bestRestaurants/${categoryData.link}`}
         state={categoryData}
       >
         <figure>

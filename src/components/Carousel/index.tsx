@@ -19,6 +19,7 @@ export interface categoryDataType {
   id: string;
   description: string;
   list: string[];
+  link: string;
 }
 
 const Carousel = ({ title }: CarouselChecker) => {

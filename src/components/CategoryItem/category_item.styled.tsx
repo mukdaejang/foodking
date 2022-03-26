@@ -43,12 +43,12 @@ const CategoryInfo = styled.figcaption`
 `;
 const CategoryTitle = styled.h3`
   white-space: nowrap;
-  font-size: 2.2vw;
+  font-size: 1.7vw;
   /* font-size: 1.8rem; */
   text-align: center;
 `;
 const CategoryText = styled.p`
-  font-size: 1.3vw;
+  font-size: 1.1vw;
   margin-top: 18px;
   text-align: center;
 `;
