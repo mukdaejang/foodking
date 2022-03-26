@@ -6,7 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, PostsOther, Reviews } from './type';
+import { Posts, PostsOther, FoodLists, Users, Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -52,6 +52,15 @@ export const getBestPostListDocs = async (posts: string[]) => {
   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
 
   return postData;
+};
+
+export const getPostTitleDocs = async (posts: string[]) => {
+  const q = query(postsCol, where(documentId(), 'in', posts), limit(2));
+  const postDocs = await getDocs(q);
+  const fileData = postDocs.docs.map((x: any) => x.data().images[0]);
+  console.log(fileData);
+
+  return fileData;
 };
 
 export const getTopScorePostDocs = async (num: number, category: string) => {
