@@ -90,7 +90,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
+    <section css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
       <SearchBarField>
         <div css={SearchBarContents}>
           <form onSubmit={onSubmit}>
@@ -134,7 +134,7 @@ const SearchBox = () => {
           {isSearchBackModalOpen && <SearchModal />}
         </div>
       </SearchBarField>
-    </div>
+    </section>
   );
 };
 
