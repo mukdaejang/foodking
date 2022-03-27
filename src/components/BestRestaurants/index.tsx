@@ -14,10 +14,7 @@ import {
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { categoryDataType } from '@/components/Carousel';
-import {
-  getBestPostListDocs,
-  getBestRestaurantsIdDocs,
-} from '@/firebase/request';
+import { getPostListDocs, getBestRestaurantsIdDocs } from '@/firebase/request';
 
 export interface BestRestaurantType {
   id: string;
@@ -43,7 +40,7 @@ const BestRestaurants = () => {
   useEffect(() => {
     getBestRestaurantsIdDocs(category).then((res: any) => {
       setCategoryData(res[0]);
-      getBestPostListDocs(res[0].list).then((res: any) => {
+      getPostListDocs(res[0].list).then((res: any) => {
         setPostList(res);
       });
     });
@@ -53,10 +50,10 @@ const BestRestaurants = () => {
     <>
       <GrayContainer>
         <ContainerTitle>
-          {categoryData ? categoryData.title : '맛집 베스트'}
+          {categoryData ? categoryData.title : ''}
         </ContainerTitle>
         <ContainerText>
-          {categoryData ? categoryData.description : '맛집 베스트'}
+          {categoryData ? categoryData.description : ''}
         </ContainerText>
       </GrayContainer>
       <SortMiddel70>
