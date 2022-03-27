@@ -94,9 +94,7 @@ const RestaurantInfo = () => {
       <Descriptions>
         <dl>
           <dt>주소</dt>
-          <dd>
-            <span>{post?.address}</span>
-          </dd>
+          <dd>{/* <span>{post?.address}</span> */}</dd>
         </dl>
         <dl>
           <dt>전화번호</dt>
