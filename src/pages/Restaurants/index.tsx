@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
@@ -13,8 +14,20 @@ const imageContainer = css`
 `;
 
 const Restaurants = () => {
+  const postId = useParams().postId;
   const dispatch = useAppDispatch();
   const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
+
+  useEffect(() => {
+    let watchedArray: any = localStorage.getItem('watched');
+
+    watchedArray = watchedArray === null ? [] : JSON.parse(watchedArray);
+    watchedArray.push(postId);
+    watchedArray = new Set(watchedArray);
+    watchedArray = [...watchedArray];
+
+    localStorage.setItem('watched', JSON.stringify(watchedArray));
+  }, [postId]);
 
   useEffect(() => {
     if (isOverlayModalOpen) {
