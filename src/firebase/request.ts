@@ -46,7 +46,7 @@ export const getFoodListDocs = async () => {
   return arrFoodListData;
 };
 
-export const getBestPostListDocs = async (posts: string[]) => {
+export const getPostListDocs = async (posts: string[]) => {
   const q = query(postsCol, where(documentId(), 'in', posts));
   const postDocs = await getDocs(q);
   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
