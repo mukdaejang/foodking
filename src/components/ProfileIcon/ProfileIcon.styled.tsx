@@ -86,7 +86,11 @@ export const ModalContainer = styled.div<modalContainerProps>`
               align-items: center;
               h3 {
                 line-height: 22px;
-                font-size: 16px;
+                font-size: 15px;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 color: black;
               }
 
