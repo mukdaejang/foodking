@@ -1,0 +1,61 @@
+import { css } from '@emotion/react';
+
+// SearchModal
+
+export const OpenNavBox = css`
+  position: absolute;
+  left: 90px;
+
+  width: 70%;
+  z-index: 1000;
+  background: white;
+  color: black;
+  margin: 0 auto;
+
+  .keyword-suggester img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+  }
+`;
+
+export const UlContainer = css`
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  li {
+    width: 100%;
+    padding: 25px 30px;
+    cursor: pointer;
+    box-sizing: content-box;
+  }
+  li:hover {
+    opacity: 0.6;
+  }
+`;
+
+interface searchKeywordProps {
+  isSelectedMenu: string;
+  key: string;
+}
+
+export const SelectedMenu = css`
+  color: #ff7100;
+  border-bottom: 3px solid #ff7100;
+`;
+
+export const None = css`
+  display: none;
+`;
+
+// export const List = styled.li<searchKeywordProps>(({ isSelectedMenu, key }) =>
+//   isSelectedMenu === key
+//     ? {
+//         color: '#ff7100',
+//         borderBottom: '3px solid #ff7100',
+//       }
+//     : { color: 'inherit', borderBottom: '3px solid inherit' },
+// );
