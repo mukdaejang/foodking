@@ -18,6 +18,8 @@ import theme from '@/styles/theme';
 import { BestRestaurantType } from '@/components/BestRestaurants';
 import { useAppSelector } from '@/store/hooks';
 import { getImageDocs } from '@/firebase/request';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface BestRestaurantItemType {
   restaurant: BestRestaurantType;
@@ -26,6 +28,7 @@ interface BestRestaurantItemType {
 const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   const { isUserLogin } = useAppSelector(({ user }) => user);
   const [starState, setStarState] = useState(false);
+  const [loadState, setLoadState] = useState<boolean>(false);
 
   const changeStar = (e: MouseEvent) => {
     if (isUserLogin) {
@@ -38,56 +41,86 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   const [imageSrc, setImageSrc] = useState<string>();
 
   useEffect(() => {
-    getImageDocs(restaurant.images[0]).then((res: any) => setImageSrc(res));
+    getImageDocs(restaurant.images[0])
+      .then((res: any) => setImageSrc(res))
+      .then((res) => {
+        setTimeout(() => {
+          setLoadState(true);
+        }, 500);
+      });
   }, []);
 
-  return (
-    <RestaurantItemLi>
-      <RestaurantItem>
-        <RestaurantImg to={`/restaurants/${restaurant.id}`}>
-          <img src={imageSrc} alt={imageSrc} />
-        </RestaurantImg>
-        <RestaurantInfo>
-          <Link to={`/restaurants/${restaurant.id}`}>
-            <RestaurantTitle>
-              {restaurant.name}
-              <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>
-            </RestaurantTitle>
-          </Link>
-          <IconButton onClick={changeStar} message="가고싶다">
-            <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
-          </IconButton>
-          <address>
-            {`${restaurant.address.city} ${restaurant.address.district} ${restaurant.address.detail}`}
-          </address>
-          <RestaurantSubInfo>
-            <small>영업시간</small>
-            <small>{restaurant.time} </small>
-          </RestaurantSubInfo>
-          <RestaurantSubInfo>
-            <small>대표메뉴</small>
-            <RestaurantMenu>
-              <p>
-                <span>{restaurant.menu[0]}</span>
-                <span>{restaurant.menu[1]}</span>
-              </p>
-              <p>
-                <span>{restaurant.menu[2]}</span>
-                <span>{restaurant.menu[3]}</span>
-              </p>
-              <p>
-                <span>{restaurant.menu[4]}</span>
-                <span>{restaurant.menu[5]}</span>
-              </p>
-            </RestaurantMenu>
-          </RestaurantSubInfo>
-          <Link to="/">
-            <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
-          </Link>
-        </RestaurantInfo>
-      </RestaurantItem>
-    </RestaurantItemLi>
-  );
+  if (loadState) {
+    return (
+      <RestaurantItemLi>
+        <RestaurantItem>
+          <RestaurantImg to={`/restaurants/${restaurant.id}`}>
+            <img src={imageSrc} alt={imageSrc} />
+          </RestaurantImg>
+          <RestaurantInfo>
+            <Link to={`/restaurants/${restaurant.id}`}>
+              <RestaurantTitle>
+                {restaurant.name}
+                <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>
+              </RestaurantTitle>
+            </Link>
+            <IconButton onClick={changeStar} message="가고싶다">
+              <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
+            </IconButton>
+            <address>
+              {`${restaurant.address.city} ${restaurant.address.district} ${restaurant.address.detail}`}
+            </address>
+            <RestaurantSubInfo>
+              <small>영업시간</small>
+              <small>{restaurant.time} </small>
+            </RestaurantSubInfo>
+            <RestaurantSubInfo>
+              <small>대표메뉴</small>
+              <RestaurantMenu>
+                <p>
+                  <span>{restaurant.menu[0]}</span>
+                  <span>{restaurant.menu[1]}</span>
+                </p>
+                <p>
+                  <span>{restaurant.menu[2]}</span>
+                  <span>{restaurant.menu[3]}</span>
+                </p>
+                <p>
+                  <span>{restaurant.menu[4]}</span>
+                  <span>{restaurant.menu[5]}</span>
+                </p>
+              </RestaurantMenu>
+            </RestaurantSubInfo>
+            <Link to="/">
+              <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
+            </Link>
+          </RestaurantInfo>
+        </RestaurantItem>
+      </RestaurantItemLi>
+    );
+  } else {
+    return (
+      <RestaurantItemLi>
+        <RestaurantItem>
+          <RestaurantImg to={`/restaurants/${restaurant.id}`}>
+            <Skeleton width={'100%'} height={'100%'} />
+          </RestaurantImg>
+          <RestaurantInfo>
+            <Link to={`/restaurants/${restaurant.id}`}>
+              <Skeleton width={'60%'} />
+            </Link>
+            <IconButton onClick={changeStar} message="">
+              <Skeleton width={'100%'} height={'100%'} />
+            </IconButton>
+            <address>
+              <Skeleton width={'70%'} height={'100%'} />
+            </address>
+            <Skeleton width={'100%'} count={5} />
+          </RestaurantInfo>
+        </RestaurantItem>
+      </RestaurantItemLi>
+    );
+  }
 };
 
 BestRestaurantItem.defaultProps = {
