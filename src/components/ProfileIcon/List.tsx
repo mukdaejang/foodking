@@ -1,13 +1,17 @@
-import { useState, MouseEvent } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
+import Modal from '@/components/Modal';
+import SocialLogin from '@/components/Modal/SocialLogin';
 import { Star } from '@/components/IconButton';
-import theme from '@/styles/theme';
-import { useAppSelector } from '@/store/hooks';
 
+import theme from '@/styles/theme';
 import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 
 export interface ListProps {
   id: string;
@@ -15,7 +19,8 @@ export interface ListProps {
   address: string;
   category: string;
   score: number;
-  deleteOneRecentlyWatched: (arg0: string) => void;
+  isLiFirst: boolean;
+  deleteOnePost: (arg0: string) => void;
 }
 
 const List = ({
@@ -24,24 +29,50 @@ const List = ({
   address,
   category,
   score,
-  deleteOneRecentlyWatched,
+  isLiFirst,
+  deleteOnePost,
 }: ListProps) => {
+  const dispatch = useAppDispatch();
   const { isUserLogin } = useAppSelector(({ user }) => user);
-  const [starState, setStarState] = useState(false);
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+
+  const [starState, setStarState] = useState(isLiFirst ? false : true);
+
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
+  };
 
   const changeStar = (e: MouseEvent) => {
     if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      if (!starState) {
+        favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+        favoriteArray.push(id);
+        favoriteArray = new Set(favoriteArray);
+      } else {
+        favoriteArray = new Set(
+          JSON.parse(favoriteArray).filter((item: any) => item !== id),
+        );
+      }
+      favoriteArray = [...favoriteArray];
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+
       setStarState(!starState);
     } else {
-      alert('로그인한 사용자만 사용할 수 있는 기능입니다.');
+      handleSocialModal();
     }
   };
 
+  const setLocalStorage = (isLiFirst: boolean) => {
+    const storageName = isLiFirst ? 'watched' : 'favorite';
+    let arr: any = localStorage.getItem(storageName);
+    arr = JSON.parse(arr);
+    const newArr = arr.filter((item: string) => item !== id);
+    localStorage.setItem(storageName, JSON.stringify(newArr));
+  };
+
   const deleteRecentPosts = () => {
-    let watchedArray: any = localStorage.getItem('watched');
-    watchedArray = JSON.parse(watchedArray);
-    const newWatchedArr = watchedArray.filter((item: string) => item !== id);
-    localStorage.setItem('watched', JSON.stringify(newWatchedArr));
+    setLocalStorage(isLiFirst);
   };
 
   return (
@@ -57,21 +88,39 @@ const List = ({
           </Link>
           <span>{`${category}`}</span>
         </div>
-        <button>
-          <Star
-            fill={theme.colors[starState ? 'orange' : 'gray1000']}
-            onClick={changeStar}
-          />
-          <FontAwesomeIcon
-            className="xIcon"
-            icon={faXmark}
-            onClick={() => {
-              deleteRecentPosts();
-              deleteOneRecentlyWatched(id);
-            }}
-          />
-        </button>
+        {isLiFirst ? (
+          <button>
+            <Star
+              fill={theme.colors[starState ? 'orange' : 'gray1000']}
+              onClick={changeStar}
+            />
+
+            <FontAwesomeIcon
+              className="xIcon"
+              icon={faXmark}
+              onClick={() => {
+                deleteRecentPosts();
+                deleteOnePost(id);
+              }}
+            />
+          </button>
+        ) : (
+          <button>
+            <Star
+              fill={theme.colors['orange']}
+              onClick={(e) => {
+                changeStar(e);
+                deleteOnePost(id);
+              }}
+            />
+          </button>
+        )}
       </section>
+      {isSocialModalOpen && (
+        <Modal closePortal={handleSocialModal}>
+          <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+        </Modal>
+      )}
     </li>
   );
 };

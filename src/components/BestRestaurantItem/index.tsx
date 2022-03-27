@@ -1,5 +1,5 @@
 import { useState, MouseEvent, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   RestaurantItemLi,
   RestaurantItem,
@@ -41,6 +41,21 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
 
   const changeStar = (e: MouseEvent) => {
     if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      if (!starState) {
+        favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+        favoriteArray.push(restaurant.id);
+        favoriteArray = new Set(favoriteArray);
+      } else {
+        favoriteArray = new Set(
+          JSON.parse(favoriteArray).filter(
+            (item: any) => item !== restaurant.id,
+          ),
+        );
+      }
+      favoriteArray = [...favoriteArray];
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+
       setStarState(!starState);
     } else {
       handleSocialModal();

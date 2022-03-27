@@ -52,6 +52,14 @@ const ProfileIcon = ({
     getPostListDocs(watchedArray).then((res) => {
       setRecentlyWatchedPosts(res.reverse());
     });
+
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      favoriteArray = JSON.parse(favoriteArray);
+      getPostListDocs(favoriteArray).then((res) => {
+        setFavoritePosts(res.reverse());
+      });
+    }
   }, []);
 
   const handleSocialModal = () => {
@@ -76,9 +84,20 @@ const ProfileIcon = ({
     setRecentlyWatchedPosts(arr);
   };
 
+  const deleteOneFavorite = (postId: string) => {
+    let arr = favoritePosts;
+    arr = arr.filter((item) => item.id !== postId);
+    setFavoritePosts(arr);
+  };
+
   const deleteBtnClick = () => {
-    localStorage.removeItem('watched');
-    setRecentlyWatchedPosts([]);
+    if (isLiFirst) {
+      localStorage.removeItem('watched');
+      setRecentlyWatchedPosts([]);
+    } else {
+      localStorage.removeItem('favorite');
+      setFavoritePosts([]);
+    }
   };
 
   const logout = () => {
@@ -92,8 +111,6 @@ const ProfileIcon = ({
         alert('로그아웃에 실패하였습니다.');
       });
   };
-
-  console.log(recentlyWatchedPosts);
 
   return (
     <ModalContainer scroll={scroll}>
@@ -116,12 +133,10 @@ const ProfileIcon = ({
         <div>
           <div>
             <button onClick={onClickToggleModal}>창 닫기</button>
-            {isLiFirst && (
-              <button onClick={deleteBtnClick}>
-                <FontAwesomeIcon icon={faXmark} />
-                <span>모두 지우기</span>
-              </button>
-            )}
+            <button onClick={deleteBtnClick}>
+              <FontAwesomeIcon icon={faXmark} />
+              <span>모두 지우기</span>
+            </button>
           </div>
           <ul>
             {isLiFirst ? (
@@ -136,7 +151,8 @@ const ProfileIcon = ({
                         address={address}
                         category={category}
                         score={score}
-                        deleteOneRecentlyWatched={deleteOneRecentlyWathced}
+                        isLiFirst={isLiFirst}
+                        deleteOnePost={deleteOneRecentlyWathced}
                       ></List>
                     );
                   },
@@ -158,7 +174,8 @@ const ProfileIcon = ({
                       address={address}
                       category={category}
                       score={score}
-                      deleteOneRecentlyWatched={deleteOneRecentlyWathced}
+                      isLiFirst={isLiFirst}
+                      deleteOnePost={deleteOneFavorite}
                     ></List>
                   );
                 },
