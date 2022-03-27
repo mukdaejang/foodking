@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Modal from '@/components/Modal';
-import List from './List';
-import SocialLogin from '../Modal/SocialLogin';
+import List from '@/components/ProfileIcon/List';
+import SocialLogin from '@/components/Modal/SocialLogin';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -9,8 +10,10 @@ import {
   isSelected,
   isNotSelected,
 } from './ProfileIcon.styled';
+
 import { getPostListDocs } from '@/firebase/request';
 import { getAuth, signOut } from 'firebase/auth';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
@@ -35,6 +38,7 @@ const ProfileIcon = ({
 }: ProfileIconProps) => {
   const dispatch = useAppDispatch();
   const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
 
   const [isLiFirst, setisLiFirst] = useState(true);
   const [recentlyWatchedPosts, setRecentlyWatchedPosts] = useState<
@@ -55,7 +59,11 @@ const ProfileIcon = ({
   };
 
   const favoriteClick = () => {
-    setisLiFirst(false);
+    if (isUserLogin) {
+      setisLiFirst(false);
+    } else {
+      handleSocialModal();
+    }
   };
 
   const recentlyWatchedClick = () => {

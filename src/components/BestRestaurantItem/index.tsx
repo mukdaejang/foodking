@@ -12,26 +12,38 @@ import {
   RestaurantMore,
 } from './bestRestaurantItem.styled';
 
+import theme from '@/styles/theme';
 import { IconButton } from '@/components';
 import { Star } from '@/components/IconButton';
-import theme from '@/styles/theme';
 import { BestRestaurantType } from '@/components/BestRestaurants';
-import { useAppSelector } from '@/store/hooks';
+import Modal from '@/components/Modal';
+import SocialLogin from '@/components/Modal/SocialLogin';
+
 import { getImageDocs } from '@/firebase/request';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
 
 interface BestRestaurantItemType {
   restaurant: BestRestaurantType;
 }
 
 const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
+  const dispatch = useAppDispatch();
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
   const { isUserLogin } = useAppSelector(({ user }) => user);
+
   const [starState, setStarState] = useState(false);
+
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
+  };
 
   const changeStar = (e: MouseEvent) => {
     if (isUserLogin) {
       setStarState(!starState);
     } else {
-      alert('로그인한 사용자만 사용할 수 있는 기능입니다.');
+      handleSocialModal();
     }
   };
 
@@ -85,6 +97,11 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
             <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
           </Link>
         </RestaurantInfo>
+        {isSocialModalOpen && (
+          <Modal closePortal={handleSocialModal}>
+            <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+          </Modal>
+        )}
       </RestaurantItem>
     </RestaurantItemLi>
   );
