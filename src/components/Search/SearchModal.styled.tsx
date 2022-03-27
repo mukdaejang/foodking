@@ -28,9 +28,13 @@ export const UlContainer = css`
 
   li {
     width: 100%;
-    padding: 25px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    box-sizing: content-box;
+    span {
+      padding: 15px 30px;
+    }
   }
   li:hover {
     opacity: 0.6;

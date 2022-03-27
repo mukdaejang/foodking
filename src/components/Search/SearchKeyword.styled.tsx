@@ -5,7 +5,7 @@ export const keywordStyle = css`
   display: flex;
   align-items: center;
   width: 100%;
-  font-size: 25px;
+  font-size: 20px;
   img {
     opacity: 0.6;
     padding: 10px;
