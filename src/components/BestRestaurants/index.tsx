@@ -53,10 +53,10 @@ const BestRestaurants = () => {
     <>
       <GrayContainer>
         <ContainerTitle>
-          {categoryData ? categoryData.title : '맛집 베스트'}
+          {categoryData ? categoryData.title : ''}
         </ContainerTitle>
         <ContainerText>
-          {categoryData ? categoryData.description : '맛집 베스트'}
+          {categoryData ? categoryData.description : ''}
         </ContainerText>
       </GrayContainer>
       <SortMiddel70>
