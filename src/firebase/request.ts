@@ -133,20 +133,11 @@ export const getReviewDocs = async () => {
 export const getImageDocs = async (fileName: string) => {
   const imagesRef = ref(storage, fileName);
 
-  return await getDownloadURL(imagesRef)
-    .then((url) => {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = (event) => {
-        const blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-      return url;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    return await getDownloadURL(imagesRef);
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
 };
 
 export const postReviewDocs = async ({
