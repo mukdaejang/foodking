@@ -1,33 +1,71 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Restaurants, Carousel, Banner } from '@/components';
-import { useAppSelector } from '@/store/hooks';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { SortMiddel95 } from '@/components/style';
 
 /** firebase */
 import { getKeywordData } from '@/firebase/api/searchkeyword';
-import { PostsOther } from '@/firebase/type';
+import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
+
+const fetchKeywordData = async (keyword: string) => {
+  try {
+    const result = await getKeywordData(keyword);
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 const Main = () => {
-  const { inputSearchKeyword } = useAppSelector(
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(({ auth }) => auth.status);
+  const { inputSearchKeyword, suggest, popular } = useAppSelector(
     ({ searchkeyword }) => searchkeyword,
   );
-  const auth = useAppSelector(({ auth }) => auth.status);
-  console.log(auth);
 
-  console.log(inputSearchKeyword);
+  const [keywordData, setKeywordData] = useState();
 
-  // const callbackFetch = useCallback(async () => {
-  //   const user = sessionStorage.getItem('id');
-  //   const result = await fetchGetData();
+  // const handleSuggestKeywordFunc = (
+  //   id: string,
+  //   keyword1: string,
+  //   keyword2: string,
+  //   keyword3: string,
+  //   keyword4: string,
+  // ) => {
+  //   dispatch(
+  //     keywordSuggestActions.handleSuggestKeyword([
+  //       keyword1,
+  //       keyword2,
+  //       keyword3,
+  //       keyword4,
+  //     ]),
+  //   );
 
-  //   if (result) {
-  //     console.log(result.tikzs);
-  //     setData(result.tikzs.map((x) => Object.assign({}, x, { key: x.id })));
-  //     setTotal(result.total);
-  //     setStatus(null);
-  //     setOrderKindStatus(false);
-  //     setOrderWhatStatus(false);
-  //   }
-  // }, [fetchGetData, pageSize, currentPage, orderWhat, orderKind]);
+  //   const handlePopularKeyword = (
+  //     id: string,
+  //     keyword1: string,
+  //     keyword2: string,
+  //     keyword3: string,
+  //     keyword4: string,
+  //   ) => {
+  //     dispatch(
+  //       keywordSuggestActions.handleSuggestKeyword([
+  //         keyword1,
+  //         keyword2,
+  //         keyword3,
+  //         keyword4,
+  //       ]),
+  //     );
+  //   };
+
+  // useEffect(() => {
+  //   const fetchKeywordData = async () => {
+  //     const result = await getKeywordData(inputSearchKeyword);
+  //     // handleSuggestKeywordFunc(result[0].);
+  //   };
+  //   fetchKeywordData();
+  // }, [inputSearchKeyword]);
 
   return (
     <div>

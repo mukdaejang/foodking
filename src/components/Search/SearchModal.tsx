@@ -48,14 +48,10 @@ const SearchModal = () => {
     <nav css={isSearchBackModalOpen ? OpenNavBox : None}>
       <ul css={UlContainer}>
         {searchMenuKeywords.map((keyword) => (
-          <li
-            onClick={onClick}
-            onKeyUp={onKeyUp}
-            css={keyword === isSelectedMenu ? SelectedMenu : ''}
-            key={keyword}
-            tabIndex={0}
-          >
-            {keyword}
+          <li onClick={onClick} onKeyUp={onKeyUp} key={keyword} tabIndex={0}>
+            <span css={keyword === isSelectedMenu ? SelectedMenu : ''}>
+              {keyword}
+            </span>
           </li>
         ))}
       </ul>

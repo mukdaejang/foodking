@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import theme from '@/styles/theme';
 
 // SearchModal
 
@@ -11,6 +12,7 @@ export const OpenNavBox = css`
   background: white;
   color: black;
   margin: 0 auto;
+  border-radius: 0 0 10px 10px;
 
   .keyword-suggester img {
     width: 20px;
@@ -28,9 +30,14 @@ export const UlContainer = css`
 
   li {
     width: 100%;
-    padding: 25px 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    box-sizing: content-box;
+    span {
+      padding: 15px 30px;
+    }
   }
   li:hover {
     opacity: 0.6;
