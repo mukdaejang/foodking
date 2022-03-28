@@ -7,6 +7,10 @@ interface Status {
 }
 
 export const TitleHeader = styled.header<{ status: Status }>`
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
+
   div.title {
     display: flex;
     justify-content: space-between;
@@ -56,10 +60,6 @@ export const TitleHeader = styled.header<{ status: Status }>`
       }
     }
   }
-
-  padding-bottom: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
 `;
 
 export const Descriptions = styled.div`

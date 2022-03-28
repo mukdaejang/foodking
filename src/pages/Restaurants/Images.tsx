@@ -6,7 +6,7 @@ const ImagesContainer = styled.ul<{ size: string }>`
 
   li {
     width: ${({ size }) => (size === 'small' ? '8rem' : '20%')};
-    height: ${({ size }) => (size === 'small' ? 8 : 23.5)}rem;
+    height: ${({ size }) => (size === 'small' ? 8 : 26.5)}rem;
     margin-right: ${({ size }) => (size === 'small' ? '0.6' : '0.4')}rem;
 
     &:last-of-type {

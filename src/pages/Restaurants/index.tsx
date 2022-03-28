@@ -1,22 +1,15 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { modalActions } from '@/store/modal/modal-slice';
 
-import { css } from '@emotion/react';
+import { imageContainer } from './Restaurants.styled';
 
 import { SurroundPopluars, Reviews, RestaurantInfo } from '@/components';
 import Images from './Images';
+import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 import image from '@/assets/img/food.jpg';
-
-const imageContainer = css`
-  margin: 0 0.4rem;
-`;
 
 const Restaurants = () => {
   const postId = useParams().postId;
-  const dispatch = useAppDispatch();
-  const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
 
   useEffect(() => {
     let watchedArray: any = localStorage.getItem('watched');
@@ -28,12 +21,6 @@ const Restaurants = () => {
 
     localStorage.setItem('watched', JSON.stringify(watchedArray));
   }, [postId]);
-
-  // useEffect(() => {
-  //   if (isOverlayModalOpen) {
-  //     dispatch(modalActions.handleOverlayModal());
-  //   }
-  // }, [dispatch, isOverlayModalOpen]);
 
   const images = Array(5)
     .fill(null)
@@ -48,7 +35,12 @@ const Restaurants = () => {
       <div css={imageContainer}>
         <Images images={images} size="big" />
       </div>
-      <RestaurantInfo />
+      <div css={mainContent}>
+        <div className="main-content">
+          <RestaurantInfo />
+        </div>
+        <aside>11</aside>
+      </div>
       <Reviews />
       <SurroundPopluars />
     </div>
