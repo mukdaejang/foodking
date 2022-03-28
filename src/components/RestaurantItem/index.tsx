@@ -1,4 +1,3 @@
-import food from '@/assets/food.jpeg';
 import {
   RestaurantItem,
   RestaurantLink,
@@ -37,7 +36,7 @@ const Restaurant = ({ info }: RestaurantType) => {
   if (loadState) {
     return (
       <RestaurantItem>
-        <RestaurantLink to="/">
+        <RestaurantLink to={`/restaurants/${info.id}`}>
           <figure>
             <RestaurantImgBox>
               <RestaurantImg src={`${imageSrc}`} alt="food" />
