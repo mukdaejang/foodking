@@ -30,12 +30,17 @@ const List = ({
 }: ListProps) => {
   const dispatch = useAppDispatch();
   const { isUserLogin } = useAppSelector(({ user }) => user);
-  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isOverlayModalOpen, isSocialModalOpen } = useAppSelector(
+    ({ modal }) => modal,
+  );
 
   const [starState, setStarState] = useState(isLiFirst ? false : true);
 
   const handleSocialModal = () => {
     dispatch(modalActions.handleSocialModal());
+  };
+  const handleOverlayModal = () => {
+    dispatch(modalActions.handleOverlayModal());
   };
 
   const changeStar = (e: MouseEvent) => {
@@ -74,11 +79,11 @@ const List = ({
   return (
     <li>
       <section>
-        <Link to={`/restaurants/${id}`}>
+        <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>
           <img src={foodImage} alt="food" />
         </Link>
         <div>
-          <Link to={`/restaurants/${id}`}>
+          <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>
             <h3>{name}</h3>
             <span>{score}</span>
           </Link>
