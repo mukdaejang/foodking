@@ -119,6 +119,7 @@ const Header = () => {
         <ProfileIcon
           onClickToggleModal={onClickToggleModal}
           isLogin={isUserLogin}
+          isMainPage={isMainPage}
           scroll={scrollPosition}
         ></ProfileIcon>
       )}
