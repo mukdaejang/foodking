@@ -9,14 +9,14 @@ import {
   RestaurantImgBox,
   RestaurantSkeleton,
 } from './restaurant.styled';
-import { infoType } from '@/components/Restaurants';
 import { useState, useEffect } from 'react';
 import { getImageDocs } from '@/firebase/request';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { PostsWithId } from '@/firebase/type';
 
 interface RestaurantType {
-  info: infoType;
+  info: PostsWithId;
 }
 
 const Restaurant = ({ info }: RestaurantType) => {
@@ -24,7 +24,7 @@ const Restaurant = ({ info }: RestaurantType) => {
   const [loadState, setLoadState] = useState<boolean>(false);
 
   useEffect(() => {
-    getImageDocs(info.images[0])
+    getImageDocs(info.images![0])
       .then((res: any) => setImageSrc(res))
       .then((res) => {
         setTimeout(() => {

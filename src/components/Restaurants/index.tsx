@@ -6,29 +6,10 @@ import {
 } from './restaurants.styled';
 import { getTopScorePostDocs } from '@/firebase/request';
 import { useState, useRef, useEffect } from 'react';
+import { PostsWithId } from '@/firebase/type';
 
 interface restaurantChecker {
   title: string;
-}
-
-export interface addressType {
-  city: string;
-  district: string;
-  detail: string;
-}
-
-export interface infoType {
-  id: string;
-  address: addressType;
-  name: string;
-  phone: string;
-  category: string;
-  time: string[];
-  breakTime: string;
-  menu: string[];
-  score: number;
-  description: string;
-  images: string[];
 }
 
 const Restaurants = ({ title }: restaurantChecker) => {
@@ -43,7 +24,7 @@ const Restaurants = ({ title }: restaurantChecker) => {
     <RestaurantsContent>
       <RestaurantsTitle>{`평점이 높은 ${title}`}</RestaurantsTitle>
       <RestaurantsList ref={restaurantsRef}>
-        {restaurants.map((restaurant) => (
+        {restaurants.map((restaurant: PostsWithId) => (
           <Restaurant key={restaurant.id} info={restaurant} />
         ))}
       </RestaurantsList>
