@@ -12,6 +12,7 @@ import {
 } from './ProfileIcon.styled';
 
 import { getPostListDocs } from '@/firebase/request';
+import { PostsWithId } from '@/firebase/type';
 import { getAuth, signOut } from 'firebase/auth';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -20,20 +21,14 @@ import { modalActions } from '@/store/modal/modal-slice';
 interface ProfileIconProps {
   onClickToggleModal: () => void;
   isLogin: boolean;
+  isMainPage: boolean;
   scroll: number;
-}
-
-interface liPostsProps {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  score: number;
 }
 
 const ProfileIcon = ({
   onClickToggleModal,
   isLogin,
+  isMainPage,
   scroll,
 }: ProfileIconProps) => {
   const dispatch = useAppDispatch();
@@ -42,9 +37,9 @@ const ProfileIcon = ({
 
   const [isLiFirst, setisLiFirst] = useState(true);
   const [recentlyWatchedPosts, setRecentlyWatchedPosts] = useState<
-    liPostsProps[]
+    PostsWithId[]
   >([]);
-  const [favoritePosts, setFavoritePosts] = useState<liPostsProps[]>([]);
+  const [favoritePosts, setFavoritePosts] = useState<PostsWithId[]>([]);
 
   useEffect(() => {
     let watchedArray: any = localStorage.getItem('watched');
@@ -113,7 +108,7 @@ const ProfileIcon = ({
   };
 
   return (
-    <ModalContainer scroll={scroll}>
+    <ModalContainer scroll={scroll} isMainPage={isMainPage}>
       <Modal closePortal={onClickToggleModal}></Modal>
       <div>
         <ul>

@@ -23,7 +23,7 @@ const CategoryImgBox = styled.div`
     width: 50%;
     height: 100%;
     object-fit: cover;
-    border: 0.5px solid ${({ theme }) => theme.colors.white};
+    border: 0.5px solid transparent;
     &:last-child {
       left: 50%;
     }

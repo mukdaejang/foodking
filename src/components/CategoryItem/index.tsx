@@ -9,7 +9,7 @@ import {
   CategorySkeleton,
 } from './category_item.styled';
 import { categoryDataType } from '@/components/Carousel';
-import { getImageDocs, getPostTitleDocs } from '@/firebase/request';
+import { getImageDocs, getPostImageTitleDocs } from '@/firebase/request';
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -24,7 +24,7 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
   const [loadState, setLoadState] = useState<boolean>(false);
 
   useEffect(() => {
-    getPostTitleDocs(categoryData.list.slice(0, 2))
+    getPostImageTitleDocs(categoryData.list.slice(0, 2))
       .then((res) => {
         getImageDocs(res[0]).then((res: any) => setImageSrc1(res));
         getImageDocs(res[1]).then((res: any) => setImageSrc2(res));

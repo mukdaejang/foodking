@@ -10,15 +10,11 @@ import foodImage from '@/assets/img/food.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
+import { PostsWithId } from '@/firebase/type';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
-export interface ListProps {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  score: number;
+export interface ListProps extends PostsWithId {
   isLiFirst: boolean;
   deleteOnePost: (arg0: string) => void;
 }
@@ -34,12 +30,17 @@ const List = ({
 }: ListProps) => {
   const dispatch = useAppDispatch();
   const { isUserLogin } = useAppSelector(({ user }) => user);
-  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isOverlayModalOpen, isSocialModalOpen } = useAppSelector(
+    ({ modal }) => modal,
+  );
 
   const [starState, setStarState] = useState(isLiFirst ? false : true);
 
   const handleSocialModal = () => {
     dispatch(modalActions.handleSocialModal());
+  };
+  const handleOverlayModal = () => {
+    dispatch(modalActions.handleOverlayModal());
   };
 
   const changeStar = (e: MouseEvent) => {
@@ -78,15 +79,15 @@ const List = ({
   return (
     <li>
       <section>
-        <Link to={`/restaurants/${id}`}>
+        <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>
           <img src={foodImage} alt="food" />
         </Link>
         <div>
-          <Link to={`/restaurants/${id}`}>
+          <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>
             <h3>{name}</h3>
             <span>{score}</span>
           </Link>
-          <span>{`${category}`}</span>
+          <span>{`${address.district} - ${category}`}</span>
         </div>
         {isLiFirst ? (
           <button>

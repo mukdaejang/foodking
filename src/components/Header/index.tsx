@@ -70,9 +70,9 @@ const Header = () => {
             isScroll={scrollPosition > 200 ? true : false}
             isMain={isMainPage}
           >
-            <a href="/">
+            <Link to="/">
               <img src={logo} alt="먹대장 로고" />
-            </a>
+            </Link>
             <HeaderInput isMain={isMainPage}>
               <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
               <input
@@ -119,6 +119,7 @@ const Header = () => {
         <ProfileIcon
           onClickToggleModal={onClickToggleModal}
           isLogin={isUserLogin}
+          isMainPage={isMainPage}
           scroll={scrollPosition}
         ></ProfileIcon>
       )}
