@@ -24,10 +24,11 @@ export const getPostDocs = async () => {
   return postData;
 };
 
-export const getFoodListDocs = async () => {
+export const getFoodListDocs = async (title: string) => {
   let temp: any = [];
 
-  const foodListDocs = await getDocs(foodListsCol);
+  const q = query(foodListsCol, where('category', '==', title));
+  const foodListDocs = await getDocs(q);
   const foodListData = foodListDocs.docs.map((x) => ({
     ...x.data(),
     id: x.id,
