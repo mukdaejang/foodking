@@ -48,8 +48,5 @@ export interface FoodLists {
 }
 
 export interface Keyword {
-  Keyword1: string;
-  Keyword2: string;
-  Keyword3: string;
-  Keyword4: string;
+  keyword: string[];
 }

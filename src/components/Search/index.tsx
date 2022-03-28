@@ -1,4 +1,3 @@
-import glassSolid from '@/assets/icons/glass-solid.svg';
 import {
   useState,
   useEffect,
@@ -11,6 +10,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
 
+import glassSolid from '@/assets/icons/glass-solid.svg';
 import {
   SearchBar,
   ModalSearchBar,
@@ -41,8 +41,7 @@ const SearchBox = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log(inputValue);
-    console.log();
+    // console.log(inputValue);
     // throttle 걸어서 일정 시간 이후 검색어 가져오기
   }, [inputValue]);
 
@@ -51,13 +50,23 @@ const SearchBox = () => {
   }, [dispatch]);
 
   const KeywordSaveToRedux = (str: string) =>
-    dispatch(keywordSuggestActions.handleKeywordSuggest(str));
+    dispatch(keywordSuggestActions.handleSearchKeyword(str));
+
+  const KeywordSaveToLocalStorage = (keyword: string) => {
+    let recentSearch: any = localStorage.getItem('recentSearch');
+    recentSearch = recentSearch === null ? [] : JSON.parse(recentSearch);
+    if (recentSearch.length > 5) {
+      recentSearch = recentSearch.slice(0, 5);
+    }
+    recentSearch = new Set([keyword, ...recentSearch]);
+    localStorage.setItem('recentSearch', JSON.stringify([...recentSearch]));
+  };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-
     if (inputValue) {
       KeywordSaveToRedux(inputValue);
+      KeywordSaveToLocalStorage(inputValue);
       handleSearchBackModal();
       navigate(`/search/${inputValue}`);
     } else {
