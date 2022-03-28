@@ -29,11 +29,11 @@ const Restaurants = () => {
     localStorage.setItem('watched', JSON.stringify(watchedArray));
   }, [postId]);
 
-  useEffect(() => {
-    if (isOverlayModalOpen) {
-      dispatch(modalActions.handleOverlayModal());
-    }
-  }, [dispatch, isOverlayModalOpen]);
+  // useEffect(() => {
+  //   if (isOverlayModalOpen) {
+  //     dispatch(modalActions.handleOverlayModal());
+  //   }
+  // }, [dispatch, isOverlayModalOpen]);
 
   const images = Array(5)
     .fill(null)
