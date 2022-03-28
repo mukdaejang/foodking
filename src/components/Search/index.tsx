@@ -2,6 +2,7 @@ import glassSolid from '@/assets/icons/glass-solid.svg';
 import {
   useState,
   useEffect,
+  useRef,
   useCallback,
   FormEvent,
   KeyboardEvent,
@@ -9,7 +10,6 @@ import {
 } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
-import Portal from '@/components/Portal';
 
 import {
   SearchBar,
@@ -24,28 +24,40 @@ import {
   None,
 } from './SearchBox.styled';
 
+/** redux */
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
 
 const SearchBox = () => {
   const dispatch = useAppDispatch();
   const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+  const { inputSearchKeyword } = useAppSelector(
+    ({ searchkeyword }) => searchkeyword,
+  );
+
   const [inputValue, setInputValue] = useState<string>('');
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    //fetchData
     console.log(inputValue);
+    console.log();
+    // throttle 걸어서 일정 시간 이후 검색어 가져오기
   }, [inputValue]);
 
   const handleSearchBackModal = useCallback(() => {
     dispatch(modalActions.handleSearchBackModal());
   }, [dispatch]);
 
-  const onSubmit = (e: FormEvent): void => {
+  const KeywordSaveToRedux = (str: string) =>
+    dispatch(keywordSuggestActions.handleKeywordSuggest(str));
+
+  const onSubmit = (e: any) => {
     e.preventDefault();
 
     if (inputValue) {
+      KeywordSaveToRedux(inputValue);
       handleSearchBackModal();
       navigate(`/search/${inputValue}`);
     } else {
@@ -54,32 +66,17 @@ const SearchBox = () => {
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' && !inputValue) {
-      alert('검색어를 입력 해주세요!');
+    if (e.key === 'Escape') {
+      (document.activeElement as HTMLElement).blur();
+      setInputValue('');
+      handleSearchBackModal();
       return;
-    }
-    if (e.key === 'Enter' || e.key === 'Escape') {
-      if (e.key === 'Escape') {
-        setInputValue('');
-        (document.activeElement as HTMLElement).blur();
-        handleSearchBackModal();
-        return;
-      } else if (inputValue) {
-        handleSearchBackModal();
-        navigate(`/search/${inputValue.replace(/[ ]/gi, '')}`);
-      } else {
-        alert('검색어를 입력 해주세요!');
-      }
     }
   };
 
   const onFocus = () => {
     setInputValue('');
-    handleSearchBackModal();
-  };
-
-  const onBlur = () => {
-    setInputValue('');
+    if (!isSearchBackModalOpen) handleSearchBackModal();
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,10 +85,11 @@ const SearchBox = () => {
 
   const onSpanClear = () => {
     setInputValue('');
+    inputRef.current && inputRef.current.focus();
   };
 
   return (
-    <div css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
+    <section css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
       <SearchBarField>
         <div css={SearchBarContents}>
           <form onSubmit={onSubmit}>
@@ -106,16 +104,16 @@ const SearchBox = () => {
               </span>
               <div css={AbsolutePosition}>
                 <input
+                  ref={inputRef}
                   css={SearchInput}
                   id="SearchInput"
                   placeholder="지역, 식당 또는 음식"
                   value={inputValue}
                   onFocus={onFocus}
-                  onBlur={onBlur}
                   onKeyUp={onKeyUp}
                   onChange={onChange}
                 ></input>
-                {isSearchBackModalOpen && <SearchModal />}
+                {/* {isSearchBackModalOpen && <SearchModal />} */}
               </div>
               <span
                 css={isSearchBackModalOpen ? SpanDisplay : None}
@@ -127,14 +125,15 @@ const SearchBox = () => {
               </span>
             </div>
             <div className="contents__right">
-              <button type="submit" css={SearchBtn}>
+              <button type="submit" css={SearchBtn} onClick={onSubmit}>
                 검색
               </button>
             </div>
           </form>
+          {isSearchBackModalOpen && <SearchModal />}
         </div>
       </SearchBarField>
-    </div>
+    </section>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchKeyword from './SearchKeyword';
 import {
@@ -6,7 +6,7 @@ import {
   OpenNavBox,
   SelectedMenu,
   None,
-} from './SearchBox.styled';
+} from './SearchModal.styled';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
@@ -29,25 +29,36 @@ const SearchModal = () => {
     setIsSelectedMenu(clickedMenu);
   };
 
-  const onKeywordClick = ({ target }: any) => {
-    navigate(`/search/${target.textContent.replace(/[ ]/gi, '')}`);
+  const onKeyUp = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      let clickedMenu = (e.target as HTMLLIElement).textContent as string;
+      setIsSelectedMenu(clickedMenu);
+    }
+  };
+
+  const onFocusOut = () => {
     handleSearchBackModal();
   };
+  // const onKeywordClick = ({ target }: any) => {
+  //   navigate(`/search/${target.textContent.replace(/[ ]/gi, '')}`);
+  //   handleSearchBackModal();
+  // };
 
   return (
     <nav css={isSearchBackModalOpen ? OpenNavBox : None}>
       <ul css={UlContainer}>
         {searchMenuKeywords.map((keyword) => (
-          <li
-            onClick={onClick}
-            css={keyword === isSelectedMenu ? SelectedMenu : ''}
-            key={keyword}
-          >
-            {keyword}
+          <li onClick={onClick} onKeyUp={onKeyUp} key={keyword} tabIndex={0}>
+            <span css={keyword === isSelectedMenu ? SelectedMenu : ''}>
+              {keyword}
+            </span>
           </li>
         ))}
       </ul>
-      <ul className="keyword-suggester" onClick={onKeywordClick}>
+      <ul
+        className="keyword-suggester"
+        // onClick={onKeywordClick}
+      >
         {searchSuggestKeywords.map((suggest) => (
           <SearchKeyword suggest={suggest} key={suggest}></SearchKeyword>
         ))}
