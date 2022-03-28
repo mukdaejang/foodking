@@ -42,6 +42,7 @@ const SearchBox = () => {
 
   useEffect(() => {
     console.log(inputValue);
+    console.log();
     // throttle 걸어서 일정 시간 이후 검색어 가져오기
   }, [inputValue]);
 
@@ -51,8 +52,6 @@ const SearchBox = () => {
 
   const KeywordSaveToRedux = (str: string) =>
     dispatch(keywordSuggestActions.handleKeywordSuggest(str));
-
-  // dispatch(keywordSuggestActions.handleKeywordSuggest(inputValue));
 
   const onSubmit = (e: any) => {
     e.preventDefault();

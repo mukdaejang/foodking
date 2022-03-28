@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  inputSearchKeyword: 'test',
+  inputSearchKeyword: '',
+  suggest: [''],
+  popular: [''],
 };
 
 const keywordSlice = createSlice({
@@ -10,6 +12,12 @@ const keywordSlice = createSlice({
   reducers: {
     handleKeywordSuggest(state, action) {
       state.inputSearchKeyword = action.payload;
+    },
+    handleSuggestKeyword(state, action) {
+      state.suggest = [...action.payload];
+    },
+    handlePopularKeyword(state, action) {
+      state.popular = [...action.payload];
     },
   },
 });
