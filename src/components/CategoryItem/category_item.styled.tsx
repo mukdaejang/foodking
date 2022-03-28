@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-const CategoryItemLi = styled.li`
+const CategoryItemLi = styled.li<{ cnt: number }>`
   float: left;
   position: relative;
-  width: calc(100% / 3);
+  width: calc(100% / ${(props) => props.cnt});
   padding: 20px;
   box-sizing: border-box;
 `;

@@ -64,7 +64,7 @@ const Carousel = ({ title }: CarouselChecker) => {
         <CarouselItems ref={slideRef}>
           {categoryComponent.map(
             (category: categoryDataType[], idx: number) => (
-              <Category key={idx} categoryItemList={category} />
+              <Category key={idx} categoryItemList={category} cnt={3} />
             ),
           )}
         </CarouselItems>

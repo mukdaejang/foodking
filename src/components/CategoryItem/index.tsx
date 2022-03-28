@@ -16,9 +16,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 interface CategoryItemChecker {
   categoryData: categoryDataType;
+  cnt: number;
 }
 
-const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
+const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
   const [imageSrc1, setImageSrc1] = useState<string>();
   const [imageSrc2, setImageSrc2] = useState<string>();
   const [loadState, setLoadState] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
 
   if (loadState) {
     return (
-      <CategoryItemLi>
+      <CategoryItemLi cnt={cnt}>
         <CategoryLink
           to={`./bestRestaurants/${categoryData.link}`}
           state={categoryData}
@@ -58,7 +59,7 @@ const CategoryItem = ({ categoryData }: CategoryItemChecker) => {
     );
   } else {
     return (
-      <CategoryItemLi>
+      <CategoryItemLi cnt={cnt}>
         <figure>
           <CategoryImgBox>
             <CategorySkeleton>
