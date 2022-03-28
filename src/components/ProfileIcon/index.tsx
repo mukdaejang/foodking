@@ -12,6 +12,7 @@ import {
 } from './ProfileIcon.styled';
 
 import { getPostListDocs } from '@/firebase/request';
+import { PostsWithId } from '@/firebase/type';
 import { getAuth, signOut } from 'firebase/auth';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -21,14 +22,6 @@ interface ProfileIconProps {
   onClickToggleModal: () => void;
   isLogin: boolean;
   scroll: number;
-}
-
-interface liPostsProps {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  score: number;
 }
 
 const ProfileIcon = ({
@@ -42,9 +35,9 @@ const ProfileIcon = ({
 
   const [isLiFirst, setisLiFirst] = useState(true);
   const [recentlyWatchedPosts, setRecentlyWatchedPosts] = useState<
-    liPostsProps[]
+    PostsWithId[]
   >([]);
-  const [favoritePosts, setFavoritePosts] = useState<liPostsProps[]>([]);
+  const [favoritePosts, setFavoritePosts] = useState<PostsWithId[]>([]);
 
   useEffect(() => {
     let watchedArray: any = localStorage.getItem('watched');
