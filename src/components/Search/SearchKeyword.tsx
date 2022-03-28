@@ -4,6 +4,7 @@ import { keywordStyle } from './SearchKeyword.styled';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+import { KeywordSaveToLocalStorage } from '@/utils';
 
 interface PropType {
   suggest: string;
@@ -20,16 +21,6 @@ const SearchKeyword = ({ suggest }: PropType) => {
 
   const handleSearchBackModal = () => {
     dispatch(modalActions.handleSearchBackModal());
-  };
-
-  const KeywordSaveToLocalStorage = (keyword: string) => {
-    let recentSearch: any = localStorage.getItem('recentSearch');
-    recentSearch = recentSearch === null ? [] : JSON.parse(recentSearch);
-    if (recentSearch.length > 5) {
-      recentSearch = recentSearch.slice(0, 5);
-    }
-    recentSearch = new Set([keyword, ...recentSearch]);
-    localStorage.setItem('recentSearch', JSON.stringify([...recentSearch]));
   };
 
   const onClick = (e: MouseEvent) => {

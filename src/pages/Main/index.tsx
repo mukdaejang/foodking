@@ -7,20 +7,10 @@ import { SortMiddel95 } from '@/components/style';
 import { getKeywordData } from '@/firebase/api/searchkeyword';
 import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
 
-const fetchKeywordData = async (keyword: string) => {
-  try {
-    const result = await getKeywordData(keyword);
-    console.log(result);
-    return result;
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 const Main = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(({ auth }) => auth.status);
-  const { inputSearchKeyword, suggest, popular } = useAppSelector(
+  const { inputSearchKeyword } = useAppSelector(
     ({ searchkeyword }) => searchkeyword,
   );
 
