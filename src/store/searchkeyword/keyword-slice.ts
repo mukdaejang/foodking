@@ -10,7 +10,7 @@ const keywordSlice = createSlice({
   name: 'searchkeyword',
   initialState,
   reducers: {
-    handleKeywordSuggest(state, action) {
+    handleSearchKeyword(state, action) {
       state.inputSearchKeyword = action.payload;
     },
     handleSuggestKeyword(state, action) {

@@ -24,48 +24,21 @@ const Main = () => {
     ({ searchkeyword }) => searchkeyword,
   );
 
-  const [keywordData, setKeywordData] = useState();
+  useEffect(() => {
+    const fetchKeywordData = async () => {
+      const result = await getKeywordData(inputSearchKeyword);
+      const [resultSuggest] = [...result.filter((el) => el.id === 'suggest')];
+      const [resultPopular] = [...result.filter((el) => el.id === 'popular')];
 
-  // const handleSuggestKeywordFunc = (
-  //   id: string,
-  //   keyword1: string,
-  //   keyword2: string,
-  //   keyword3: string,
-  //   keyword4: string,
-  // ) => {
-  //   dispatch(
-  //     keywordSuggestActions.handleSuggestKeyword([
-  //       keyword1,
-  //       keyword2,
-  //       keyword3,
-  //       keyword4,
-  //     ]),
-  //   );
-
-  //   const handlePopularKeyword = (
-  //     id: string,
-  //     keyword1: string,
-  //     keyword2: string,
-  //     keyword3: string,
-  //     keyword4: string,
-  //   ) => {
-  //     dispatch(
-  //       keywordSuggestActions.handleSuggestKeyword([
-  //         keyword1,
-  //         keyword2,
-  //         keyword3,
-  //         keyword4,
-  //       ]),
-  //     );
-  //   };
-
-  // useEffect(() => {
-  //   const fetchKeywordData = async () => {
-  //     const result = await getKeywordData(inputSearchKeyword);
-  //     // handleSuggestKeywordFunc(result[0].);
-  //   };
-  //   fetchKeywordData();
-  // }, [inputSearchKeyword]);
+      dispatch(
+        keywordSuggestActions.handleSuggestKeyword(resultSuggest.keyword),
+      );
+      dispatch(
+        keywordSuggestActions.handlePopularKeyword(resultPopular.keyword),
+      );
+    };
+    fetchKeywordData();
+  }, [inputSearchKeyword]);
 
   return (
     <div>
