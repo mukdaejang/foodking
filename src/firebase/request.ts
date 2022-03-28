@@ -24,10 +24,11 @@ export const getPostDocs = async () => {
   return postData;
 };
 
-export const getFoodListDocs = async () => {
+export const getFoodListDocs = async (title: string) => {
   let temp: any = [];
 
-  const foodListDocs = await getDocs(foodListsCol);
+  const q = query(foodListsCol, where('category', '==', title));
+  const foodListDocs = await getDocs(q);
   const foodListData = foodListDocs.docs.map((x) => ({
     ...x.data(),
     id: x.id,
@@ -63,12 +64,20 @@ export const getBestRestaurantsIdDocs = async (category: string) => {
   return postListData;
 };
 
-export const getPostTitleDocs = async (posts: string[]) => {
+export const getPostImageTitleDocs = async (posts: string[]) => {
   const q = query(postsCol, where(documentId(), 'in', posts), limit(2));
   const postDocs = await getDocs(q);
   const fileData = postDocs.docs.map((x: any) => x.data().images[0]);
 
   return fileData;
+};
+
+export const getPostTitleDocs = async (post: string) => {
+  const q = query(postsCol, where(documentId(), '==', post), limit(2));
+  const postDocs = await getDocs(q);
+  const postTitle = postDocs.docs.map((x: any) => x.data().name);
+
+  return postTitle;
 };
 
 export const getTopScorePostDocs = async (num: number, category: string) => {
