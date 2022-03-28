@@ -6,7 +6,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, PostsOther, FoodLists, Users, Reviews } from './type';
+import { Posts, FoodLists, Users, Reviews } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -204,7 +204,7 @@ export const postRestaurantsDocs = async ({
   score,
   description,
   images,
-}: PostsOther) => {
+}: Posts) => {
   const docRef = await addDoc(collection(db, 'posts'), {
     address,
     name,

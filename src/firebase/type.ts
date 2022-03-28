@@ -1,10 +1,4 @@
-export interface Posts {
-  address: string;
-  category: string;
-  name: string;
-  score: number;
-}
-interface Address {
+export interface Address {
   city: string;
   district: string;
   detail: string;
@@ -14,19 +8,21 @@ interface menu {
   district: string;
   detail: string;
 }
-export interface PostsOther {
+export interface Posts {
   address: Address;
   name: string;
-  phone: string;
+  phone?: string;
   category: string;
-  time: string[];
-  breakTime: string;
-  menu: string[];
+  time?: string[];
+  breakTime?: string;
+  menu?: string[];
   score: number;
-  description: string;
-  images: string[];
+  description?: string;
+  images?: string[];
 }
-
+export interface PostsWithId extends Posts {
+  id: string;
+}
 export interface Users {
   userId: string;
   favorites: string[];
