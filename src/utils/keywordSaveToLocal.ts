@@ -1,4 +1,4 @@
-export const KeywordSaveToLocalStorage = (keyword: string) => {
+export const saveKeywordsToLocalStorage = (keyword: string) => {
   let recentSearch: any = localStorage.getItem('recentSearch');
   recentSearch = recentSearch === null ? [] : JSON.parse(recentSearch);
   if (recentSearch.length > 3) {

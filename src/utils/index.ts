@@ -1,3 +1,3 @@
 export { getErrorMessage } from './getErrorMessage';
-export { KeywordSaveToLocalStorage } from './keywordSaveToLocal';
+export { saveKeywordsToLocalStorage } from './keywordSaveToLocal';
 export { modifyMenuData } from './modifyMenuData';

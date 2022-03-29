@@ -28,7 +28,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
-import { KeywordSaveToLocalStorage } from '@/utils';
+import { saveKeywordsToLocalStorage } from '@/utils';
 
 const SearchBox = () => {
   const dispatch = useAppDispatch();
@@ -50,15 +50,14 @@ const SearchBox = () => {
     dispatch(modalActions.handleSearchBackModal());
   }, [dispatch]);
 
-  const KeywordSaveToRedux = (str: string) =>
+  const saveKeywordToRedux = (str: string) =>
     dispatch(keywordSuggestActions.handleSearchKeyword(str));
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     if (inputValue) {
-      KeywordSaveToRedux(inputValue);
-
-      KeywordSaveToLocalStorage(inputValue);
+      saveKeywordToRedux(inputValue);
+      saveKeywordsToLocalStorage(inputValue);
       handleSearchBackModal();
       navigate(`/search/${inputValue}`);
     } else {

@@ -1,5 +1,4 @@
 import React, { useState, MouseEvent, KeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import SearchKeyword from './SearchKeyword';
 import {
   UlContainer,
@@ -14,7 +13,6 @@ import { modalActions } from '@/store/modal/modal-slice';
 
 const SearchModal = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { suggest, popular } = useAppSelector(
     ({ searchkeyword }) => searchkeyword,

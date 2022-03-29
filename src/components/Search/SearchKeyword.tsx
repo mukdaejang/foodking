@@ -4,7 +4,7 @@ import { keywordStyle } from './SearchKeyword.styled';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
-import { KeywordSaveToLocalStorage } from '@/utils';
+import { saveKeywordsToLocalStorage } from '@/utils';
 
 interface PropType {
   suggest: string;
@@ -25,7 +25,7 @@ const SearchKeyword = ({ suggest }: PropType) => {
 
   const onClick = (e: MouseEvent) => {
     let clickedText = (e.target as HTMLLIElement).textContent;
-    clickedText && KeywordSaveToLocalStorage(clickedText);
+    clickedText && saveKeywordsToLocalStorage(clickedText);
     handleSearchBackModal();
     navigate(`/search/${URLTEXT}`);
   };

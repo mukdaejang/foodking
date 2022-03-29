@@ -44,11 +44,6 @@ export const UlContainer = css`
   }
 `;
 
-interface searchKeywordProps {
-  isSelectedMenu: string;
-  key: string;
-}
-
 export const SelectedMenu = css`
   color: #ff7100;
   border-bottom: 3px solid #ff7100;
