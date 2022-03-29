@@ -12,37 +12,48 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
 const SearchModal = () => {
-  const searchMenuKeywords = ['추천 검색어', '인기 검색어', '최근 검색어'];
-  const searchSuggestKeywords = ['강남 맛집', '수원 맛집', '분당 맛집'];
-  const [isSelectedMenu, setIsSelectedMenu] = useState<string>('추천 검색어');
-  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { suggest, popular } = useAppSelector(
+    ({ searchkeyword }) => searchkeyword,
+  );
+  const searchMenuKeywords = ['추천 검색어', '인기 검색어', '최근 검색어'];
+  const [searchDisplayKeywords, setSearchDisplayKeywords] =
+    useState<string[]>(suggest);
+  const [isSelectedMenu, setIsSelectedMenu] = useState<string>('추천 검색어');
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
 
   const handleSearchBackModal = () => {
     dispatch(modalActions.handleSearchBackModal());
   };
 
+  const isSuggestKeyword = (clickedMenu: string) => {
+    if (clickedMenu === '추천 검색어') {
+      setSearchDisplayKeywords(suggest);
+    } else if (clickedMenu === '인기 검색어') {
+      setSearchDisplayKeywords(popular);
+    } else {
+      // 최근 검색어
+      let recentSearch: any = localStorage.getItem('recentSearch');
+      recentSearch = recentSearch === null ? [] : JSON.parse(recentSearch);
+      setSearchDisplayKeywords(recentSearch);
+    }
+  };
+
   const onClick = (e: MouseEvent<HTMLLIElement>) => {
     let clickedMenu = (e.target as HTMLLIElement).textContent as string;
     setIsSelectedMenu(clickedMenu);
+    isSuggestKeyword(clickedMenu);
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       let clickedMenu = (e.target as HTMLLIElement).textContent as string;
       setIsSelectedMenu(clickedMenu);
+      isSuggestKeyword(clickedMenu);
     }
   };
-
-  const onFocusOut = () => {
-    handleSearchBackModal();
-  };
-  // const onKeywordClick = ({ target }: any) => {
-  //   navigate(`/search/${target.textContent.replace(/[ ]/gi, '')}`);
-  //   handleSearchBackModal();
-  // };
 
   return (
     <nav css={isSearchBackModalOpen ? OpenNavBox : None}>
@@ -55,11 +66,8 @@ const SearchModal = () => {
           </li>
         ))}
       </ul>
-      <ul
-        className="keyword-suggester"
-        // onClick={onKeywordClick}
-      >
-        {searchSuggestKeywords.map((suggest) => (
+      <ul className="keyword-suggester">
+        {searchDisplayKeywords.map((suggest) => (
           <SearchKeyword suggest={suggest} key={suggest}></SearchKeyword>
         ))}
       </ul>

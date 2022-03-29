@@ -2,14 +2,19 @@ import {
   getDocs,
   collection,
   DocumentData,
+  DocumentReference,
   CollectionReference,
   addDoc,
+  doc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, Reviews } from './type';
+import { Posts, FoodLists, Users, Reviews, DocParams } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
+
+export const createDoc = <T = DocumentData>({ docName, id }: DocParams) =>
+  doc(db, docName, id) as DocumentReference<T>;
 
 const createCollection = <T = DocumentData>(collectionName: string) =>
   collection(db, collectionName) as CollectionReference<T>;
@@ -147,20 +152,11 @@ export const getReviewDocs = async () => {
 export const getImageDocs = async (fileName: string) => {
   const imagesRef = ref(storage, fileName);
 
-  return await getDownloadURL(imagesRef)
-    .then((url) => {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = (event) => {
-        const blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-      return url;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    return await getDownloadURL(imagesRef);
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
 };
 
 export const postReviewDocs = async ({

@@ -1,24 +1,23 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { modalActions } from '@/store/modal/modal-slice';
-
-import { css } from '@emotion/react';
 
 import { SurroundPopluars, Reviews, RestaurantInfo } from '@/components';
-import Images from './Images';
-import image from '@/assets/img/food.jpg';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { request } from '@/store/restaurants/restaurants-actions';
 
-const imageContainer = css`
-  margin: 0 0.4rem;
-`;
+import Images from './Images';
+import { imageContainer } from './Restaurants.styled';
+import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 
 const Restaurants = () => {
-  const postId = useParams().postId;
   const dispatch = useAppDispatch();
-  const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
+
+  const { postId = '' } = useParams();
 
   useEffect(() => {
+    dispatch(request({ docName: 'posts', id: postId }));
+
     let watchedArray: any = localStorage.getItem('watched');
 
     watchedArray = watchedArray === null ? [] : JSON.parse(watchedArray);
@@ -27,28 +26,19 @@ const Restaurants = () => {
     watchedArray = [...watchedArray];
 
     localStorage.setItem('watched', JSON.stringify(watchedArray));
-  }, [postId]);
-
-  // useEffect(() => {
-  //   if (isOverlayModalOpen) {
-  //     dispatch(modalActions.handleOverlayModal());
-  //   }
-  // }, [dispatch, isOverlayModalOpen]);
-
-  const images = Array(5)
-    .fill(null)
-    .map((_, i) => ({
-      id: String(i),
-      title: '햄버거',
-      src: image,
-    }));
+  }, [dispatch, postId]);
 
   return (
     <div>
       <div css={imageContainer}>
-        <Images images={images} size="big" />
+        {post?.images ? <Images images={post?.images} size="big" /> : ''}
       </div>
-      <RestaurantInfo />
+      <div css={mainContent}>
+        <div className="main-content">
+          <RestaurantInfo />
+        </div>
+        <aside>11</aside>
+      </div>
       <Reviews />
       <SurroundPopluars />
     </div>
