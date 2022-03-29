@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { useFetch } from '@/firebase/hooks';
-import { Posts } from '@/firebase/type';
+
+import { useAppSelector } from '@/store/hooks';
 
 import { TitleHeader, Descriptions } from './RestaurantInfo.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +12,8 @@ import { Pen, Star } from '@/components/IconButton';
 import theme from '@/styles/theme';
 
 const RestaurantInfo = () => {
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
+
   const status = {
     view: 141982,
     write: 114,
@@ -32,19 +33,6 @@ const RestaurantInfo = () => {
     },
     [],
   );
-
-  const { postId = '' } = useParams();
-
-  const post = useFetch<Posts>({ docName: 'posts', id: postId });
-  let menus: { name: string; price: string }[] = [];
-  if (post?.menu) {
-    for (let i = 0; i < post?.menu?.length - 1; i += 2) {
-      menus.push({
-        name: post?.menu[i],
-        price: post?.menu[i + 1].replace('원', ''),
-      });
-    }
-  }
 
   return (
     <div>
@@ -117,7 +105,7 @@ const RestaurantInfo = () => {
           <dt>메뉴</dt>
           <dd>
             <ul className="menus">
-              {menus.map(({ name, price }) => (
+              {post?.menus?.map(({ name, price }) => (
                 <li key={name}>
                   <span>{name}</span>
                   <span>{price.toLocaleString()}원</span>
