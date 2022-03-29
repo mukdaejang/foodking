@@ -23,6 +23,7 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
   const [imageSrc1, setImageSrc1] = useState<string[]>();
   const [imageSrc2, setImageSrc2] = useState<string[]>();
   const [loadState, setLoadState] = useState<boolean>(false);
+  const [imgLoadState, setImgLoadState] = useState<boolean[]>([false, false]);
 
   useEffect(() => {
     getPostImageTitleDocs(categoryData.list.slice(0, 2))
@@ -41,6 +42,9 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
       });
   }, []);
 
+  const changeImgLoadState = () =>
+    setImgLoadState(imgLoadState[0] ? [true, true] : [true, false]);
+
   if (loadState) {
     return (
       <CategoryItemLi cnt={cnt}>
@@ -50,8 +54,23 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
         >
           <figure>
             <CategoryImgBox>
-              <img src={imageSrc1![0]} alt={imageSrc1![1]} />
-              <img src={imageSrc2![0]} alt={imageSrc2![1]} />
+              <img
+                src={imageSrc1![0]}
+                alt={imageSrc1![1]}
+                onLoad={changeImgLoadState}
+              />
+              <img
+                src={imageSrc2![0]}
+                alt={imageSrc2![1]}
+                onLoad={changeImgLoadState}
+              />
+              {!imgLoadState[0] && !imgLoadState[1] ? (
+                <CategorySkeleton>
+                  <Skeleton width={'100%'} height={'100%'} />
+                </CategorySkeleton>
+              ) : (
+                ''
+              )}
             </CategoryImgBox>
             <CategoryInfo>
               <CategoryTitle>{categoryData.title}</CategoryTitle>
