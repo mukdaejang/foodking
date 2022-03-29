@@ -22,6 +22,7 @@ interface RestaurantType {
 const Restaurant = ({ info }: RestaurantType) => {
   const [imageSrc, setImageSrc] = useState<string>('');
   const [loadState, setLoadState] = useState<boolean>(false);
+  const [imgLoadState, setImgLoadState] = useState<boolean>(false);
 
   useEffect(() => {
     getImageDocs(info.images![0] as any)
@@ -33,13 +34,26 @@ const Restaurant = ({ info }: RestaurantType) => {
       });
   }, []);
 
+  const changeImgLoadState = () => setImgLoadState(true);
+
   if (loadState) {
     return (
       <RestaurantItem>
         <RestaurantLink to={`/restaurants/${info.id}`}>
           <figure>
             <RestaurantImgBox>
-              <RestaurantImg src={`${imageSrc}`} alt="food" />
+              <RestaurantImg
+                src={`${imageSrc}`}
+                alt="food"
+                onLoad={changeImgLoadState}
+              />
+              {!imgLoadState ? (
+                <RestaurantSkeleton>
+                  <Skeleton width={'100%'} height={'100%'} />
+                </RestaurantSkeleton>
+              ) : (
+                ''
+              )}
             </RestaurantImgBox>
             <RestaurantInfo>
               <p>

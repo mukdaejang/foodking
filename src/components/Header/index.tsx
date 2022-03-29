@@ -22,13 +22,13 @@ import { userActions } from '@/store/user/user-slice';
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  const { isOverlayModalOpen } = useAppSelector(({ modal }) => modal);
-  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
-  const { isUserLogin } = useAppSelector(({ user }) => user);
+  const { isOverlayModalOpen, isSearchBackModalOpen } = useAppSelector(
+    ({ modal }) => modal,
+  );
+  const { isUserLogin, userProfileImage } = useAppSelector(({ user }) => user);
 
   const [showHeader, setShowHeader] = useState<boolean>(true);
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
-  const [profileImage, setProfileImage] = useState<string | null>('');
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Header = () => {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      setProfileImage(user?.providerData[0].photoURL);
+      dispatch(userActions.setUserProfileImage(user?.providerData[0].photoURL));
       dispatch(userActions.handleUserLogin(true));
     } else {
       dispatch(userActions.handleUserLogin(false));
@@ -99,7 +99,7 @@ const Header = () => {
             <div>
               {isUserLogin ? (
                 <button className="profileImgBtn" onClick={onClickToggleModal}>
-                  <img src={profileImage!} alt="프로필이미지"></img>
+                  <img src={userProfileImage!} alt="프로필이미지"></img>
                 </button>
               ) : (
                 <button>
