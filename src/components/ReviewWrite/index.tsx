@@ -18,26 +18,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   postReviewDocs,
   postImage,
+  getPostTitleDocs,
   postRestaurantsDocs,
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
+import { useLocation } from 'react-router-dom';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
+
+  const [title, setTitle] = useState<string>();
   const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
   const disabledRef = useRef<HTMLButtonElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const selectScoreHandler = (e: any) => {
-    changeScore(e.currentTarget);
-  };
+  const { pathname } = useLocation();
+  const postId = pathname.replace('/writeReview/', '');
+
+  useEffect(() => {
+    getPostTitleDocs(postId).then((res) => setTitle(res[0]));
+  }, []);
+
+  const selectScoreHandler = (e: any) => changeScore(e.currentTarget);
 
   const changeScore = (node: any) => {
     const id = node.id;
@@ -76,7 +85,6 @@ const ReviewWrite = () => {
   // 파일 저장
   const saveFileImage = (e: any) => {
     if (fileRef.current?.files) {
-      // console.log(fileRef.current?.files[0]);
       setFileImage([...fileImage, fileRef.current?.files[0]]);
       setFileImageSrc([
         ...fileImageSrc,
@@ -99,24 +107,27 @@ const ReviewWrite = () => {
     const date = `${today.getFullYear()}-${
       today.getMonth() + 1
     }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+
     // 이미지
     const images = await Promise.all(
       fileImage.map(async (file) => await postImage(file)),
     );
+
     // text
     const text = textRef.current?.value || '';
+
     // 점수
     const score = +(selectScore || 0);
+
     // firebase insert
-    await postReviewDocs({
-      // 현재 포스트의 아이디를 넣어주자
-      postId: '222',
-      userId,
-      date,
-      images,
-      text,
-      score,
-    });
+    // await postReviewDocs({
+    //   postId,
+    //   userId,
+    //   date,
+    //   images,
+    //   text,
+    //   score,
+    // });
 
     // 데이터 집어넣는 부분
     // restaurants.forEach(async (obj: any) => {
@@ -134,7 +145,7 @@ const ReviewWrite = () => {
   return (
     <Review>
       <SortMiddel60>
-        <RestaurantsTitle>까스까스</RestaurantsTitle>
+        <RestaurantsTitle>{title}</RestaurantsTitle>
         <SubTitle>에 대한 솔직한 리뷰를 써주세요.</SubTitle>
         <ReviewContent>
           <ReviewScoreGroup>

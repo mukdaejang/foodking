@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 
 interface modalContainerProps {
   scroll: number;
+  isMainPage: boolean;
 }
 
 export const ModalContainer = styled.div<modalContainerProps>`
@@ -16,7 +17,8 @@ export const ModalContainer = styled.div<modalContainerProps>`
   > div {
     position: absolute;
     right: 20px;
-    top: ${({ scroll }) => `${scroll + 70}px`};
+    top: ${({ scroll, isMainPage }) =>
+      isMainPage ? `${scroll + 70}px` : `${scroll + 10}px`};
     width: 320px;
     height: 534px;
 
