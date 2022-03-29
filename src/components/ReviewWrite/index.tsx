@@ -28,6 +28,7 @@ import {
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
 import { useLocation } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
@@ -83,13 +84,30 @@ const ReviewWrite = () => {
   const [fileImageSrc, setFileImageSrc] = useState<Array<string>>([]);
 
   // 파일 저장
-  const saveFileImage = (e: any) => {
+  const saveFileImage = async (e: any) => {
     if (fileRef.current?.files) {
       setFileImage([...fileImage, fileRef.current?.files[0]]);
       setFileImageSrc([
         ...fileImageSrc,
         URL.createObjectURL(fileRef.current?.files[0]),
       ]);
+
+      // let file = fileRef.current?.files[0]; // 입력받은 file객체
+
+      // // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+      // const options = {
+      //   maxSizeMB: 2,
+      //   maxWidthOrHeight: 100,
+      // };
+
+      // try {
+      //   const compressedFile = await imageCompression(file, options);
+      //   setFileImage([...fileImage, compressedFile]);
+      //   setFileImageSrc([...fileImageSrc, URL.createObjectURL(file)]);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+
       e.target.value = '';
     }
   };
