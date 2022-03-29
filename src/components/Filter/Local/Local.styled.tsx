@@ -86,6 +86,7 @@ export const SelectedLabel = css`
   height: 50px;
   margin: 10px;
 
+  color: ${theme.colors.orange};
   border: ${theme.borders.border1};
   border-radius: ${theme.borders.radius};
 `;
