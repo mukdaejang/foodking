@@ -42,7 +42,7 @@ const List = ({
   const [imageSrc, setImageSrc] = useState<string>();
 
   useEffect(() => {
-    getImageDocs(images![0])
+    getImageDocs(images![0] as any)
       .then((res: any) => setImageSrc(res))
       .then((res) => {
         setTimeout(() => {

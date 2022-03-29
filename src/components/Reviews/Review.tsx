@@ -7,15 +7,10 @@ import {
 } from './Review.styled';
 import image from '@/assets/img/food.jpg';
 import Images from '@/pages/Restaurants/Images';
+import { useAppSelector } from '@/store/hooks';
 
 const Review = () => {
-  const images = Array(2)
-    .fill(null)
-    .map((_, i) => ({
-      id: String(i),
-      title: '햄버거',
-      src: image,
-    }));
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
 
   return (
     <StyledReview>
@@ -32,7 +27,7 @@ const Review = () => {
           피쉬버거라서 싫어하다가 막상 먹어보니 너무 맛있어서 더 시켜 먹었다는
           ㅋㅋㅋ생생 후기를 듣고!!!
         </p>
-        <Images images={images} size="small" />
+        {post?.images ? <Images images={post?.images} size="small" /> : ''}
       </div>
       <Evaluation>
         <img src={image} alt="맛있다" />
