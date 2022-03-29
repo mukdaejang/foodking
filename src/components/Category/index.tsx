@@ -1,9 +1,9 @@
 import { CategoryItem } from '@/components';
 import { CategoryContent, CategoryList } from './category.styled';
-import { categoryDataType } from '@/components/Carousel';
+import { CategoryType } from '@/firebase/type';
 
 interface CategoryChecker {
-  categoryItemList: categoryDataType[];
+  categoryItemList: CategoryType[];
   cnt: number;
 }
 

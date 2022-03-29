@@ -5,8 +5,7 @@ const CategoryItemLi = styled.li<{ cnt: number }>`
   float: left;
   position: relative;
   width: calc(100% / ${(props) => props.cnt});
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 10px;
 `;
 
 const CategoryLink = styled(Link)``;

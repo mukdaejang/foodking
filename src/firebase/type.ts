@@ -49,3 +49,11 @@ export interface Keyword {
   Keyword3: string;
   Keyword4: string;
 }
+
+export interface CategoryType {
+  title: string;
+  id: string;
+  description: string;
+  list: string[];
+  link: string;
+}

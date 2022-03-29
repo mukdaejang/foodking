@@ -52,3 +52,7 @@ export const ContainerText = styled.div`
   margin-top: 12px;
   text-align: center;
 `;
+
+export const FloatBox = styled.ul`
+  overflow: hidden;
+`;
