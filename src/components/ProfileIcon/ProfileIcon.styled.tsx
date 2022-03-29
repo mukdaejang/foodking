@@ -201,3 +201,10 @@ export const loginButton = css`
   color: #ff7100;
   background-color: transparent;
 `;
+
+export const imgSkeleton = css`
+  width: 70px;
+  height: 70px;
+  margin-right: 16px;
+  margin-left: 16px;
+`;
