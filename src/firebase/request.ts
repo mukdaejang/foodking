@@ -2,14 +2,19 @@ import {
   getDocs,
   collection,
   DocumentData,
+  DocumentReference,
   CollectionReference,
   addDoc,
+  doc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, Reviews } from './type';
+import { Posts, FoodLists, Users, Reviews, DocParams } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
+
+export const createDoc = <T = DocumentData>({ docName, id }: DocParams) =>
+  doc(db, docName, id) as DocumentReference<T>;
 
 const createCollection = <T = DocumentData>(collectionName: string) =>
   collection(db, collectionName) as CollectionReference<T>;
