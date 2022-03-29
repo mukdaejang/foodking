@@ -26,7 +26,6 @@ const SearchKeyword = ({ suggest }: PropType) => {
   const onClick = (e: MouseEvent) => {
     let clickedText = (e.target as HTMLLIElement).textContent;
     clickedText && KeywordSaveToLocalStorage(clickedText);
-
     handleSearchBackModal();
     navigate(`/search/${URLTEXT}`);
   };

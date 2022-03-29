@@ -57,6 +57,7 @@ const SearchBox = () => {
     e.preventDefault();
     if (inputValue) {
       KeywordSaveToRedux(inputValue);
+
       KeywordSaveToLocalStorage(inputValue);
       handleSearchBackModal();
       navigate(`/search/${inputValue}`);

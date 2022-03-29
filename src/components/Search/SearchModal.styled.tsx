@@ -58,11 +58,10 @@ export const None = css`
   display: none;
 `;
 
-// export const List = styled.li<searchKeywordProps>(({ isSelectedMenu, key }) =>
-//   isSelectedMenu === key
-//     ? {
-//         color: '#ff7100',
-//         borderBottom: '3px solid #ff7100',
-//       }
-//     : { color: 'inherit', borderBottom: '3px solid inherit' },
-// );
+export const noRecentSearchKeyword = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  padding: 30px 10px;
+`;
