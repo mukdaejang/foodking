@@ -44,18 +44,22 @@ const ProfileIcon = ({
   useEffect(() => {
     let watchedArray: any = localStorage.getItem('watched');
     watchedArray = JSON.parse(watchedArray);
-    getPostListDocs(watchedArray).then((res) => {
-      setRecentlyWatchedPosts(res.reverse());
-    });
+    if (watchedArray?.length) {
+      getPostListDocs(watchedArray).then((res) => {
+        setRecentlyWatchedPosts(res.reverse());
+      });
+    }
 
     if (isUserLogin) {
       let favoriteArray: any = localStorage.getItem('favorite');
       favoriteArray = JSON.parse(favoriteArray);
-      getPostListDocs(favoriteArray).then((res) => {
-        setFavoritePosts(res.reverse());
-      });
+      if (favoriteArray?.length) {
+        getPostListDocs(favoriteArray).then((res) => {
+          setFavoritePosts(res.reverse());
+        });
+      }
     }
-  }, []);
+  }, [isUserLogin]);
 
   const handleSocialModal = () => {
     dispatch(modalActions.handleSocialModal());
@@ -137,7 +141,10 @@ const ProfileIcon = ({
             {isLiFirst ? (
               recentlyWatchedPosts.length ? (
                 recentlyWatchedPosts.map(
-                  ({ id, name, address, category, score }, index: number) => {
+                  (
+                    { id, name, address, category, score, images },
+                    index: number,
+                  ) => {
                     return (
                       <List
                         id={id}
@@ -146,6 +153,7 @@ const ProfileIcon = ({
                         address={address}
                         category={category}
                         score={score}
+                        images={images}
                         isLiFirst={isLiFirst}
                         deleteOnePost={deleteOneRecentlyWathced}
                       ></List>
@@ -160,7 +168,7 @@ const ProfileIcon = ({
               )
             ) : favoritePosts.length ? (
               favoritePosts.map(
-                ({ id, name, address, category, score }, index) => {
+                ({ id, name, address, category, score, images }, index) => {
                   return (
                     <List
                       id={id}
@@ -169,6 +177,7 @@ const ProfileIcon = ({
                       address={address}
                       category={category}
                       score={score}
+                      images={images}
                       isLiFirst={isLiFirst}
                       deleteOnePost={deleteOneFavorite}
                     ></List>

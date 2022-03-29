@@ -6,13 +6,17 @@ import SocialLogin from '@/components/Modal/SocialLogin';
 import { Star } from '@/components/IconButton';
 
 import theme from '@/styles/theme';
-import foodImage from '@/assets/img/food.jpg';
+import { imgSkeleton } from '@/components/ProfileIcon/ProfileIcon.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { PostsWithId } from '@/firebase/type';
+import { getImageDocs } from '@/firebase/request';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export interface ListProps extends PostsWithId {
   isLiFirst: boolean;
@@ -25,16 +29,27 @@ const List = ({
   address,
   category,
   score,
+  images,
   isLiFirst,
   deleteOnePost,
 }: ListProps) => {
   const dispatch = useAppDispatch();
   const { isUserLogin } = useAppSelector(({ user }) => user);
-  const { isOverlayModalOpen, isSocialModalOpen } = useAppSelector(
-    ({ modal }) => modal,
-  );
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
 
-  const [starState, setStarState] = useState(isLiFirst ? false : true);
+  const [starState, setStarState] = useState<boolean>(isLiFirst ? false : true);
+  const [isLoadingFinish, setIsLoadingFinish] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string>();
+
+  useEffect(() => {
+    getImageDocs(images![0] as any)
+      .then((res: any) => setImageSrc(res))
+      .then((res) => {
+        setTimeout(() => {
+          setIsLoadingFinish(true);
+        }, 600);
+      });
+  }, []);
 
   const handleSocialModal = () => {
     dispatch(modalActions.handleSocialModal());
@@ -80,7 +95,11 @@ const List = ({
     <li>
       <section>
         <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>
-          <img src={foodImage} alt="food" />
+          {isLoadingFinish ? (
+            <img src={imageSrc} alt="food" />
+          ) : (
+            <Skeleton css={imgSkeleton} />
+          )}
         </Link>
         <div>
           <Link to={`/restaurants/${id}`} onClick={handleOverlayModal}>

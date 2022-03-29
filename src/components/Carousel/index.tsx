@@ -9,17 +9,10 @@ import {
   NavigationControl,
 } from './carousel.styled';
 import { getFoodListDocs } from '@/firebase/request';
+import { CategoryType } from '@/firebase/type';
 
 interface CarouselChecker {
   title: string;
-}
-
-export interface categoryDataType {
-  title: string;
-  id: string;
-  description: string;
-  list: string[];
-  link: string;
 }
 
 const Carousel = ({ title }: CarouselChecker) => {
@@ -28,15 +21,27 @@ const Carousel = ({ title }: CarouselChecker) => {
   const slideDotRef = useRef<HTMLUListElement>(null);
 
   const [categoryComponent, setCategoryComponent] = useState<
-    Array<categoryDataType[]>
+    Array<CategoryType[]>
   >([]);
 
   const [totalSlides, setTotalslides] = useState<number>(0);
 
   useEffect(() => {
     getFoodListDocs(title).then((res) => {
-      setCategoryComponent(res);
-      setTotalslides(res.length - 1);
+      let temp: any = [];
+      const arrFoodListData = [];
+
+      res.forEach((category) => {
+        temp.push(category);
+        if (temp.length === 6) {
+          arrFoodListData.push(temp);
+          temp = [];
+        }
+      });
+      if (temp.length) arrFoodListData.push(temp);
+
+      setCategoryComponent(arrFoodListData);
+      setTotalslides(arrFoodListData.length - 1);
     });
   }, []);
 
@@ -62,11 +67,9 @@ const Carousel = ({ title }: CarouselChecker) => {
       <CategoryTitle>{`믿고 보는 ${title} 리스트`}</CategoryTitle>
       <CarouselView>
         <CarouselItems ref={slideRef}>
-          {categoryComponent.map(
-            (category: categoryDataType[], idx: number) => (
-              <Category key={idx} categoryItemList={category} />
-            ),
-          )}
+          {categoryComponent.map((category: CategoryType[], idx: number) => (
+            <Category key={idx} categoryItemList={category} cnt={3} />
+          ))}
         </CarouselItems>
       </CarouselView>
       <NavigationControl ref={slideDotRef} nowSlide={currentSlide}>

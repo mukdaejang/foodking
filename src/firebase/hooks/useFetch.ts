@@ -1,21 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  doc,
-  getDoc,
-  DocumentData,
-  DocumentReference,
-} from 'firebase/firestore';
-import { db } from '@/firebase';
+import { getDoc, DocumentData } from 'firebase/firestore';
+import { createDoc } from '@/firebase/request';
+import { DocParams } from '@/firebase/type';
 
 import { getErrorMessage } from '@/utils';
-
-interface DocParams {
-  docName: string;
-  id: string;
-}
-
-const createDoc = <T = DocumentData>({ docName, id }: DocParams) =>
-  doc(db, docName, id) as DocumentReference<T>;
 
 export const useFetch = <T = DocumentData>({ docName, id }: DocParams) => {
   const [data, setData] = useState<T | null>(null);
