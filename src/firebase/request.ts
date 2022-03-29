@@ -23,15 +23,26 @@ const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
 const usersCol = createCollection<Users>('users');
 
+// 모든 음식점 가져오기
 export const getPostDocs = async () => {
   const postDocs = await getDocs(postsCol);
   const postData = postDocs.docs.map((x) => ({ ...x.data(), id: x.id }));
   return postData;
 };
+// 맛집 술집 별로 카테고리 가져오기
+export const getCategoryFoodListDocs = async (category: string) => {
+  const q = query(foodListsCol, where('category', '==', category));
+  const foodListDocs = await getDocs(q);
+  const foodListData = foodListDocs.docs.map((x) => ({
+    ...x.data(),
+    id: x.id,
+  }));
 
+  return foodListData;
+};
+
+// 술집인지 맛집인지에 따라 배열에 6개로 담아서 리턴 (캐러셀에서 사용)
 export const getFoodListDocs = async (title: string) => {
-  let temp: any = [];
-
   const q = query(foodListsCol, where('category', '==', title));
   const foodListDocs = await getDocs(q);
   const foodListData = foodListDocs.docs.map((x) => ({
@@ -39,19 +50,10 @@ export const getFoodListDocs = async (title: string) => {
     id: x.id,
   }));
 
-  const arrFoodListData = [];
-  foodListData.forEach((category) => {
-    temp.push(category);
-    if (temp.length === 6) {
-      arrFoodListData.push(temp);
-      temp = [];
-    }
-  });
-  if (temp.length) arrFoodListData.push(temp);
-
-  return arrFoodListData;
+  return foodListData;
 };
 
+// post id로 음식점 데이터
 export const getPostListDocs = async (posts: string[]) => {
   const q = query(postsCol, where(documentId(), 'in', posts));
   const postDocs = await getDocs(q);
@@ -69,6 +71,7 @@ export const getBestRestaurantsIdDocs = async (category: string) => {
   return postListData;
 };
 
+// post id 배열로 이미지 이름 가져오기 (2개)
 export const getPostImageTitleDocs = async (posts: string[]) => {
   const q = query(postsCol, where(documentId(), 'in', posts), limit(2));
   const postDocs = await getDocs(q);
@@ -77,6 +80,7 @@ export const getPostImageTitleDocs = async (posts: string[]) => {
   return fileData;
 };
 
+// post id로 음식점의 이름가져오기
 export const getPostTitleDocs = async (post: string) => {
   const q = query(postsCol, where(documentId(), '==', post), limit(2));
   const postDocs = await getDocs(q);
@@ -85,6 +89,7 @@ export const getPostTitleDocs = async (post: string) => {
   return postTitle;
 };
 
+// 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
     postsCol,

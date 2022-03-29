@@ -86,12 +86,12 @@ const Header = () => {
             </HeaderInput>
             <ul>
               <li>
-                <Link to="/matjib_list">
+                <Link to="/food_list">
                   <span>맛집 리스트</span>
                 </Link>
               </li>
               <li>
-                <Link to="/">
+                <Link to="/drink_list">
                   <span>술집 리스트</span>
                 </Link>
               </li>

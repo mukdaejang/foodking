@@ -13,7 +13,7 @@ import {
 } from '@/components/style';
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { categoryDataType } from '@/components/Carousel';
+import { CategoryType } from '@/firebase/type';
 import { getPostListDocs, getBestRestaurantsIdDocs } from '@/firebase/request';
 
 export interface BestRestaurantType {
@@ -35,7 +35,7 @@ const BestRestaurants = () => {
   const category = location.pathname.replace('/bestRestaurants/', '');
 
   const [postList, setPostList] = useState<BestRestaurantType[]>([]);
-  const [categoryData, setCategoryData] = useState<categoryDataType>();
+  const [categoryData, setCategoryData] = useState<CategoryType>();
 
   useEffect(() => {
     getBestRestaurantsIdDocs(category).then((res: any) => {

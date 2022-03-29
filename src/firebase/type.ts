@@ -61,3 +61,11 @@ export interface DocParams {
   docName: string;
   id: string;
 }
+
+export interface CategoryType {
+  title: string;
+  id: string;
+  description: string;
+  list: string[];
+  link: string;
+}

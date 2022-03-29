@@ -120,14 +120,14 @@ const ReviewWrite = () => {
     const score = +(selectScore || 0);
 
     // firebase insert
-    // await postReviewDocs({
-    //   postId,
-    //   userId,
-    //   date,
-    //   images,
-    //   text,
-    //   score,
-    // });
+    await postReviewDocs({
+      postId,
+      userId,
+      date,
+      images,
+      text,
+      score,
+    });
 
     // 데이터 집어넣는 부분
     // restaurants.forEach(async (obj: any) => {
