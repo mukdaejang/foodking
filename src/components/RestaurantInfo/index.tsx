@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useFetch } from '@/firebase/hooks';
 import { Posts } from '@/firebase/type';
 
@@ -10,9 +10,20 @@ import foodImage from '@/assets/img/food.jpg';
 
 import { IconButton } from '@/components';
 import { Pen, Star } from '@/components/IconButton';
+import Modal from '@/components/Modal';
+import SocialLogin from '@/components/Modal/SocialLogin';
 import theme from '@/styles/theme';
 
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
+
 const RestaurantInfo = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
+
   const status = {
     view: 141982,
     write: 114,
@@ -34,8 +45,13 @@ const RestaurantInfo = () => {
     { name: '크림우동', price: 9000 },
   ].map((menu, id) => ({ ...menu, id }));
 
-  const [starColor, setStarColor] = useState(theme.colors.gray1000);
-  const [penColor, setPenColor] = useState(theme.colors.gray1000);
+  // const [starColor, setStarColor] = useState(theme.colors.gray1000);
+  const [starState, setStarState] = useState(false);
+
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
+  };
+
   const toggleIconColor = useCallback(
     (setState) => () => {
       const {
@@ -50,6 +66,35 @@ const RestaurantInfo = () => {
 
   const { postId = '' } = useParams();
 
+  const changeStar = () => {
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      if (!starState) {
+        favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+        favoriteArray.push(postId);
+        favoriteArray = new Set(favoriteArray);
+      } else {
+        favoriteArray = new Set(
+          JSON.parse(favoriteArray).filter((item: any) => item !== postId),
+        );
+      }
+      favoriteArray = [...favoriteArray];
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+
+      setStarState(!starState);
+    } else {
+      handleSocialModal();
+    }
+  };
+
+  const writeReview = () => {
+    if (isUserLogin) {
+      navigate(`/writeReview/${postId}`);
+    } else {
+      handleSocialModal();
+    }
+  };
+
   const post = useFetch<Posts>({ docName: 'posts', id: postId });
 
   return (
@@ -63,18 +108,17 @@ const RestaurantInfo = () => {
           <div className="icon-btns">
             <div>
               <IconButton
-                onClick={toggleIconColor(setPenColor)}
+                onClick={() => {
+                  writeReview();
+                }}
                 message="리뷰쓰기"
               >
-                <Pen width="30" height="30" fill={penColor} />
+                <Pen width="30" height="30" fill={theme.colors['gray1000']} />
               </IconButton>
             </div>
             <div>
-              <IconButton
-                onClick={toggleIconColor(setStarColor)}
-                message="가고싶다"
-              >
-                <Star fill={starColor} />
+              <IconButton onClick={changeStar} message="가고싶다">
+                <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
               </IconButton>
             </div>
           </div>
@@ -144,6 +188,11 @@ const RestaurantInfo = () => {
           </dd>
         </dl>
       </Descriptions>
+      {isSocialModalOpen && (
+        <Modal closePortal={handleSocialModal}>
+          <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+        </Modal>
+      )}
     </div>
   );
 };
