@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const CategoryContent = styled.section`
+const CategoryContent = styled.div`
   padding-top: 30px;
   padding-bottom: 40px;
 `;

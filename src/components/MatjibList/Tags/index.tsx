@@ -1,4 +1,4 @@
-import Tag from './Tag';
+import { Tag, TagBox } from './Tag';
 
 const tags: string[] = [
   '전체',
@@ -16,11 +16,11 @@ const tags: string[] = [
 
 const Tags = () => {
   return (
-    <p>
+    <TagBox>
       {tags.map((tag) => (
         <Tag key={tag} content={tag} />
       ))}
-    </p>
+    </TagBox>
   );
 };
 

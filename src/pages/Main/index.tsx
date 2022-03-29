@@ -31,7 +31,7 @@ const Main = () => {
   }, [inputSearchKeyword]);
 
   return (
-    <div>
+    <main>
       <Banner />
       <SortMiddel95>
         <Carousel title={'맛집'} />
@@ -39,7 +39,7 @@ const Main = () => {
         <Restaurants title={'맛집'} />
         <Restaurants title={'술집'} />
       </SortMiddel95>
-    </div>
+    </main>
   );
 };
 
