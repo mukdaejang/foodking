@@ -80,8 +80,8 @@ const ReviewWrite = () => {
   };
 
   // 이미지 미리보기 할 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Array<Blob>>([]);
-  const [fileImageSrc, setFileImageSrc] = useState<Array<string>>([]);
+  const [fileImage, setFileImage] = useState<Blob[]>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
 
   // 파일 저장
   const saveFileImage = async (e: any) => {
@@ -89,7 +89,10 @@ const ReviewWrite = () => {
       setFileImage([...fileImage, fileRef.current?.files[0]]);
       setFileImageSrc([
         ...fileImageSrc,
-        URL.createObjectURL(fileRef.current?.files[0]),
+        [
+          URL.createObjectURL(fileRef.current?.files[0]),
+          fileRef.current?.files[0].name,
+        ],
       ]);
 
       // let file = fileRef.current?.files[0]; // 입력받은 file객체
@@ -114,9 +117,14 @@ const ReviewWrite = () => {
 
   // 파일 삭제
   const deleteFileImage = (e: any) => {
-    const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
-    setFileImageSrc([...fileImageSrc].filter((file: any) => fileName !== file));
-    URL.revokeObjectURL(fileName);
+    const fileSrc = e.currentTarget.parentNode.parentNode.dataset.id;
+    const fileName = e.currentTarget.parentNode.parentNode.dataset.name;
+
+    setFileImageSrc(
+      [...fileImageSrc].filter((file: any) => fileSrc !== file[0]),
+    );
+    setFileImage([...fileImage].filter((file: any) => fileName !== file.name));
+    URL.revokeObjectURL(fileSrc);
   };
 
   const craeteReview = async () => {
@@ -207,7 +215,12 @@ const ReviewWrite = () => {
         <ReviewSelectImgs>
           {fileImageSrc.map((file, idx) => {
             return (
-              <ReviewSelectImg key={idx} data-id={file} img={file}>
+              <ReviewSelectImg
+                key={idx}
+                data-id={file[0]}
+                data-name={file[1]}
+                img={file[0]}
+              >
                 <ImgDelete>
                   <FontAwesomeIcon
                     onClick={deleteFileImage}
