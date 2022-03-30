@@ -1,7 +1,7 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-import { ProfileIcon, Portal, SearchBox } from '@/components';
+import { ProfileIcon, Portal, SearchBox, BannerPortal } from '@/components';
 
 import logo from '@/assets/img/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -91,7 +91,9 @@ const Header = () => {
               </div>
             )}
             {isSearchBackModalOpen && (
-              <Portal setModalOpen={onClickToggleSearchBackModal}></Portal>
+              <BannerPortal
+                setModalOpen={onClickToggleSearchBackModal}
+              ></BannerPortal>
             )}
             <UlContainer
               isScroll={scrollPosition > 200 ? true : false}

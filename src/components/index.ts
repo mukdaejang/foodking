@@ -14,7 +14,7 @@ export { default as MoreButton } from './MoreButton';
 export { default as LinkCopyButton } from './LinkCopyButton';
 export { default as SurroundPopluars } from './SurroundPopulars';
 export { default as SearchBox } from './Search';
-export { default as Portal } from './Portal';
+export { Portal, BannerPortal } from './Portal';
 export { default as Reviews } from './Reviews';
 export { default as ReviewWrite } from './ReviewWrite';
 export { default as Button } from './Button';
