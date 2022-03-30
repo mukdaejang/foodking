@@ -27,6 +27,7 @@ const Map = ({ pos }: mapType) => {
       position: markerPosition,
     });
     map.setDraggable(false);
+    map.setZoomable(false);
     marker.setMap(map);
   }, []);
 
