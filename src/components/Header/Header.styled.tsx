@@ -20,10 +20,10 @@ export const StyledHeader = styled.header<headerprops>`
         : 'none'
       : '0 4px 11px rgb(0 0 0 / 10%)'};
   position: fixed;
+  z-index: 101;
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
 
   background-color: ${({ isScroll, isMain }) =>
     isMain ? (isScroll ? 'white' : 'transparent') : 'white'};
@@ -53,7 +53,7 @@ export const StyledHeader = styled.header<headerprops>`
 
 export const Search = css`
   width: 100%;
-  z-index: 10000;
+  /* z-index: 101; */
 `;
 
 export const UlContainer = styled.ul<headerprops>`
