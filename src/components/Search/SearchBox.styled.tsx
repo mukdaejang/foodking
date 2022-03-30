@@ -5,13 +5,11 @@ import Theme from '@/styles/theme';
 export const SearchBar = css`
   width: 60%;
   margin: 0 auto;
-  margin-top: 60px;
 `;
 
 export const ModalSearchBar = css`
   width: 60%;
   margin: 0 auto;
-  margin-top: 60px;
 
   position: relative;
   z-index: 1000;

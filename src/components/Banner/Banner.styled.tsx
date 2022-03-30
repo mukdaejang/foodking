@@ -19,5 +19,6 @@ export const banner = css`
   .banner__title {
     font-size: 40px;
     text-align: center;
+    margin-bottom: 60px;
   }
 `;
