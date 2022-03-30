@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { PostsWithId } from '@/firebase/type';
-import { getImageDocs } from '@/firebase/request';
+import { getImageDocs, updateStarCount } from '@/firebase/request';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
@@ -29,7 +29,7 @@ const List = ({
   address,
   category,
   score,
-	star,
+  star,
   images,
   isLiFirst,
   deleteOnePost,
@@ -64,14 +64,22 @@ const List = ({
       let favoriteArray: any = localStorage.getItem('favorite');
       if (!starState) {
         favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
-        favoriteArray.push(id);
-        favoriteArray = new Set(favoriteArray);
+        if (favoriteArray.includes(id)) {
+          setStarState(true);
+          return;
+        } else {
+          updateStarCount(id, true);
+          favoriteArray.push(id);
+          favoriteArray = new Set(favoriteArray);
+        }
       } else {
+        updateStarCount(id, false);
         favoriteArray = new Set(
           JSON.parse(favoriteArray).filter((item: any) => item !== id),
         );
       }
       favoriteArray = [...favoriteArray];
+
       localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
       setStarState(!starState);
