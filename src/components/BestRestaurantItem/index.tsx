@@ -19,7 +19,7 @@ import { BestRestaurantType } from '@/components/BestRestaurants';
 import Modal from '@/components/Modal';
 import SocialLogin from '@/components/Modal/SocialLogin';
 
-import { getImageDocs } from '@/firebase/request';
+import { getImageDocs, updateStarCount } from '@/firebase/request';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -47,9 +47,16 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
       let favoriteArray: any = localStorage.getItem('favorite');
       if (!starState) {
         favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
-        favoriteArray.push(restaurant.id);
-        favoriteArray = new Set(favoriteArray);
+        if (favoriteArray.includes(restaurant.id)) {
+          setStarState(true);
+          return;
+        } else {
+          updateStarCount(restaurant.id, true);
+          favoriteArray.push(restaurant.id);
+          favoriteArray = new Set(favoriteArray);
+        }
       } else {
+        updateStarCount(restaurant.id, false);
         favoriteArray = new Set(
           JSON.parse(favoriteArray).filter(
             (item: any) => item !== restaurant.id,
@@ -57,6 +64,7 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
         );
       }
       favoriteArray = [...favoriteArray];
+
       localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
       setStarState(!starState);

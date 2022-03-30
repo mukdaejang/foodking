@@ -1,9 +1,9 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+
 import { ProfileIcon, Portal, SearchBox } from '@/components';
 
 import logo from '@/assets/img/logo.svg';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -33,9 +33,18 @@ const Header = () => {
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
+
+    return () => window.removeEventListener('scroll', updateScroll);
   });
+
+  useEffect(() => {
+    setShowHeader(!(pathname === '/page-not-found'));
+    pathname === '/' ? setIsMainPage(true) : setIsMainPage(false);
+  }, [pathname]);
 
   const onClickToggleSearchBackModal = useCallback(() => {
     dispatch(modalActions.handleSearchBackModal());
@@ -44,8 +53,6 @@ const Header = () => {
   const onClickToggleModal = useCallback(() => {
     dispatch(modalActions.handleOverlayModal());
   }, [dispatch]);
-
-  const { pathname } = useLocation();
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -59,11 +66,6 @@ const Header = () => {
       dispatch(userActions.handleUserLogin(false));
     }
   });
-
-  useEffect(() => {
-    setShowHeader(!(pathname === '/page-not-found'));
-    pathname === '/' ? setIsMainPage(true) : setIsMainPage(false);
-  }, [pathname]);
 
   return (
     <Fragment>
