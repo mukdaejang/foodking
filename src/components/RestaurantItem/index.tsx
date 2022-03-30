@@ -17,9 +17,10 @@ import { PostsWithId } from '@/firebase/type';
 
 interface RestaurantType {
   info: PostsWithId;
+  cnt: number;
 }
 
-const Restaurant = ({ info }: RestaurantType) => {
+const Restaurant = ({ info, cnt }: RestaurantType) => {
   const [imageSrc, setImageSrc] = useState<string>('');
   const [loadState, setLoadState] = useState<boolean>(false);
   const [imgLoadState, setImgLoadState] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const Restaurant = ({ info }: RestaurantType) => {
 
   if (loadState) {
     return (
-      <RestaurantItem>
+      <RestaurantItem cnt={cnt}>
         <RestaurantLink to={`/restaurants/${info.id}`}>
           <figure>
             <RestaurantImgBox>
@@ -68,7 +69,7 @@ const Restaurant = ({ info }: RestaurantType) => {
     );
   } else {
     return (
-      <RestaurantItem>
+      <RestaurantItem cnt={cnt}>
         <RestaurantLink to="/">
           <figure>
             <RestaurantImgBox>
