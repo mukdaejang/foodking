@@ -8,7 +8,7 @@ import {
   doc,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, Reviews, DocParams } from './type';
+import { Posts, FoodLists, Users, Review, DocParams } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -16,10 +16,10 @@ import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
 export const createDoc = <T = DocumentData>({ docName, id }: DocParams) =>
   doc(db, docName, id) as DocumentReference<T>;
 
-const createCollection = <T = DocumentData>(collectionName: string) =>
+export const createCollection = <T = DocumentData>(collectionName: string) =>
   collection(db, collectionName) as CollectionReference<T>;
 
-const postsCol = createCollection<Posts>('posts');
+export const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
 const usersCol = createCollection<Users>('users');
 
@@ -142,7 +142,7 @@ export const registUser = async (userId: string) => {
   }
 };
 
-const reviewsCol = createCollection<Reviews>('reviews');
+const reviewsCol = createCollection<Review>('reviews');
 export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
   const reviewData = reviewDocs.docs.map((x) => x.data());
@@ -160,6 +160,32 @@ export const getImageDocs = async (fileName: string, category: string) => {
   }
 };
 
+export const reformPromiseAllSettled = <T>(result: PromiseSettledResult<T>[]) =>
+  result
+    .filter(({ status }) => status === 'fulfilled')
+    .map((result) => {
+      if (result.status === 'fulfilled') {
+        return result.value;
+      }
+      return '';
+    });
+
+export const getImages = async (category: string, imageUrls: string[]) => {
+  try {
+    const images = await Promise.allSettled(
+      imageUrls.map(async (url: string) => ({
+        title: url,
+        src: await getImageDocs(url, category),
+      })),
+    );
+    const result = reformPromiseAllSettled(images);
+    console.log({ result });
+    return result;
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
+};
+
 export const postReviewDocs = async ({
   userId,
   postId,
@@ -167,7 +193,7 @@ export const postReviewDocs = async ({
   score,
   images,
   text,
-}: Reviews) => {
+}: Review) => {
   const docRef = await addDoc(collection(db, 'reviews'), {
     userId,
     postId,
