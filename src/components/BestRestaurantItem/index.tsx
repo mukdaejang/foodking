@@ -68,7 +68,7 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
   const [imageSrc, setImageSrc] = useState<string>();
 
   useEffect(() => {
-    getImageDocs(restaurant.images[0])
+    getImageDocs(restaurant.images[0], 'restaurants')
       .then((res: any) => setImageSrc(res))
       .then((res) => {
         setTimeout(() => {
