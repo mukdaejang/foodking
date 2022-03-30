@@ -28,10 +28,10 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
   useEffect(() => {
     getPostImageTitleDocs(categoryData.list.slice(0, 2))
       .then((imgTitle) => {
-        getImageDocs(imgTitle[0]).then((res: any) =>
+        getImageDocs(imgTitle[0], 'restaurants').then((res: any) =>
           setImageSrc1([res, imgTitle[0].replace('1.jpeg', '')]),
         );
-        getImageDocs(imgTitle[1]).then((res: any) =>
+        getImageDocs(imgTitle[1], 'restaurants').then((res: any) =>
           setImageSrc2([res, imgTitle[1].replace('1.jpeg', '')]),
         );
       })
