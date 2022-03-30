@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { TitleHeader, Descriptions } from './RestaurantInfo.styled';
@@ -14,6 +14,8 @@ import theme from '@/styles/theme';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+
+import { updateStarCount } from '@/firebase/request';
 
 const RestaurantInfo = () => {
   const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
@@ -37,19 +39,27 @@ const RestaurantInfo = () => {
 
   const { postId = '' } = useParams();
 
-  const changeStar = () => {
+  const changeStar = (e: MouseEvent) => {
     if (isUserLogin) {
       let favoriteArray: any = localStorage.getItem('favorite');
       if (!starState) {
         favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
-        favoriteArray.push(postId);
-        favoriteArray = new Set(favoriteArray);
+        if (favoriteArray.includes(postId)) {
+          setStarState(true);
+          return;
+        } else {
+          updateStarCount(postId, true);
+          favoriteArray.push(postId);
+          favoriteArray = new Set(favoriteArray);
+        }
       } else {
+        updateStarCount(postId, false);
         favoriteArray = new Set(
           JSON.parse(favoriteArray).filter((item: any) => item !== postId),
         );
       }
       favoriteArray = [...favoriteArray];
+
       localStorage.setItem('favorite', JSON.stringify(favoriteArray));
 
       setStarState(!starState);

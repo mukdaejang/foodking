@@ -11,7 +11,7 @@ import {
   isNotSelected,
 } from './ProfileIcon.styled';
 
-import { getPostListDocs } from '@/firebase/request';
+import { getPostListDocs, updateStarCount } from '@/firebase/request';
 import { PostsWithId } from '@/firebase/type';
 import { getAuth, signOut } from 'firebase/auth';
 
@@ -65,6 +65,16 @@ const ProfileIcon = ({
     dispatch(modalActions.handleSocialModal());
   };
 
+  // const renderFavoritePosts = () => {
+  //   let favoriteArray: any = localStorage.getItem('favorite');
+  //   favoriteArray = JSON.parse(favoriteArray);
+  //   if (favoriteArray?.length) {
+  //     getPostListDocs(favoriteArray).then((res) => {
+  //       setFavoritePosts(res.reverse());
+  //     });
+  //   }
+  // };
+
   const favoriteClick = () => {
     if (isUserLogin) {
       setisLiFirst(false);
@@ -86,6 +96,8 @@ const ProfileIcon = ({
   const deleteOneFavorite = (postId: string) => {
     let arr = favoritePosts;
     arr = arr.filter((item) => item.id !== postId);
+
+    updateStarCount(postId, false);
     setFavoritePosts(arr);
   };
 
@@ -94,6 +106,13 @@ const ProfileIcon = ({
       localStorage.removeItem('watched');
       setRecentlyWatchedPosts([]);
     } else {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+
+      favoriteArray.forEach((postId: string) => {
+        updateStarCount(postId, false);
+      });
+
       localStorage.removeItem('favorite');
       setFavoritePosts([]);
     }
@@ -157,6 +176,7 @@ const ProfileIcon = ({
                         images={images}
                         isLiFirst={isLiFirst}
                         deleteOnePost={deleteOneRecentlyWathced}
+                        deleteOneFavorite={deleteOneFavorite}
                       ></List>
                     );
                   },
@@ -185,6 +205,7 @@ const ProfileIcon = ({
                       images={images}
                       isLiFirst={isLiFirst}
                       deleteOnePost={deleteOneFavorite}
+                      deleteOneFavorite={deleteOneFavorite}
                     ></List>
                   );
                 },
