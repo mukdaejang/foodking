@@ -28,6 +28,7 @@ import {
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
 import { useLocation } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
@@ -79,26 +80,54 @@ const ReviewWrite = () => {
   };
 
   // 이미지 미리보기 할 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Array<Blob>>([]);
-  const [fileImageSrc, setFileImageSrc] = useState<Array<string>>([]);
+  const [fileImage, setFileImage] = useState<Blob[]>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
 
   // 파일 저장
-  const saveFileImage = (e: any) => {
+  const saveFileImage = async (e: any) => {
     if (fileRef.current?.files) {
-      setFileImage([...fileImage, fileRef.current?.files[0]]);
-      setFileImageSrc([
-        ...fileImageSrc,
-        URL.createObjectURL(fileRef.current?.files[0]),
-      ]);
+      // setFileImage([...fileImage, fileRef.current?.files[0]]);
+      // setFileImageSrc([
+      //   ...fileImageSrc,
+      //   [
+      //     URL.createObjectURL(fileRef.current?.files[0]),
+      //     fileRef.current?.files[0].name,
+      //   ],
+      // ]);
+
+      let file = fileRef.current?.files[0]; // 입력받은 file객체
+
+      // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+      const options = {
+        maxSizeMB: 2,
+        maxWidthOrHeight: 300,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        setFileImage([...fileImage, compressedFile]);
+        setFileImageSrc([
+          ...fileImageSrc,
+          [URL.createObjectURL(file), file.name],
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+
       e.target.value = '';
     }
   };
 
   // 파일 삭제
   const deleteFileImage = (e: any) => {
-    const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
-    setFileImageSrc([...fileImageSrc].filter((file: any) => fileName !== file));
-    URL.revokeObjectURL(fileName);
+    const fileSrc = e.currentTarget.parentNode.parentNode.dataset.id;
+    const fileName = e.currentTarget.parentNode.parentNode.dataset.name;
+
+    setFileImageSrc(
+      [...fileImageSrc].filter((file: any) => fileSrc !== file[0]),
+    );
+    setFileImage([...fileImage].filter((file: any) => fileName !== file.name));
+    URL.revokeObjectURL(fileSrc);
   };
 
   const craeteReview = async () => {
@@ -110,7 +139,7 @@ const ReviewWrite = () => {
 
     // 이미지
     const images = await Promise.all(
-      fileImage.map(async (file) => await postImage(file)),
+      fileImage.map(async (file) => await postImage(file, 'reviews')),
     );
 
     // text
@@ -120,14 +149,14 @@ const ReviewWrite = () => {
     const score = +(selectScore || 0);
 
     // firebase insert
-    // await postReviewDocs({
-    //   postId,
-    //   userId,
-    //   date,
-    //   images,
-    //   text,
-    //   score,
-    // });
+    await postReviewDocs({
+      postId,
+      userId,
+      date,
+      images,
+      text,
+      score,
+    });
 
     // 데이터 집어넣는 부분
     // restaurants.forEach(async (obj: any) => {
@@ -189,7 +218,12 @@ const ReviewWrite = () => {
         <ReviewSelectImgs>
           {fileImageSrc.map((file, idx) => {
             return (
-              <ReviewSelectImg key={idx} data-id={file} img={file}>
+              <ReviewSelectImg
+                key={idx}
+                data-id={file[0]}
+                data-name={file[1]}
+                img={file[0]}
+              >
                 <ImgDelete>
                   <FontAwesomeIcon
                     onClick={deleteFileImage}

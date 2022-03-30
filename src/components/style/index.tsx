@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Title = styled.h1`
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
   color: ${({ theme }) => theme.colors.orange};
@@ -51,4 +51,8 @@ export const ContainerText = styled.div`
   font-weight: 400;
   margin-top: 12px;
   text-align: center;
+`;
+
+export const FloatBox = styled.ul`
+  overflow: hidden;
 `;

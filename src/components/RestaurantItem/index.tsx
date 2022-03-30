@@ -17,14 +17,16 @@ import { PostsWithId } from '@/firebase/type';
 
 interface RestaurantType {
   info: PostsWithId;
+  cnt: number;
 }
 
-const Restaurant = ({ info }: RestaurantType) => {
+const Restaurant = ({ info, cnt }: RestaurantType) => {
   const [imageSrc, setImageSrc] = useState<string>('');
   const [loadState, setLoadState] = useState<boolean>(false);
+  const [imgLoadState, setImgLoadState] = useState<boolean>(false);
 
   useEffect(() => {
-    getImageDocs(info.images![0] as any)
+    getImageDocs(info.images![0] as any, 'restaurants')
       .then((res: any) => setImageSrc(res))
       .then((res) => {
         setTimeout(() => {
@@ -33,13 +35,26 @@ const Restaurant = ({ info }: RestaurantType) => {
       });
   }, []);
 
+  const changeImgLoadState = () => setImgLoadState(true);
+
   if (loadState) {
     return (
-      <RestaurantItem>
+      <RestaurantItem cnt={cnt}>
         <RestaurantLink to={`/restaurants/${info.id}`}>
           <figure>
             <RestaurantImgBox>
-              <RestaurantImg src={`${imageSrc}`} alt="food" />
+              <RestaurantImg
+                src={`${imageSrc}`}
+                alt="food"
+                onLoad={changeImgLoadState}
+              />
+              {!imgLoadState ? (
+                <RestaurantSkeleton>
+                  <Skeleton width={'100%'} height={'100%'} />
+                </RestaurantSkeleton>
+              ) : (
+                ''
+              )}
             </RestaurantImgBox>
             <RestaurantInfo>
               <p>
@@ -54,7 +69,7 @@ const Restaurant = ({ info }: RestaurantType) => {
     );
   } else {
     return (
-      <RestaurantItem>
+      <RestaurantItem cnt={cnt}>
         <RestaurantLink to="/">
           <figure>
             <RestaurantImgBox>

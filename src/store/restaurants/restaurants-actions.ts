@@ -22,7 +22,7 @@ export const request = createAsyncThunk(
       data.images = await Promise.allSettled(
         data.images.map(async (url: string) => ({
           title: url,
-          src: await getImageDocs(url),
+          src: await getImageDocs(url, 'restaurants'),
         })),
       );
       data.images = data.images.map(({ value }: PromiseAllSettled) => value);
