@@ -89,42 +89,40 @@ export const UlContainer = styled.ul<headerprops>`
 `;
 
 export const UserLoginDiv = styled.div<headerprops>`
-  div {
-    height: 100%;
-    width: 86px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-left: ${({ isScroll, isMain, theme }) =>
+  height: 100%;
+  width: 86px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: ${({ isScroll, isMain, theme }) =>
+    isMain
+      ? isScroll
+        ? `1px solid ${theme.colors.gray900}`
+        : 'none'
+      : `1px solid ${theme.colors.gray900}`};
+
+  .profileImgBtn {
+    border: 2px solid ${({ theme }) => theme.colors.orange};
+    border-radius: 34px;
+    overflow: hidden;
+    width: 38px;
+    height: 38px;
+  }
+
+  button {
+    border: none;
+    color: ${({ isScroll, isMain, theme }) =>
       isMain
         ? isScroll
-          ? `1px solid ${theme.colors.gray900}`
-          : 'none'
-        : `1px solid ${theme.colors.gray900}`};
+          ? `${theme.colors.gray500}`
+          : 'white'
+        : `${theme.colors.gray500}`};
+    cursor: pointer;
+    background-color: transparent;
 
-    .profileImgBtn {
-      border: 2px solid ${({ theme }) => theme.colors.orange};
-      border-radius: 34px;
-      overflow: hidden;
-      width: 38px;
-      height: 38px;
-    }
-
-    button {
-      border: none;
-      color: ${({ isScroll, isMain, theme }) =>
-        isMain
-          ? isScroll
-            ? `${theme.colors.gray500}`
-            : 'white'
-          : `${theme.colors.gray500}`};
-      cursor: pointer;
-      background-color: transparent;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 `;
