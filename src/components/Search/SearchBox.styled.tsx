@@ -3,12 +3,11 @@ import styled from '@emotion/styled';
 import Theme from '@/styles/theme';
 
 export const SearchBar = css`
-  width: 60%;
-  margin: 0 auto;
+  width: 750px;
 `;
 
 export const ModalSearchBar = css`
-  width: 60%;
+  width: 750px;
   margin: 0 auto;
 
   position: relative;

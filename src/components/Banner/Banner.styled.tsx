@@ -22,3 +22,9 @@ export const banner = css`
     margin-bottom: 60px;
   }
 `;
+export const SearchContainer = css`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
