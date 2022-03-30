@@ -16,5 +16,15 @@ export const mainContent = css`
 
   aside {
     margin-top: 2rem;
+
+    .mapXIcon {
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      transform: translate(0, -110%);
+      z-index: 100000;
+      cursor: pointer;
+      color: white;
+    }
   }
 `;

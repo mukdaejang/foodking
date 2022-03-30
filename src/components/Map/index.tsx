@@ -1,6 +1,9 @@
 import { MapStyle } from './map.styled';
-import { useEffect, useRef } from 'react';
+import { Fragment, useState, useEffect, useRef } from 'react';
 import Modal from '@/components/Modal';
+import MapModal from './mapModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface mapType {
   pos: number[];
@@ -9,6 +12,7 @@ interface mapType {
 const Map = ({ pos }: mapType) => {
   const { kakao }: any = window;
   const mapRef = useRef<HTMLDivElement>(null);
+  const [isMapModalOpen, setIsMapModalOpen] = useState<Boolean>(false);
 
   useEffect(() => {
     const container = mapRef.current;
@@ -26,11 +30,30 @@ const Map = ({ pos }: mapType) => {
     marker.setMap(map);
   }, []);
 
-  const MapBigSize = () => {
-    console.log('event');
+  const handleMapBigModal = () => {
+    const isMapModalOpenState = isMapModalOpen;
+    setIsMapModalOpen(!isMapModalOpenState);
+    document.body.style.overflow = !isMapModalOpenState ? 'hidden' : 'unset';
   };
 
-  return <MapStyle ref={mapRef} onClick={MapBigSize}></MapStyle>;
+  return (
+    <Fragment>
+      {isMapModalOpen && (
+        <FontAwesomeIcon
+          className="mapXIcon"
+          icon={faXmark}
+          size={'2x'}
+          onClick={handleMapBigModal}
+        />
+      )}
+      <MapStyle ref={mapRef} onClick={handleMapBigModal}></MapStyle>
+      {isMapModalOpen && (
+        <Modal closePortal={handleMapBigModal}>
+          <MapModal pos={pos}></MapModal>
+        </Modal>
+      )}
+    </Fragment>
+  );
 };
 
 export default Map;
