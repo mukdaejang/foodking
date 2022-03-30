@@ -21,6 +21,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 export interface ListProps extends PostsWithId {
   isLiFirst: boolean;
   deleteOnePost: (arg0: string) => void;
+  deleteOneFavorite: (arg0: string) => void;
 }
 
 const List = ({
@@ -33,6 +34,7 @@ const List = ({
   images,
   isLiFirst,
   deleteOnePost,
+  deleteOneFavorite,
 }: ListProps) => {
   const dispatch = useAppDispatch();
   const { isUserLogin } = useAppSelector(({ user }) => user);
@@ -50,6 +52,7 @@ const List = ({
           setIsLoadingFinish(true);
         }, 600);
       });
+    console.log(imageSrc);
   }, []);
 
   const handleSocialModal = () => {
@@ -74,6 +77,7 @@ const List = ({
         }
       } else {
         updateStarCount(id, false);
+        deleteOneFavorite(id);
         favoriteArray = new Set(
           JSON.parse(favoriteArray).filter((item: any) => item !== id),
         );
