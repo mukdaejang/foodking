@@ -42,8 +42,8 @@ export const Image: FC<ImageType> = ({ title, src }) => (
 const Images = ({ images, size }: ImagesProps) => {
   return (
     <ImagesContainer size={size}>
-      {images.map(({ title, src }) => (
-        <Image key={title} title={title} src={src} />
+      {images.map(({ title, src }, i) => (
+        <Image key={title + i} title={title} src={src} />
       ))}
     </ImagesContainer>
   );
