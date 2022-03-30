@@ -32,7 +32,7 @@ const SearchResult = () => {
         <ul>
           {fetchFilteredData &&
             fetchFilteredData.map((elem: PostsWithId) => (
-              <Restaurant key={elem.id} info={elem}></Restaurant>
+              <Restaurant key={elem.id} info={elem} cnt={3}></Restaurant>
             ))}
         </ul>
       </div>
