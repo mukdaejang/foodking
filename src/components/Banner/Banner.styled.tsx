@@ -19,5 +19,12 @@ export const banner = css`
   .banner__title {
     font-size: 40px;
     text-align: center;
+    margin-bottom: 60px;
   }
+`;
+export const SearchContainer = css`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
