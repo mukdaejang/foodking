@@ -4,6 +4,7 @@ import { keywordStyle } from './SearchKeyword.styled';
 import glassSolid from '@/assets/icons/glass-solid.svg';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
+import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
 import { saveKeywordsToLocalStorage } from '@/utils';
 
 interface PropType {
@@ -23,9 +24,13 @@ const SearchKeyword = ({ suggest }: PropType) => {
     dispatch(modalActions.handleSearchBackModal());
   };
 
+  const saveKeywordToRedux = (str: string) =>
+    dispatch(keywordSuggestActions.handleSearchKeyword(str));
+
   const onClick = (e: MouseEvent) => {
     let clickedText = (e.target as HTMLLIElement).textContent;
     clickedText && saveKeywordsToLocalStorage(clickedText);
+    clickedText && saveKeywordToRedux(clickedText);
     handleSearchBackModal();
     navigate(`/search/${URLTEXT}`);
   };

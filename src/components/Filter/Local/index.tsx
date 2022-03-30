@@ -192,7 +192,6 @@ const Local = ({ local, setLocal }: PropsType) => {
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
-      console.log(e.target, WrapperRef.current);
       if (WrapperRef.current === e.target) {
         setOnMoreButton(false);
         return;
