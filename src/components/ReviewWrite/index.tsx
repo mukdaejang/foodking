@@ -86,30 +86,33 @@ const ReviewWrite = () => {
   // 파일 저장
   const saveFileImage = async (e: any) => {
     if (fileRef.current?.files) {
-      setFileImage([...fileImage, fileRef.current?.files[0]]);
-      setFileImageSrc([
-        ...fileImageSrc,
-        [
-          URL.createObjectURL(fileRef.current?.files[0]),
-          fileRef.current?.files[0].name,
-        ],
-      ]);
+      // setFileImage([...fileImage, fileRef.current?.files[0]]);
+      // setFileImageSrc([
+      //   ...fileImageSrc,
+      //   [
+      //     URL.createObjectURL(fileRef.current?.files[0]),
+      //     fileRef.current?.files[0].name,
+      //   ],
+      // ]);
 
-      // let file = fileRef.current?.files[0]; // 입력받은 file객체
+      let file = fileRef.current?.files[0]; // 입력받은 file객체
 
-      // // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
-      // const options = {
-      //   maxSizeMB: 2,
-      //   maxWidthOrHeight: 100,
-      // };
+      // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+      const options = {
+        maxSizeMB: 2,
+        maxWidthOrHeight: 300,
+      };
 
-      // try {
-      //   const compressedFile = await imageCompression(file, options);
-      //   setFileImage([...fileImage, compressedFile]);
-      //   setFileImageSrc([...fileImageSrc, URL.createObjectURL(file)]);
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      try {
+        const compressedFile = await imageCompression(file, options);
+        setFileImage([...fileImage, compressedFile]);
+        setFileImageSrc([
+          ...fileImageSrc,
+          [URL.createObjectURL(file), file.name],
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
 
       e.target.value = '';
     }
@@ -136,7 +139,7 @@ const ReviewWrite = () => {
 
     // 이미지
     const images = await Promise.all(
-      fileImage.map(async (file) => await postImage(file)),
+      fileImage.map(async (file) => await postImage(file, 'reviews')),
     );
 
     // text

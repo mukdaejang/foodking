@@ -25,7 +25,7 @@ const Restaurant = ({ info }: RestaurantType) => {
   const [imgLoadState, setImgLoadState] = useState<boolean>(false);
 
   useEffect(() => {
-    getImageDocs(info.images![0] as any)
+    getImageDocs(info.images![0] as any, 'restaurants')
       .then((res: any) => setImageSrc(res))
       .then((res) => {
         setTimeout(() => {
