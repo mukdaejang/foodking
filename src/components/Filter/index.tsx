@@ -20,21 +20,26 @@ const Filter = ({
   const [order, setOrder] = useState<boolean>(false);
   const [local, setLocal] = useState<string[]>([]);
   const [kind, setKind] = useState<string[]>([]);
+  const [scrollY, setScollY] = useState();
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    let temp = fetchData;
-
+    let filteredData = fetchData;
     if (order) {
-      temp && temp.sort((a, b) => b.star - a.star);
+      filteredData && filteredData.sort((a, b) => b.star - a.star);
+    } else filteredData && filteredData.sort((a, b) => b.score - a.score);
+    if (local.length > 0 && filteredData) {
+      filteredData = filteredData.filter((elem) =>
+        local.includes(elem.address.district),
+      );
     }
-    if (local.length > 0 && temp) {
-      temp = temp.filter((elem) => local.includes(elem.address.district));
+    if (kind.length > 0 && filteredData) {
+      filteredData = filteredData.filter((elem) =>
+        kind.includes(elem.category),
+      );
     }
-    if (kind.length > 0 && temp) {
-      temp = temp.filter((elem) => kind.includes(elem.category));
-    }
-    console.log(temp);
-    setFetchFilteredData(temp);
+
+    window.scrollTo(0, 0);
+    setFetchFilteredData(filteredData);
   };
   return (
     <article css={Container}>
