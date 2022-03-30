@@ -8,6 +8,16 @@ export const modalBackground = css`
   z-index: 200;
   background-color: rgba(0, 0, 0, 0.6);
 `;
+
+export const bannerModalOpen = css`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
 export const loginModalBackground = css`
   width: 100vw;
   height: 100vh;
