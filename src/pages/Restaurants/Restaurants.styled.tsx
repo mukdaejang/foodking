@@ -6,14 +6,15 @@ export const imageContainer = css`
 
 export const mainContent = css`
   display: flex;
+  padding: 0.4rem;
 
   .main-content {
     flex-grow: 1;
-    padding: 0 22rem;
-    margin-top: 4rem;
+    padding: 0 50px;
+    margin-top: 3rem;
   }
 
   aside {
-    width: 25rem;
+    margin-top: 2rem;
   }
 `;
