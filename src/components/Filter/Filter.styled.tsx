@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = css`
-  width: 600px;
+  width: 500px;
   margin: 0 auto;
 `;
 
