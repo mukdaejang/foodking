@@ -29,6 +29,7 @@ const List = ({
   address,
   category,
   score,
+	star,
   images,
   isLiFirst,
   deleteOnePost,

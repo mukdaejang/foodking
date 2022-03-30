@@ -138,7 +138,7 @@ const ProfileIcon = ({
               recentlyWatchedPosts.length ? (
                 recentlyWatchedPosts.map(
                   (
-                    { id, name, address, category, score, images },
+                    { id, name, address, category, score, star, images },
                     index: number,
                   ) => {
                     return (
@@ -149,6 +149,7 @@ const ProfileIcon = ({
                         address={address}
                         category={category}
                         score={score}
+                        star={star}
                         images={images}
                         isLiFirst={isLiFirst}
                         deleteOnePost={deleteOneRecentlyWathced}
@@ -164,7 +165,10 @@ const ProfileIcon = ({
               )
             ) : favoritePosts.length ? (
               favoritePosts.map(
-                ({ id, name, address, category, score, images }, index) => {
+                (
+                  { id, name, address, category, score, star, images },
+                  index,
+                ) => {
                   return (
                     <List
                       id={id}
@@ -173,6 +177,7 @@ const ProfileIcon = ({
                       address={address}
                       category={category}
                       score={score}
+                      star={star}
                       images={images}
                       isLiFirst={isLiFirst}
                       deleteOnePost={deleteOneFavorite}

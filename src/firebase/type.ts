@@ -27,6 +27,7 @@ export interface Posts {
     price: string;
   }[];
   score: number;
+  star: number;
   description?: string;
   images?: ImageType[];
 }
