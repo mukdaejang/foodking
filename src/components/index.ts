@@ -22,3 +22,4 @@ export { default as Filter } from './Filter';
 export { default as RestaurantInfo } from './RestaurantInfo';
 export { default as IconButton } from './IconButton';
 export { default as BestRestaurants } from './BestRestaurants';
+export { default as KakaoMap } from './Map';
