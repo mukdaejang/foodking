@@ -32,6 +32,7 @@ const SearchKeyword = ({ suggest }: PropType) => {
     clickedText && saveKeywordsToLocalStorage(clickedText);
     clickedText && saveKeywordToRedux(clickedText);
     handleSearchBackModal();
+    window.scrollTo(0, 0);
     navigate(`/search/${URLTEXT}`);
   };
 
