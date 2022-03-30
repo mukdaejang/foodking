@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-const RestaurantItem = styled.li`
+const RestaurantItem = styled.li<{ cnt: number }>`
   float: left;
-  width: 25%;
+  width: calc(100% / ${(props) => props.cnt});
   padding: 20px;
   list-style: none;
   box-sizing: border-box;

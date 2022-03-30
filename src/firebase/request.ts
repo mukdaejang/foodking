@@ -149,8 +149,9 @@ export const getReviewDocs = async () => {
   return reviewData;
 };
 
-export const getImageDocs = async (fileName: string) => {
-  const imagesRef = ref(storage, fileName);
+// fileName -> 파일 이름 / category -> 파베 스토리지 종류별 폴더명
+export const getImageDocs = async (fileName: string, category: string) => {
+  const imagesRef = ref(storage, `${category}/${fileName}`);
 
   try {
     return await getDownloadURL(imagesRef);
@@ -188,9 +189,9 @@ export const addUsersDocs = async ({ userId, favorites }: Users) => {
 // storage (이미지)
 const storage = getStorage();
 
-export const postImage = async (file: any) => {
+export const postImage = async (file: any, category: string) => {
   try {
-    const storageRef = ref(storage, file.name);
+    const storageRef = ref(storage, `${category}/${file.name}`);
 
     await uploadBytes(storageRef, file).then((snapshot) => {
       console.log('Uploaded a blob or file!');
