@@ -37,8 +37,7 @@ export const StyledHeader = styled.header<headerprops>`
       height: 33px;
     }
   }
-
-  input {
+  /* input {
     width: 100%;
     height: 27px;
     margin-left: 13px;
@@ -49,40 +48,47 @@ export const StyledHeader = styled.header<headerprops>`
     &:focus {
       outline: none;
     }
-  }
+  } */
+`;
 
-  ul {
+export const Search = css`
+  width: 100%;
+  z-index: 10000;
+`;
+
+export const UlContainer = styled.ul<headerprops>`
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+
+  li {
+    width: 130px;
+    height: 60px;
     display: flex;
-    list-style: none;
-    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+    border-left: ${({ isScroll, isMain, theme }) =>
+      isMain
+        ? isScroll
+          ? `1px solid ${theme.colors.gray900}`
+          : 'none'
+        : `1px solid ${theme.colors.gray900}`};
 
-    li {
-      width: 130px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-left: ${({ isScroll, isMain, theme }) =>
+    span {
+      color: ${({ isScroll, isMain, theme }) =>
         isMain
           ? isScroll
-            ? `1px solid ${theme.colors.gray900}`
-            : 'none'
-          : `1px solid ${theme.colors.gray900}`};
+            ? `${theme.colors.gray800}`
+            : `${theme.colors.white}`
+          : `${theme.colors.gray800}`};
 
-      span {
-        color: ${({ isScroll, isMain, theme }) =>
-          isMain
-            ? isScroll
-              ? `${theme.colors.gray800}`
-              : `${theme.colors.white}`
-            : `${theme.colors.gray800}`};
-
-        font-size: 14px;
-        font-weight: 700;
-      }
+      font-size: 14px;
+      font-weight: 700;
     }
   }
+`;
 
+export const UserLoginDiv = styled.div<headerprops>`
   div {
     height: 100%;
     width: 86px;
@@ -122,7 +128,6 @@ export const StyledHeader = styled.header<headerprops>`
     }
   }
 `;
-
 export const blankDiv = css`
   width: 0px;
   height: 60px;

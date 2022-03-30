@@ -70,11 +70,17 @@ export const getSearchData = async (keyword: string) => {
     id: x.id,
   }));
 
-  const postSearchName = await getDocs(q3);
+  const postSearchName = await getDocs(q4);
   const postSearchNameData = postSearchName.docs.map((x) => ({
     ...x.data(),
     id: x.id,
   }));
+  console.log('test', [
+    ...postSearchData,
+    ...postSearchDistrictData,
+    ...postSearchDetailData,
+    ...postSearchNameData,
+  ]);
 
   return [
     ...postSearchData,
