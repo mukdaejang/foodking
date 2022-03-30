@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Section, Left, Right, item } from './searchResult.styled';
+import { Section, Left, Right, item, UlContainer } from './searchResult.styled';
 import { Filter, Restaurant } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getSearchData } from '@/firebase/api/searchkeyword';
@@ -18,7 +18,6 @@ const SearchResult = () => {
   useEffect(() => {
     const fetchSearchData = async () => {
       const result = await getSearchData(inputSearchKeyword);
-      console.log(result);
       result.sort((a, b) => b.score - a.score);
       setFetchData(result);
       setFetchFilteredData(result);
@@ -27,9 +26,9 @@ const SearchResult = () => {
   }, []);
 
   return (
-    <section css={Section}>
+    <article css={Section}>
       <div css={Left}>
-        <ul>
+        <ul css={UlContainer}>
           {fetchFilteredData &&
             fetchFilteredData.map((elem: PostsWithId) => (
               <Restaurant key={elem.id} info={elem} cnt={3}></Restaurant>
@@ -45,7 +44,7 @@ const SearchResult = () => {
         ></Filter>
         ;
       </div>
-    </section>
+    </article>
   );
 };
 
