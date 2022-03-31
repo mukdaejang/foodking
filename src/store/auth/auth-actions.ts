@@ -12,7 +12,11 @@ export const login = createAsyncThunk(
         return;
       }
 
-      await registUser(result?.user?.uid);
+      await registUser(
+        result?.user?.uid,
+        result?.user?.displayName,
+        result?.user?.providerData[0].photoURL,
+      );
       return result?.user?.uid;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

@@ -52,7 +52,6 @@ const List = ({
           setIsLoadingFinish(true);
         }, 600);
       });
-    console.log(imageSrc);
   }, []);
 
   const handleSocialModal = () => {
