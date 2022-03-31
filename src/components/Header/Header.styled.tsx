@@ -20,7 +20,10 @@ export const StyledHeader = styled.header<headerprops>`
         : 'none'
       : '0 4px 11px rgb(0 0 0 / 10%)'};
   position: fixed;
-  z-index: 101;
+  z-index: ${({ isScroll }) => (isScroll ? '102' : `99`)};
+
+  z-index: ${({ isScroll, isMain }) =>
+    isMain ? (isScroll ? '102' : '99') : '101'};
   width: 100%;
   top: 0;
   left: 0;

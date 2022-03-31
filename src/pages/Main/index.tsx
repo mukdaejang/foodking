@@ -1,14 +1,24 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Restaurants, Carousel, Banner } from '@/components';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+// import { Carousel, Banner, Restaurants } from '@/components';
+
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { SortMiddel95 } from '@/components/style';
-
 /** firebase */
 import { getKeywordData } from '@/firebase/api/searchkeyword';
 import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
-
 import { Helmet } from 'react-helmet-async';
 import { setDocumentTitle } from '@/utils';
+
+/** lazy loading components */
+let Restaurants = lazy(() => {
+  return import('@/components/Restaurants');
+});
+let Banner = lazy(() => {
+  return import('@/components/Banner');
+});
+let Carousel = lazy(() => {
+  return import('@/components/Carousel');
+});
 
 const Main = () => {
   const dispatch = useAppDispatch();
@@ -38,13 +48,15 @@ const Main = () => {
       <Helmet>
         <title>{setDocumentTitle('')}</title>
       </Helmet>
-      <Banner />
-      <SortMiddel95>
-        <Carousel title={'맛집'} />
-        <Carousel title={'술집'} />
-        <Restaurants title={'맛집'} />
-        <Restaurants title={'술집'} />
-      </SortMiddel95>
+      <Suspense fallback={<div>test</div>}>
+        <Banner />
+        <SortMiddel95>
+          <Carousel title={'맛집'} />
+          <Carousel title={'술집'} />
+          <Restaurants title={'맛집'} />
+          <Restaurants title={'술집'} />
+        </SortMiddel95>
+      </Suspense>
     </main>
   );
 };
