@@ -153,9 +153,9 @@ const RestaurantInfo = () => {
                 </li>
               ))}
             </ul>
-            <button>
+            {/* <button>
               <img src={foodImage} alt={'메뉴'} />
-            </button>
+            </button> */}
           </dd>
         </dl>
         <p>업데이트: 2018 2.2</p>
