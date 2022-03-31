@@ -17,6 +17,7 @@ import {
   UsersWithImgAndName,
   Review,
   DocParams,
+  Search,
 } from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -206,7 +207,6 @@ export const getImages = async (category: string, imageUrls: string[]) => {
       })),
     );
     const result = reformPromiseAllSettled(images);
-    console.log({ result });
     return result;
   } catch (error) {
     console.error(getErrorMessage(error));
@@ -287,4 +287,21 @@ export const postRestaurantsDocs = async ({
     images,
   });
   console.log('Document written with ID: ', docRef.id);
+};
+
+export const searchByLocation = async ({ location, keyword }: Search) => {
+  const searchQuery = query(
+    postsCol,
+    where(location, '>=', keyword),
+    where(location, '<=', keyword + '\uf8ff'),
+  );
+  try {
+    const keywordSnapShot = await getDocs(searchQuery);
+    return keywordSnapShot.docs.map((data) => ({
+      ...data.data(),
+      id: data.id,
+    }));
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
 };
