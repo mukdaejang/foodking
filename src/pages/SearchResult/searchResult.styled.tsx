@@ -11,10 +11,10 @@ export const UlContainer = css`
   width: 100%;
 `;
 export const Left = css`
-  width: 100%;
+  width: 1000px;
 `;
 export const Right = css`
-  width: 100%;
+  margin-left: 100px;
 `;
 
 export const NoDisplay = css`

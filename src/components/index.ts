@@ -12,7 +12,7 @@ export { default as Footer } from './Footer';
 export { default as BestRestaurantItem } from './BestRestaurantItem';
 export { default as MoreButton } from './MoreButton';
 export { default as LinkCopyButton } from './LinkCopyButton';
-export { default as SurroundPopluars } from './SurroundPopulars';
+export { default as LocalPopluars } from './LocalPopulars';
 export { default as SearchBox } from './Search';
 export { Portal, BannerPortal } from './Portal';
 export { default as Reviews } from './Reviews';

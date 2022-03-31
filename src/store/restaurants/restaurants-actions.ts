@@ -5,6 +5,7 @@ import {
   createCollection,
   getImages,
   reformPromiseAllSettled,
+  searchByLocation,
 } from '@/firebase/request';
 import { getDoc, getDocs, query, where } from 'firebase/firestore';
 
@@ -27,7 +28,11 @@ export const request = createAsyncThunk(
         where('postId', '==', id),
       );
       const reviewDocs = await getDocs(reviewQueryByPostId);
-      const reviews = reviewDocs.docs.map((x) => x.data());
+      const reviews = reviewDocs.docs.map((x) => ({
+        id: x.id,
+        ...x.data(),
+      }));
+      console.log(reviews);
 
       const reviewsAllSettled = await Promise.allSettled(
         reviews.map(async (review) => ({
@@ -39,9 +44,27 @@ export const request = createAsyncThunk(
         })),
       );
 
+      const localPops = await searchByLocation({
+        location: 'address.district',
+        keyword: post?.address?.district,
+      });
+      if (!localPops) {
+        return;
+      }
+
+      const localPopsAllSettled = await Promise.allSettled(
+        localPops?.map(async (restaurant) => ({
+          ...restaurant,
+          images: await getImages(
+            'restaurants',
+            restaurant.images as unknown as string[],
+          ),
+        })),
+      );
+
       post.images = await getImages('restaurants', post.images);
       post.reviews = reformPromiseAllSettled(reviewsAllSettled);
-
+      post.localPops = reformPromiseAllSettled(localPopsAllSettled);
       return post;
     } catch (error: any) {
       return rejectWithValue(error?.response.data);

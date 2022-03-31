@@ -18,7 +18,6 @@ const modalSlice = createSlice({
       handleBodyOverflow(state.isSocialModalOpen);
     },
     handleOverlayModal(state) {
-      console.log(state);
       state.isOverlayModalOpen = !state.isOverlayModalOpen;
       handleBodyOverflow(state.isOverlayModalOpen);
     },

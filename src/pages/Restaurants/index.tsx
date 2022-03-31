@@ -1,18 +1,15 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {
-  SurroundPopluars,
-  Reviews,
-  RestaurantInfo,
-  KakaoMap,
-} from '@/components';
+import { LocalPopluars, Reviews, RestaurantInfo, KakaoMap } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { request } from '@/store/restaurants/restaurants-actions';
 
 import Images from './Images';
 import { imageContainer } from './Restaurants.styled';
 import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
+
+import { updatePostViews } from '@/firebase/request';
 
 const Restaurants = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +19,8 @@ const Restaurants = () => {
 
   useEffect(() => {
     dispatch(request({ docName: 'posts', id: postId }));
+
+    updatePostViews(postId);
 
     let watchedArray: any = localStorage.getItem('watched');
 
@@ -42,10 +41,10 @@ const Restaurants = () => {
         <div className="main-content">
           <RestaurantInfo />
           <Reviews />
-          <SurroundPopluars />
         </div>
         <aside>
           <KakaoMap pos={[37.365264512305174, 127.10676860117488]}></KakaoMap>
+          <LocalPopluars />
         </aside>
       </div>
     </div>

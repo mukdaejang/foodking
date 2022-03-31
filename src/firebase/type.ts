@@ -15,6 +15,7 @@ export interface ImageType {
 }
 
 export interface Posts {
+  id?: string;
   address: Address;
   name: string;
   phone?: string;
@@ -30,14 +31,22 @@ export interface Posts {
   star: number;
   description?: string;
   images?: ImageType[];
-  reviews?: Review[];
+  reviews?: ReviewWithId[];
+  localPops?: Posts[];
+  views?: number;
 }
+
 export interface PostsWithId extends Posts {
   id: string;
 }
 export interface Users {
   userId: string;
-  favorites: string[];
+}
+
+export interface UsersWithImgAndName {
+  userId: string;
+  userName: string | null;
+  profileImgURL: string | null;
 }
 
 export interface Review {
@@ -47,6 +56,9 @@ export interface Review {
   score: number;
   images: ImageType[];
   text: string;
+}
+export interface ReviewWithId extends Review {
+  id: string;
 }
 
 export interface FoodLists {
@@ -78,4 +90,9 @@ interface Promise {
 
 export interface PromiseAllSettled<T> extends Promise {
   value: T;
+}
+
+export interface Search {
+  location: string;
+  keyword: string;
 }
