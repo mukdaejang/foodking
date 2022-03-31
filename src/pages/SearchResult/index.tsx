@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Section,
   Left,
@@ -6,13 +6,20 @@ import {
   UlContainer,
   NoDisplay,
 } from './searchResult.styled';
-import { Filter, Restaurant } from '@/components';
+
 import { useAppSelector } from '@/store/hooks';
 import { getSearchData } from '@/firebase/api/searchkeyword';
 import { PostsWithId } from '@/firebase/type';
 
 import { Helmet } from 'react-helmet-async';
 import { setDocumentTitle } from '@/utils';
+
+let Restaurant = lazy(() => {
+  return import('@/components/RestaurantItem');
+});
+let Filter = lazy(() => {
+  return import('@/components/Filter');
+});
 
 const SearchResult = () => {
   const { inputSearchKeyword } = useAppSelector(
@@ -45,10 +52,12 @@ const SearchResult = () => {
       </Helmet>
       <div css={Left}>
         <ul css={UlContainer}>
-          {fetchFilteredData &&
-            fetchFilteredData.map((elem: PostsWithId) => (
-              <Restaurant key={elem.id} info={elem} cnt={3}></Restaurant>
-            ))}
+          <Suspense fallback={<div>loading...</div>}>
+            {fetchFilteredData &&
+              fetchFilteredData.map((elem: PostsWithId) => (
+                <Restaurant key={elem.id} info={elem} cnt={3}></Restaurant>
+              ))}
+          </Suspense>
         </ul>
         {loadingDataIsZero && (
           <span css={NoDisplay}>
@@ -57,14 +66,16 @@ const SearchResult = () => {
         )}
       </div>
       <div css={Right}>
-        <Filter
-          fetchData={fetchData}
-          setFetchData={setFetchData}
-          fetchFilteredData={fetchFilteredData}
-          setFetchFilteredData={setFetchFilteredData}
-          loadingDataIsZero={loadingDataIsZero}
-          setLoadingDataIsZero={setLoadingDataIsZero}
-        ></Filter>
+        <Suspense fallback={<div>loading...</div>}>
+          <Filter
+            fetchData={fetchData}
+            setFetchData={setFetchData}
+            fetchFilteredData={fetchFilteredData}
+            setFetchFilteredData={setFetchFilteredData}
+            loadingDataIsZero={loadingDataIsZero}
+            setLoadingDataIsZero={setLoadingDataIsZero}
+          ></Filter>
+        </Suspense>
         ;
       </div>
     </article>
