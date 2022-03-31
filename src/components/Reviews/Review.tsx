@@ -7,31 +7,29 @@ import {
 } from './Review.styled';
 import image from '@/assets/img/food.jpg';
 import Images from '@/pages/Restaurants/Images';
-import { useAppSelector } from '@/store/hooks';
+import { ReviewScoreImg } from '@/components/ReviewWrite/reviewWrite.styled';
+import { Review as ReviewType } from '@/firebase/type';
 
-const Review = () => {
-  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
-
+const Review = ({ userId, date, score, images, text }: ReviewType) => {
   return (
     <StyledReview>
       <div css={profileStyle}>
         <div>
           <img src={image} alt="사진" />
         </div>
-        <span>우챠우챠</span>
+        <span>{userId}</span>
       </div>
       <div css={contentStyle}>
-        <GrayTitle>2022-02-01</GrayTitle>
-        <p>
-          좋은 후기를 많이 봐서 예전에 동생한테 추천해 줬었는데 첨엔
-          피쉬버거라서 싫어하다가 막상 먹어보니 너무 맛있어서 더 시켜 먹었다는
-          ㅋㅋㅋ생생 후기를 듣고!!!
-        </p>
-        {post?.images ? <Images images={post?.images} size="small" /> : ''}
+        <GrayTitle>{date}</GrayTitle>
+        <p>{text}</p>
+        {images ? <Images images={images} size="small" /> : ''}
       </div>
       <Evaluation>
-        <img src={image} alt="맛있다" />
-        <span>맛있다</span>
+        <ReviewScoreImg
+          posX={score === 5 ? -1 : score === 3 ? 49 : 98}
+          posY={0}
+        />
+        <span>{score === 5 ? '맛있다' : score === 3 ? '괜찮다' : '별로'}</span>
       </Evaluation>
     </StyledReview>
   );

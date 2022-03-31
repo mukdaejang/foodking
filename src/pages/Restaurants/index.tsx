@@ -41,13 +41,13 @@ const Restaurants = () => {
       <div css={mainContent}>
         <div className="main-content">
           <RestaurantInfo />
+          <Reviews />
+          <SurroundPopluars />
         </div>
         <aside>
           <KakaoMap pos={[37.365264512305174, 127.10676860117488]}></KakaoMap>
         </aside>
       </div>
-      <Reviews />
-      <SurroundPopluars />
     </div>
   );
 };
