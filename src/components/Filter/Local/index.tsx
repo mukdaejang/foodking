@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef, MouseEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  MouseEvent,
+  KeyboardEvent,
+  KeyboardEventHandler,
+} from 'react';
 import { Section, SubTitle } from '../Filter.styled';
 import {
   Province,
@@ -189,6 +196,7 @@ const Local = ({ local, setLocal }: PropsType) => {
 
   // 외부의 클릭 이벤트를 위한 ref
   const WrapperRef = useRef<HTMLUListElement>(null);
+  const provinceMoreRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
@@ -209,10 +217,7 @@ const Local = ({ local, setLocal }: PropsType) => {
   }, [WrapperRef]);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    // if ((e.target as HTMLLIElement).textContent !== null) {
-    //   setCurProvince((e.target as HTMLLIElement).textContent);
-    // }
-
+    console.log(e.target);
     let TEXT = (e.target as HTMLLIElement).textContent as string;
     if (TEXT === '더보기') {
       onMoreButton ? setOnMoreButton(false) : setOnMoreButton(true);
@@ -224,9 +229,18 @@ const Local = ({ local, setLocal }: PropsType) => {
     else setCurProvince(TEXT);
   };
 
-  const onClickLabel = (e: MouseEvent<HTMLElement>) => {
-    let City = (e.target as HTMLLIElement).textContent;
-    if (City && local.includes(City)) {
+  const onKeyUp = (e: KeyboardEvent<HTMLDivElement>) => {
+    let TEXT = (e.target as HTMLLIElement).textContent as string;
+    if (e.key === 'Enter' && provinceMore.includes(TEXT)) {
+      setCurProvince(TEXT);
+      setCurCity(provinceKorToEng[TEXT]);
+      onMoreButton ? setOnMoreButton(false) : setOnMoreButton(true);
+      provinceMoreRef.current && provinceMoreRef.current.focus();
+    }
+  };
+
+  const checkDuplicatedCity = (City: string) => {
+    if (local.includes(City)) {
       let temp_local = [...local];
       temp_local = temp_local.filter((e) => e !== City);
       setLocal([...temp_local]);
@@ -236,19 +250,33 @@ const Local = ({ local, setLocal }: PropsType) => {
     }
   };
 
+  const onClickLabel = (e: MouseEvent<HTMLElement>) => {
+    let City = (e.target as HTMLLIElement).textContent;
+    City && checkDuplicatedCity(City);
+  };
+
+  const onKeyUpLabel = (e: KeyboardEvent<HTMLLabelElement>) => {
+    if (e.key === 'Enter') {
+      let City = (e.target as HTMLLIElement).textContent;
+      City && checkDuplicatedCity(City);
+    }
+  };
+
   return (
     <section css={Section}>
       <SubTitle>지역</SubTitle>
-      <div css={Province} onClick={onClick}>
+      <div css={Province} onClick={onClick} onKeyUp={onKeyUp}>
         {provinceList.map((province: string) => (
           // <CityButton>
           <button
+            ref={provinceMoreRef}
             css={
               curProvince === province
                 ? SelectedCityButton
                 : UnSelectedCityButton
             }
             key={province}
+            tabIndex={0}
           >
             {province}
           </button>
@@ -256,7 +284,7 @@ const Local = ({ local, setLocal }: PropsType) => {
         <ul ref={WrapperRef} css={onMoreButton ? ProvinceMoreUl : None}>
           {onMoreButton &&
             provinceMore.map((province) => (
-              <li css={ProvinceMoreList} key={province}>
+              <li css={ProvinceMoreList} key={province} tabIndex={0}>
                 {province}
               </li>
             ))}
@@ -272,6 +300,8 @@ const Local = ({ local, setLocal }: PropsType) => {
                 htmlFor={city}
                 css={local.includes(city) ? SelectedLabel : Label}
                 onClick={onClickLabel}
+                onKeyUp={onKeyUpLabel}
+                tabIndex={0}
               >
                 {city}
               </label>
@@ -280,6 +310,7 @@ const Local = ({ local, setLocal }: PropsType) => {
                 value={city}
                 type="checkbox"
                 css={a11yHidden}
+                tabIndex={-1}
               ></input>
             </li>
           );

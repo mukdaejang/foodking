@@ -75,12 +75,6 @@ export const getSearchData = async (keyword: string) => {
     ...x.data(),
     id: x.id,
   }));
-  console.log('test', [
-    ...postSearchData,
-    ...postSearchDistrictData,
-    ...postSearchDetailData,
-    ...postSearchNameData,
-  ]);
 
   return [
     ...postSearchData,

@@ -55,6 +55,8 @@ const SearchResult = () => {
           setFetchData={setFetchData}
           fetchFilteredData={fetchFilteredData}
           setFetchFilteredData={setFetchFilteredData}
+          loadingDataIsZero={loadingDataIsZero}
+          setLoadingDataIsZero={setLoadingDataIsZero}
         ></Filter>
         ;
       </div>
