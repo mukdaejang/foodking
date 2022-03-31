@@ -31,7 +31,7 @@ export interface Posts {
   star: number;
   description?: string;
   images?: ImageType[];
-  reviews?: ReviewWithId[];
+  reviews?: Review[];
   localPops?: Posts[];
   views?: number;
 }
@@ -56,9 +56,6 @@ export interface Review {
   score: number;
   images: ImageType[];
   text: string;
-}
-export interface ReviewWithId extends Review {
-  id: string;
 }
 
 export interface FoodLists {

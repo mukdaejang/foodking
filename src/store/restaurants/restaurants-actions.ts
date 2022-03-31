@@ -28,11 +28,7 @@ export const request = createAsyncThunk(
         where('postId', '==', id),
       );
       const reviewDocs = await getDocs(reviewQueryByPostId);
-      const reviews = reviewDocs.docs.map((x) => ({
-        id: x.id,
-        ...x.data(),
-      }));
-      console.log(reviews);
+      const reviews = reviewDocs.docs.map((x) => x.data());
 
       const reviewsAllSettled = await Promise.allSettled(
         reviews.map(async (review) => ({

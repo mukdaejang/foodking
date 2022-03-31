@@ -24,14 +24,11 @@ import {
   postImage,
   getPostTitleDocs,
   postRestaurantsDocs,
-  updateReview,
-  getReview,
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
 import { useLocation, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import { RestaurantLink } from '../RestaurantItem/restaurant.styled';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
@@ -39,30 +36,16 @@ const ReviewWrite = () => {
   const [title, setTitle] = useState<string>();
   const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
-  const [reviewText, setReviewText] = useState('');
   const disabledRef = useRef<HTMLButtonElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const { pathname } = useLocation();
-  const { state }: any = useLocation();
-  const postId = pathname.replace(/(\/writeReview\/)?(\/editReview\/)?/, '');
-  const action = pathname.replace(postId, '');
-
+  const postId = pathname.replace('/writeReview/', '');
   const navigate = useNavigate();
-
-  // 이미지 미리보기 할 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Blob[]>([]);
-  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
 
   useEffect(() => {
     getPostTitleDocs(postId).then((res) => setTitle(res[0]));
-    if (action === '/editReview/') {
-      getReview(state.reviewId).then((res: any) => {
-        console.log(res);
-        setReviewText(res.text);
-      });
-    }
   }, []);
 
   const selectScoreHandler = (e: any) => changeScore(e.currentTarget);
@@ -96,6 +79,10 @@ const ReviewWrite = () => {
       ? false
       : true;
   };
+
+  // 이미지 미리보기 할 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState<Blob[]>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
 
   // 파일 저장
   const saveFileImage = async (e: any) => {
@@ -178,35 +165,12 @@ const ReviewWrite = () => {
     // });
   };
 
-  const editReview = async () => {
-    // 현재 시간
-    const today = new Date();
-    const date = `${today.getFullYear()}-${
-      today.getMonth() + 1
-    }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-
-    // 이미지
-    const images = await Promise.all(
-      fileImage.map(async (file) => await postImage(file, 'reviews')),
-    );
-
-    // text
-    const text = textRef.current?.value || '';
-
-    // 점수
-    const score = +(selectScore || 0);
-
-    const reviewId = state.reviewId || '';
-    // firebase insert
-    await updateReview(reviewId, {
-      postId,
-      userId,
-      date,
-      images,
-      text,
-      score,
-    }).then((res) => navigate(-1));
-  };
+  // 리뷰 db에서 불러오기
+  // const reviewLoad = () => {
+  //   getReviewDocs().then((res) => {
+  //     console.log(res);
+  //   });
+  // };
 
   return (
     <Review>
@@ -250,12 +214,10 @@ const ReviewWrite = () => {
             ref={textRef}
             onInput={changeText}
             placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"
-            defaultValue={reviewText}
           ></ReviewText>
         </ReviewContent>
         <ReviewSelectImgs>
           {fileImageSrc.map((file, idx) => {
-            console.log(file);
             return (
               <ReviewSelectImg
                 key={idx}
@@ -288,36 +250,18 @@ const ReviewWrite = () => {
         </ReviewSelectImgs>
 
         <ButtonGroup>
-          <Button
-            background={theme.colors.white}
-            color={theme.colors.gray300}
-            clickEvent={() => {
-              navigate(-1);
-            }}
-          >
+          <Button background={theme.colors.white} color={theme.colors.gray300}>
             취소
           </Button>
-          {action === '/editReview/' ? (
-            <Button
-              background={theme.colors.gray500}
-              color={theme.colors.white}
-              // disabled
-              forwardRef={disabledRef}
-              clickEvent={editReview}
-            >
-              리뷰 수정하기
-            </Button>
-          ) : (
-            <Button
-              background={theme.colors.gray500}
-              color={theme.colors.white}
-              // disabled
-              forwardRef={disabledRef}
-              clickEvent={craeteReview}
-            >
-              리뷰 올리기
-            </Button>
-          )}
+          <Button
+            background={theme.colors.gray500}
+            color={theme.colors.white}
+            // disabled
+            forwardRef={disabledRef}
+            clickEvent={craeteReview}
+          >
+            리뷰 올리기
+          </Button>
         </ButtonGroup>
       </SortMiddel60>
     </Review>
