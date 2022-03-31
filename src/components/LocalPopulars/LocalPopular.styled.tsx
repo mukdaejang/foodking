@@ -5,10 +5,10 @@ export const StyledLi = styled.li`
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
+  cursor: pointer;
 
   img {
     width: 6rem;
-    height: 8rem;
     margin-right: 1rem;
   }
 
@@ -19,6 +19,10 @@ export const StyledLi = styled.li`
     &:first-of-type {
       font-size: 1.2rem;
     }
+  }
+
+  .orange {
+    color: ${({ theme }) => theme.colors.orange};
   }
 `;
 
