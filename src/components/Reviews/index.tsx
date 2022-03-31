@@ -4,7 +4,7 @@ import { Header } from './Review.styled';
 import { useAppSelector } from '@/store/hooks';
 import { Review as ReviewType } from '@/firebase/type';
 
-const calcReviewCount = (reviews: ReviewType[], reviewScore: number) =>
+const calcReviewCount = (reviews: ReviewType[] = [], reviewScore: number) =>
   reviews.filter(({ score }) => score === reviewScore).length;
 
 const Reviews = () => {
