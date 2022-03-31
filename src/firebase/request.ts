@@ -33,6 +33,7 @@ export const createCollection = <T = DocumentData>(collectionName: string) =>
 export const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
 const usersCol = createCollection<Users>('users');
+const reviewsCol = createCollection<Review>('reviews');
 
 // 모든 음식점 가져오기
 export const getPostDocs = async () => {
@@ -128,6 +129,15 @@ export const updateReview = async (
   });
 };
 
+// review id로 review data 한개 가져오기
+export const getReview = async (reviewId: string) => {
+  const q = query(reviewsCol, where(documentId(), '==', reviewId));
+  const reviewDocs = await getDocs(q);
+  const reviewData = reviewDocs.docs.map((x: any) => x.data());
+
+  return reviewData[0];
+};
+
 // 리뷰삭제
 export const deleteReviewDoc = async (reviewId: string) => {
   await deleteDoc(doc(db, 'reviews', reviewId));
@@ -199,7 +209,6 @@ export const registUser = async (
   }
 };
 
-const reviewsCol = createCollection<Review>('reviews');
 export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
   const reviewData = reviewDocs.docs.map((x) => x.data());

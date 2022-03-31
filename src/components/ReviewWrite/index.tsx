@@ -25,6 +25,7 @@ import {
   getPostTitleDocs,
   postRestaurantsDocs,
   updateReview,
+  getReview,
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
@@ -38,6 +39,7 @@ const ReviewWrite = () => {
   const [title, setTitle] = useState<string>();
   const [selectScore, setSelectScore] = useState(null);
   const [prevSelectScore, setPrevSelectScore] = useState(null);
+  const [reviewText, setReviewText] = useState('');
   const disabledRef = useRef<HTMLButtonElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -49,8 +51,18 @@ const ReviewWrite = () => {
 
   const navigate = useNavigate();
 
+  // 이미지 미리보기 할 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState<Blob[]>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
+
   useEffect(() => {
     getPostTitleDocs(postId).then((res) => setTitle(res[0]));
+    if (action === '/editReview/') {
+      getReview(state.reviewId).then((res: any) => {
+        console.log(res);
+        setReviewText(res.text);
+      });
+    }
   }, []);
 
   const selectScoreHandler = (e: any) => changeScore(e.currentTarget);
@@ -84,10 +96,6 @@ const ReviewWrite = () => {
       ? false
       : true;
   };
-
-  // 이미지 미리보기 할 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Blob[]>([]);
-  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
 
   // 파일 저장
   const saveFileImage = async (e: any) => {
@@ -242,10 +250,12 @@ const ReviewWrite = () => {
             ref={textRef}
             onInput={changeText}
             placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"
+            defaultValue={reviewText}
           ></ReviewText>
         </ReviewContent>
         <ReviewSelectImgs>
           {fileImageSrc.map((file, idx) => {
+            console.log(file);
             return (
               <ReviewSelectImg
                 key={idx}
@@ -278,7 +288,13 @@ const ReviewWrite = () => {
         </ReviewSelectImgs>
 
         <ButtonGroup>
-          <Button background={theme.colors.white} color={theme.colors.gray300}>
+          <Button
+            background={theme.colors.white}
+            color={theme.colors.gray300}
+            clickEvent={() => {
+              navigate(-1);
+            }}
+          >
             취소
           </Button>
           {action === '/editReview/' ? (
