@@ -1,3 +1,11 @@
+import { Fragment, useState, useEffect, useCallback } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { restaurantActions } from '@/store/restaurants/restaurants-slice';
+import { ReviewWithId as ReviewType, User } from '@/firebase/type';
+import { deleteReviewDoc, getReviewWriter } from '@/firebase/request';
+
+import Images from '@/pages/Restaurants/Images';
 import {
   StyledReview,
   profileStyle,
@@ -7,15 +15,8 @@ import {
   FlexBox,
   ReviewControlBox,
 } from './Review.styled';
-import image from '@/assets/img/food.jpg';
-import Images from '@/pages/Restaurants/Images';
 import { ReviewScoreImg } from '@/components/ReviewWrite/reviewWrite.styled';
-import { ReviewWithId as ReviewType } from '@/firebase/type';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { deleteReviewDoc } from '@/firebase/request';
-import { restaurantActions } from '@/store/restaurants/restaurants-slice';
+// import image from '@/assets/img/food.jpg';
 
 const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
   const { uid } = useAppSelector(({ auth }) => auth.status);
@@ -30,15 +31,33 @@ const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
       });
   };
 
+  const [reviewWriter, setReviewWriter] = useState<User>();
+  const handleReviewWriter = useCallback(async (reviewWriterId) => {
+    const reviewWriterData = await getReviewWriter(reviewWriterId);
+    if (!reviewWriterData) {
+      return;
+    }
+    setReviewWriter(reviewWriterData);
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      handleReviewWriter(userId);
+    }
+  }, [userId, handleReviewWriter]);
+
   return (
-    <>
+    <Fragment>
       <StyledReview>
         <FlexBox>
           <div css={profileStyle}>
             <div>
-              <img src={image} alt="사진" />
+              <img
+                src={reviewWriter?.profileImgURL}
+                alt={`${reviewWriter?.userName} 프로필`}
+              />
             </div>
-            <span>{userId}</span>
+            <span>{reviewWriter?.userName}</span>
           </div>
           <div css={contentStyle}>
             <GrayTitle>{date}</GrayTitle>
@@ -66,7 +85,7 @@ const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
           <ReviewControlBox></ReviewControlBox>
         )}
       </StyledReview>
-    </>
+    </Fragment>
   );
 };
 
