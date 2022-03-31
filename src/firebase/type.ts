@@ -33,6 +33,7 @@ export interface Posts {
   images?: ImageType[];
   reviews?: Review[];
   localPops?: Posts[];
+  views?: number;
 }
 
 export interface PostsWithId extends Posts {

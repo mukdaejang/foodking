@@ -9,6 +9,8 @@ import Images from './Images';
 import { imageContainer } from './Restaurants.styled';
 import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 
+import { updatePostViews } from '@/firebase/request';
+
 const Restaurants = () => {
   const dispatch = useAppDispatch();
   const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
@@ -17,6 +19,8 @@ const Restaurants = () => {
 
   useEffect(() => {
     dispatch(request({ docName: 'posts', id: postId }));
+
+    updatePostViews(postId);
 
     let watchedArray: any = localStorage.getItem('watched');
 
