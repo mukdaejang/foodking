@@ -15,6 +15,7 @@ export interface ImageType {
 }
 
 export interface Posts {
+  id?: string;
   address: Address;
   name: string;
   phone?: string;
@@ -31,7 +32,9 @@ export interface Posts {
   description?: string;
   images?: ImageType[];
   reviews?: Review[];
+  localPops?: Posts[];
 }
+
 export interface PostsWithId extends Posts {
   id: string;
 }
@@ -83,4 +86,9 @@ interface Promise {
 
 export interface PromiseAllSettled<T> extends Promise {
   value: T;
+}
+
+export interface Search {
+  location: string;
+  keyword: string;
 }
