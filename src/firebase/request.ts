@@ -112,6 +112,13 @@ export const updateStarCount = async (postId: string, isIncrement: boolean) => {
   }
 };
 
+// post id로 음식점의 views cnt 증가
+export const updatePostViews = async (postId: string) => {
+  await updateDoc(doc(db, 'posts', postId), {
+    views: increment(1),
+  });
+};
+
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
