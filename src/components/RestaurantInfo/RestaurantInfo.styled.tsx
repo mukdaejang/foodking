@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 
 interface Status {
-  view: number;
-  write: number;
-  star: number;
+  view: number | undefined;
+  write: number | undefined;
+  star: number | undefined;
 }
 
 export const TitleHeader = styled.header<{ status: Status }>`
@@ -48,15 +48,15 @@ export const TitleHeader = styled.header<{ status: Status }>`
       }
 
       &.view::after {
-        content: '${({ status }) => status.view.toLocaleString()}';
+        content: '${({ status }) => status?.view?.toLocaleString()}';
       }
 
       &.write::after {
-        content: '${({ status }) => status.write.toLocaleString()}';
+        content: '${({ status }) => status?.write?.toLocaleString()}';
       }
 
       &.star::after {
-        content: '${({ status }) => status.star.toLocaleString()}';
+        content: '${({ status }) => status?.star?.toLocaleString()}';
       }
     }
   }

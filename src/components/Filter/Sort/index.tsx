@@ -24,6 +24,7 @@ const Sort = ({ order, setOrder }: PropsType) => {
             onClick={() => {
               setOrder(false);
             }}
+            tabIndex={0}
           >
             평점순
             <input
@@ -34,6 +35,7 @@ const Sort = ({ order, setOrder }: PropsType) => {
               defaultValue="asc"
               checked={!order ? true : false}
               readOnly
+              tabIndex={-1}
             ></input>
           </label>
           <label
@@ -42,6 +44,7 @@ const Sort = ({ order, setOrder }: PropsType) => {
             onClick={() => {
               setOrder(true);
             }}
+            tabIndex={0}
           >
             인기순
             <input

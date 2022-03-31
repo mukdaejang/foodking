@@ -19,13 +19,15 @@ const SearchResult = () => {
 
   const [fetchData, setFetchData] = useState<Array<any>>([]);
   const [fetchFilteredData, setFetchFilteredData] = useState<Array<any>>([]);
+  const [loadingDataIsZero, setLoadingDataIsZero] = useState<boolean>(false);
 
-  console.log(inputSearchKeyword);
   useEffect(() => {
+    setLoadingDataIsZero(false);
     const fetchSearchData = async () => {
       const result = await getSearchData(inputSearchKeyword);
       result.sort((a, b) => b.score - a.score);
-      // console.log(result);
+      console.log(result);
+      if (result.length <= 0) setLoadingDataIsZero(true);
       setFetchData(result);
       setFetchFilteredData(result);
     };
@@ -41,7 +43,7 @@ const SearchResult = () => {
               <Restaurant key={elem.id} info={elem} cnt={3}></Restaurant>
             ))}
         </ul>
-        {fetchData.length === 0 && (
+        {loadingDataIsZero && (
           <span css={NoDisplay}>
             '{inputSearchKeyword}' 키워드와 일치하는 검색 결과가 없습니다!
           </span>
@@ -53,6 +55,8 @@ const SearchResult = () => {
           setFetchData={setFetchData}
           fetchFilteredData={fetchFilteredData}
           setFetchFilteredData={setFetchFilteredData}
+          loadingDataIsZero={loadingDataIsZero}
+          setLoadingDataIsZero={setLoadingDataIsZero}
         ></Filter>
         ;
       </div>

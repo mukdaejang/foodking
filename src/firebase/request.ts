@@ -11,7 +11,15 @@ import {
   increment,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, Review, DocParams } from './type';
+import {
+  Posts,
+  FoodLists,
+  Users,
+  UsersWithImgAndName,
+  Review,
+  DocParams,
+  Search,
+} from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -126,6 +134,13 @@ export const deleteReviewDoc = async (reviewId: string) => {
   return reviewId;
 };
 
+// post id로 음식점의 views cnt 증가
+export const updatePostViews = async (postId: string) => {
+  await updateDoc(doc(db, 'posts', postId), {
+    views: increment(1),
+  });
+};
+
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
@@ -160,7 +175,11 @@ export const getTopScorePostDocs = async (num: number, category: string) => {
   return postData;
 };
 
-export const registUser = async (userId: string) => {
+export const registUser = async (
+  userId: string,
+  userName: string | null,
+  profileImageURL: string | null,
+) => {
   try {
     const q = query(usersCol, where('userId', '==', userId));
     const userData = await getDocs(q);
@@ -172,7 +191,8 @@ export const registUser = async (userId: string) => {
 
     await addUsersDocs({
       userId: userId,
-      favorites: [],
+      userName: userName,
+      profileImgURL: profileImageURL,
     });
   } catch (err) {
     console.log(getErrorMessage(err));
@@ -216,7 +236,6 @@ export const getImages = async (category: string, imageUrls: string[]) => {
       })),
     );
     const result = reformPromiseAllSettled(images);
-    // console.log({ result });
     return result;
   } catch (error) {
     console.error(getErrorMessage(error));
@@ -242,10 +261,15 @@ export const postReviewDocs = async ({
   console.log('Document written with ID: ', docRef.id);
 };
 
-export const addUsersDocs = async ({ userId, favorites }: Users) => {
+export const addUsersDocs = async ({
+  userId,
+  userName,
+  profileImgURL,
+}: UsersWithImgAndName) => {
   await addDoc(collection(db, 'users'), {
     userId,
-    favorites,
+    userName,
+    profileImgURL,
   });
 };
 
@@ -292,4 +316,21 @@ export const postRestaurantsDocs = async ({
     images,
   });
   console.log('Document written with ID: ', docRef.id);
+};
+
+export const searchByLocation = async ({ location, keyword }: Search) => {
+  const searchQuery = query(
+    postsCol,
+    where(location, '>=', keyword),
+    where(location, '<=', keyword + '\uf8ff'),
+  );
+  try {
+    const keywordSnapShot = await getDocs(searchQuery);
+    return keywordSnapShot.docs.map((data) => ({
+      ...data.data(),
+      id: data.id,
+    }));
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
 };

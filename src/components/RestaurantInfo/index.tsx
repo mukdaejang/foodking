@@ -26,9 +26,9 @@ const RestaurantInfo = () => {
   const { isUserLogin } = useAppSelector(({ user }) => user);
 
   const status = {
-    view: 141982,
-    write: 114,
-    star: 3787,
+    view: post?.views,
+    write: post?.reviews?.length,
+    star: post?.star,
   };
 
   const [starState, setStarState] = useState(false);
