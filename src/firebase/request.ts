@@ -5,7 +5,9 @@ import {
   DocumentReference,
   CollectionReference,
   addDoc,
+  updateDoc,
   doc,
+  increment,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { Posts, FoodLists, Users, Review, DocParams } from './type';
@@ -87,6 +89,19 @@ export const getPostTitleDocs = async (post: string) => {
   const postTitle = postDocs.docs.map((x: any) => x.data().name);
 
   return postTitle;
+};
+
+// post id로 음식점의 star cnt 업데이트하기
+export const updateStarCount = async (postId: string, isIncrement: boolean) => {
+  if (isIncrement) {
+    await updateDoc(doc(db, 'posts', postId), {
+      star: increment(1),
+    });
+  } else {
+    await updateDoc(doc(db, 'posts', postId), {
+      star: increment(-1),
+    });
+  }
 };
 
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)

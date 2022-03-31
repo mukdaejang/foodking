@@ -27,7 +27,7 @@ import {
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 
 const ReviewWrite = () => {
@@ -42,6 +42,7 @@ const ReviewWrite = () => {
 
   const { pathname } = useLocation();
   const postId = pathname.replace('/writeReview/', '');
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPostTitleDocs(postId).then((res) => setTitle(res[0]));
@@ -156,7 +157,7 @@ const ReviewWrite = () => {
       images,
       text,
       score,
-    });
+    }).then((res) => navigate(-1));
 
     // 데이터 집어넣는 부분
     // restaurants.forEach(async (obj: any) => {

@@ -3,18 +3,15 @@ import styled from '@emotion/styled';
 import Theme from '@/styles/theme';
 
 export const SearchBar = css`
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 60px;
+  width: 750px;
+  z-index: 101;
 `;
 
 export const ModalSearchBar = css`
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 60px;
+  width: 750px;
 
   position: relative;
-  z-index: 1000;
+  z-index: 101;
 `;
 
 export const SearchBarField = styled.fieldset`

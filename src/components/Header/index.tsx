@@ -1,16 +1,18 @@
 import { useState, useCallback, Fragment, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import ProfileIcon from '@/components/ProfileIcon';
-import Portal from '@/components/Portal';
-import logo from '@/assets/img/logo.svg';
 
+import { ProfileIcon, Portal, SearchBox, BannerPortal } from '@/components';
+
+import logo from '@/assets/img/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
   searchIcon,
   blankDiv,
   StyledHeader,
-  HeaderInput,
+  Search,
+  UlContainer,
+  UserLoginDiv,
 } from './Header.styled';
 
 import { auth } from '@/firebase';
@@ -31,18 +33,26 @@ const Header = () => {
   const [isMainPage, setIsMainPage] = useState<boolean>(false);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
+
+    return () => window.removeEventListener('scroll', updateScroll);
   });
+
+  useEffect(() => {
+    setShowHeader(!(pathname === '/page-not-found'));
+    pathname === '/' ? setIsMainPage(true) : setIsMainPage(false);
+  }, [pathname]);
 
   const onClickToggleSearchBackModal = useCallback(() => {
     dispatch(modalActions.handleSearchBackModal());
   }, [dispatch]);
+
   const onClickToggleModal = useCallback(() => {
     dispatch(modalActions.handleOverlayModal());
   }, [dispatch]);
-
-  const { pathname } = useLocation();
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -57,11 +67,6 @@ const Header = () => {
     }
   });
 
-  useEffect(() => {
-    setShowHeader(!(pathname === '/page-not-found'));
-    pathname === '/' ? setIsMainPage(true) : setIsMainPage(false);
-  }, [pathname]);
-
   return (
     <Fragment>
       {showHeader && (
@@ -73,18 +78,27 @@ const Header = () => {
             <Link to="/">
               <img src={logo} alt="먹대장 로고" />
             </Link>
-            <HeaderInput isMain={isMainPage}>
+            {/* <HeaderInput isMain={isMainPage}>
               <FontAwesomeIcon icon={faMagnifyingGlass} css={searchIcon} />
               <input
                 placeholder="지역, 식당 또는 음식"
                 onClick={onClickToggleSearchBackModal}
               ></input>
-
-              {isSearchBackModalOpen && (
-                <Portal setModalOpen={onClickToggleSearchBackModal}></Portal>
-              )}
-            </HeaderInput>
-            <ul>
+            </HeaderInput> */}
+            {!isMainPage && (
+              <div css={Search}>
+                <SearchBox></SearchBox>
+              </div>
+            )}
+            {isSearchBackModalOpen && (
+              <BannerPortal
+                setModalOpen={onClickToggleSearchBackModal}
+              ></BannerPortal>
+            )}
+            <UlContainer
+              isScroll={scrollPosition > 200 ? true : false}
+              isMain={isMainPage}
+            >
               <li>
                 <Link to="/food_list">
                   <span>맛집 리스트</span>
@@ -95,8 +109,11 @@ const Header = () => {
                   <span>술집 리스트</span>
                 </Link>
               </li>
-            </ul>
-            <div>
+            </UlContainer>
+            <UserLoginDiv
+              isScroll={scrollPosition > 200 ? true : false}
+              isMain={isMainPage}
+            >
               {isUserLogin ? (
                 <button className="profileImgBtn" onClick={onClickToggleModal}>
                   <img src={userProfileImage!} alt="프로필이미지"></img>
@@ -110,7 +127,7 @@ const Header = () => {
                   />
                 </button>
               )}
-            </div>
+            </UserLoginDiv>
           </StyledHeader>
           {isMainPage ? '' : <div css={blankDiv}></div>}
         </Fragment>

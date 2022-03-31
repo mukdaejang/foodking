@@ -24,7 +24,7 @@ export const ModalContainer = styled.div<modalContainerProps>`
 
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.colors.white};
-    z-index: 9998;
+    z-index: 202;
 
     > ul {
       display: flex;
