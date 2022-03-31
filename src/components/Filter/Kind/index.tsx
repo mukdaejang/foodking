@@ -88,4 +88,4 @@ const FoodKind = ({ kind, setKind }: PropsType) => {
   );
 };
 
-export default FoodKind;
+export default React.memo(FoodKind);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect, useCallback, MouseEvent } from 'react';
 import { Container, ButtonContainer } from './Filter.styled';
 import Sort from './Sort';
 import Local from './Local';
@@ -61,4 +61,4 @@ const Filter = ({
   );
 };
 
-export default Filter;
+export default React.memo(Filter);
