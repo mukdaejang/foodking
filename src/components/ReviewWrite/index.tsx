@@ -24,11 +24,13 @@ import {
   postImage,
   getPostTitleDocs,
   postRestaurantsDocs,
+  updateReview,
 } from '@/firebase/request';
 import { useAppSelector } from '@/store/hooks';
 import { restaurants } from './obj';
 import { useLocation, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
+import { RestaurantLink } from '../RestaurantItem/restaurant.styled';
 
 const ReviewWrite = () => {
   const userId = useAppSelector(({ auth }) => auth.status.uid);
@@ -41,7 +43,10 @@ const ReviewWrite = () => {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const { pathname } = useLocation();
-  const postId = pathname.replace('/writeReview/', '');
+  const { state }: any = useLocation();
+  const postId = pathname.replace(/(\/writeReview\/)?(\/editReview\/)?/, '');
+  const action = pathname.replace(postId, '');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -165,12 +170,35 @@ const ReviewWrite = () => {
     // });
   };
 
-  // 리뷰 db에서 불러오기
-  // const reviewLoad = () => {
-  //   getReviewDocs().then((res) => {
-  //     console.log(res);
-  //   });
-  // };
+  const editReview = async () => {
+    // 현재 시간
+    const today = new Date();
+    const date = `${today.getFullYear()}-${
+      today.getMonth() + 1
+    }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+
+    // 이미지
+    const images = await Promise.all(
+      fileImage.map(async (file) => await postImage(file, 'reviews')),
+    );
+
+    // text
+    const text = textRef.current?.value || '';
+
+    // 점수
+    const score = +(selectScore || 0);
+
+    const reviewId = state.reviewId || '';
+    // firebase insert
+    await updateReview(reviewId, {
+      postId,
+      userId,
+      date,
+      images,
+      text,
+      score,
+    }).then((res) => navigate(-1));
+  };
 
   return (
     <Review>
@@ -253,15 +281,27 @@ const ReviewWrite = () => {
           <Button background={theme.colors.white} color={theme.colors.gray300}>
             취소
           </Button>
-          <Button
-            background={theme.colors.gray500}
-            color={theme.colors.white}
-            // disabled
-            forwardRef={disabledRef}
-            clickEvent={craeteReview}
-          >
-            리뷰 올리기
-          </Button>
+          {action === '/editReview/' ? (
+            <Button
+              background={theme.colors.gray500}
+              color={theme.colors.white}
+              // disabled
+              forwardRef={disabledRef}
+              clickEvent={editReview}
+            >
+              리뷰 수정하기
+            </Button>
+          ) : (
+            <Button
+              background={theme.colors.gray500}
+              color={theme.colors.white}
+              // disabled
+              forwardRef={disabledRef}
+              clickEvent={craeteReview}
+            >
+              리뷰 올리기
+            </Button>
+          )}
         </ButtonGroup>
       </SortMiddel60>
     </Review>

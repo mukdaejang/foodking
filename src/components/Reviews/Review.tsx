@@ -13,10 +13,11 @@ import { ReviewScoreImg } from '@/components/ReviewWrite/reviewWrite.styled';
 import { ReviewWithId as ReviewType } from '@/firebase/type';
 import { useAppSelector } from '@/store/hooks';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
   const { uid } = useAppSelector(({ auth }) => auth.status);
+  const { postId = '' } = useParams();
 
   const editReview = () => {};
   const deleteReview = () => {
@@ -51,7 +52,9 @@ const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
         {uid === userId ? (
           <ReviewControlBox>
             <button onClick={deleteReview}>리뷰 삭제</button>
-            <Link to={'/'}>리뷰 수정</Link>
+            <Link to={`/editReview/${postId}`} state={{ reviewId: id }}>
+              리뷰 수정
+            </Link>
           </ReviewControlBox>
         ) : (
           <ReviewControlBox></ReviewControlBox>

@@ -104,6 +104,21 @@ export const updateStarCount = async (postId: string, isIncrement: boolean) => {
   }
 };
 
+// review id로 review update
+export const updateReview = async (
+  reviewId: string,
+  { userId, postId, date, score, images, text }: Review,
+) => {
+  await updateDoc(doc(db, 'reviews', reviewId), {
+    userId,
+    postId,
+    date,
+    score,
+    images,
+    text,
+  });
+};
+
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
