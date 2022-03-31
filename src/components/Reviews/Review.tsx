@@ -11,17 +11,23 @@ import image from '@/assets/img/food.jpg';
 import Images from '@/pages/Restaurants/Images';
 import { ReviewScoreImg } from '@/components/ReviewWrite/reviewWrite.styled';
 import { ReviewWithId as ReviewType } from '@/firebase/type';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { deleteReviewDoc } from '@/firebase/request';
+import { restaurantActions } from '@/store/restaurants/restaurants-slice';
 
 const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
   const { uid } = useAppSelector(({ auth }) => auth.status);
   const { postId = '' } = useParams();
+  const dispatch = useAppDispatch();
 
-  const editReview = () => {};
-  const deleteReview = () => {
-    console.log(id);
+  const deleteReview = async () => {
+    const check = window.confirm('리뷰를 삭제하시겠습니까?');
+    if (check)
+      await deleteReviewDoc(id).then((res) => {
+        dispatch(restaurantActions.removeReview(res));
+      });
   };
 
   return (

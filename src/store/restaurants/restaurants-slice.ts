@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { request } from './restaurants-actions';
 import { Posts } from '@/firebase/type';
 import { modifyMenuData } from '@/utils';
+import { startAfter } from 'firebase/firestore';
 
 interface Restaurant {
   post: {
@@ -22,7 +23,15 @@ const initialState: Restaurant = {
 const restaurantSlice = createSlice({
   name: 'restaurant',
   initialState,
-  reducers: {},
+  reducers: {
+    removeReview(state, action) {
+      if (state.post.data) {
+        state.post.data.reviews = state.post.data.reviews?.filter(
+          (review) => review.id !== action.payload,
+        );
+      }
+    },
+  },
   extraReducers: {
     [request.pending.type]: (state) => {
       state.post = {

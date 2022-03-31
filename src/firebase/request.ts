@@ -6,6 +6,7 @@ import {
   CollectionReference,
   addDoc,
   updateDoc,
+  deleteDoc,
   doc,
   increment,
 } from 'firebase/firestore';
@@ -119,6 +120,12 @@ export const updateReview = async (
   });
 };
 
+// 리뷰삭제
+export const deleteReviewDoc = async (reviewId: string) => {
+  await deleteDoc(doc(db, 'reviews', reviewId));
+  return reviewId;
+};
+
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
@@ -209,7 +216,7 @@ export const getImages = async (category: string, imageUrls: string[]) => {
       })),
     );
     const result = reformPromiseAllSettled(images);
-    console.log({ result });
+    // console.log({ result });
     return result;
   } catch (error) {
     console.error(getErrorMessage(error));
