@@ -217,7 +217,6 @@ const Local = ({ local, setLocal }: PropsType) => {
   }, [WrapperRef]);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    console.log(e.target);
     let TEXT = (e.target as HTMLLIElement).textContent as string;
     if (TEXT === '더보기') {
       onMoreButton ? setOnMoreButton(false) : setOnMoreButton(true);
