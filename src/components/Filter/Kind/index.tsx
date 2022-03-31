@@ -12,34 +12,47 @@ const FoodKind = ({ kind, setKind }: PropsType) => {
   const foodKind = ['한식', '일식', '중식', '양식', '카페', '주점'];
   const foodImg = ['kor', 'japan', 'china', 'pizza', 'coffee', 'beer'];
 
-  const setFoodKindState = (foodKind: string) => {
-    if (kind.includes(foodKind)) {
-      let temp_kind = [...kind];
-      temp_kind = temp_kind.filter((elem) => elem !== foodKind);
-      setKind([...temp_kind]);
-    } else {
-      let set = new Set([...kind, foodKind]);
-      foodKind && setKind([...(set as any)]);
-    }
-  };
+  const setFoodKindState = useCallback(
+    (foodKind: string) => {
+      if (kind.includes(foodKind)) {
+        let temp_kind = [...kind];
+        temp_kind = temp_kind.filter((elem) => elem !== foodKind);
+        setKind([...temp_kind]);
+      } else {
+        let set = new Set([...kind, foodKind]);
+        foodKind && setKind([...(set as any)]);
+      }
+    },
+    [kind, setKind],
+  );
 
-  const saveFoodKindToPropsState = (e: MouseEvent<HTMLElement>) => {
-    if ((e.target as HTMLLIElement).matches('input')) {
-      let foodKind = (e.target as HTMLLIElement).getAttribute('value');
-      foodKind && setFoodKindState(foodKind);
-    }
-  };
+  const saveFoodKindToPropsState = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      if ((e.target as HTMLLIElement).matches('input')) {
+        let foodKind = (e.target as HTMLLIElement).getAttribute('value');
+        foodKind && setFoodKindState(foodKind);
+      }
+    },
+    [setFoodKindState],
+  );
 
-  const onKeyUp = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      let foodKind = (e.target as HTMLElement).getAttribute('for');
-      foodKind && setFoodKindState(foodKind);
-    }
-  };
+  const onKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        let foodKind = (e.target as HTMLElement).getAttribute('for');
+        foodKind && setFoodKindState(foodKind);
+      }
+    },
+    [setFoodKindState],
+  );
 
-  const onClick = (e: MouseEvent<HTMLElement>) => {
-    saveFoodKindToPropsState(e);
-  };
+  const onClick = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      saveFoodKindToPropsState(e);
+    },
+    [saveFoodKindToPropsState],
+  );
+
   return (
     <section css={Section}>
       <SubTitle>종류</SubTitle>
