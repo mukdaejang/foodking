@@ -33,10 +33,12 @@ export const Header = styled.header`
 `;
 
 export const StyledReview = styled.li`
-  display: flex;
   margin-top: 2rem;
-  padding-bottom: 3rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
+`;
+
+export const FlexBox = styled.div`
+  display: flex;
 `;
 
 export const profileStyle = css`
@@ -83,5 +85,31 @@ export const Evaluation = styled.div`
     width: 3rem;
     margin-top: 1rem;
     color: ${({ theme }) => theme.colors.orange};
+  }
+`;
+
+export const ReviewControlBox = styled.div`
+  margin: 1.5rem 0;
+
+  overflow: hidden;
+  & > button,
+  > a {
+    all: unset;
+    text-align: center;
+    float: right;
+    margin-left: 1rem;
+    padding: 8px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    width: 120px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    background-color: ${({ theme }) => theme.colors.gray900};
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.orange};
+      color: ${({ theme }) => theme.colors.white};
+    }
   }
 `;
