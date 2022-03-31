@@ -92,7 +92,10 @@ export const ReviewControlBox = styled.div`
   margin: 1.5rem 0;
 
   overflow: hidden;
-  & > button {
+  & > button,
+  > a {
+    all: unset;
+    text-align: center;
     float: right;
     margin-left: 1rem;
     padding: 8px;

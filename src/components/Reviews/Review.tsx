@@ -10,13 +10,18 @@ import {
 import image from '@/assets/img/food.jpg';
 import Images from '@/pages/Restaurants/Images';
 import { ReviewScoreImg } from '@/components/ReviewWrite/reviewWrite.styled';
-import { Review as ReviewType } from '@/firebase/type';
+import { ReviewWithId as ReviewType } from '@/firebase/type';
 import { useAppSelector } from '@/store/hooks';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Review = ({ userId, date, score, images, text }: ReviewType) => {
+const Review = ({ userId, date, score, images, text, id }: ReviewType) => {
   const { uid } = useAppSelector(({ auth }) => auth.status);
-  console.log(uid);
+
+  const editReview = () => {};
+  const deleteReview = () => {
+    console.log(id);
+  };
 
   return (
     <>
@@ -45,8 +50,8 @@ const Review = ({ userId, date, score, images, text }: ReviewType) => {
         </FlexBox>
         {uid === userId ? (
           <ReviewControlBox>
-            <button>리뷰 삭제</button>
-            <button>리뷰 수정</button>
+            <button onClick={deleteReview}>리뷰 삭제</button>
+            <Link to={'/'}>리뷰 수정</Link>
           </ReviewControlBox>
         ) : (
           <ReviewControlBox></ReviewControlBox>
