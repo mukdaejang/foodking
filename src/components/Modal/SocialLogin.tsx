@@ -19,6 +19,7 @@ const SocialLogin = ({ closePortal }: socialLoginProps) => {
       await dispatch(login('google')).unwrap();
       dispatch(modalActions.handleOverlayModal());
       dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
       navigate('/');
     } catch (error) {
       console.error(getErrorMessage(error));
@@ -29,6 +30,7 @@ const SocialLogin = ({ closePortal }: socialLoginProps) => {
       await dispatch(login('facebook')).unwrap();
       dispatch(modalActions.handleOverlayModal());
       dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
       navigate('/');
     } catch (error) {
       console.error(getErrorMessage(error));
@@ -39,6 +41,8 @@ const SocialLogin = ({ closePortal }: socialLoginProps) => {
       await dispatch(login('github')).unwrap();
       dispatch(modalActions.handleOverlayModal());
       dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
+
       navigate('/');
     } catch (error) {
       console.error(getErrorMessage(error));

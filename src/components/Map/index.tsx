@@ -33,6 +33,7 @@ const Map = ({ pos }: mapType) => {
 
   const handleMapBigModal = () => {
     const isMapModalOpenState = isMapModalOpen;
+    window.scrollTo(0, 0);
     setIsMapModalOpen(!isMapModalOpenState);
     document.body.style.overflow = !isMapModalOpenState ? 'hidden' : 'unset';
   };
