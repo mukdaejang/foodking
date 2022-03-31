@@ -1,4 +1,4 @@
-import LocalPopular, { Restaurant } from './LocalPopular';
+import LocalPopular from './LocalPopular';
 import { Title } from '@/components/style';
 import foodImage from '@/assets/img/food.jpg';
 import { useAppSelector } from '@/store/hooks';
