@@ -10,7 +10,14 @@ import {
   increment,
 } from 'firebase/firestore';
 import { db } from '@/firebase';
-import { Posts, FoodLists, Users, Review, DocParams } from './type';
+import {
+  Posts,
+  FoodLists,
+  Users,
+  UsersWithImgAndName,
+  Review,
+  DocParams,
+} from './type';
 import { getErrorMessage } from '@/utils';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { query, orderBy, limit, where, documentId } from 'firebase/firestore';
@@ -138,7 +145,11 @@ export const getTopScorePostDocs = async (num: number, category: string) => {
   return postData;
 };
 
-export const registUser = async (userId: string) => {
+export const registUser = async (
+  userId: string,
+  userName: string | null,
+  profileImageURL: string | null,
+) => {
   try {
     const q = query(usersCol, where('userId', '==', userId));
     const userData = await getDocs(q);
@@ -150,7 +161,8 @@ export const registUser = async (userId: string) => {
 
     await addUsersDocs({
       userId: userId,
-      favorites: [],
+      userName: userName,
+      profileImgURL: profileImageURL,
     });
   } catch (err) {
     console.log(getErrorMessage(err));
@@ -220,10 +232,15 @@ export const postReviewDocs = async ({
   console.log('Document written with ID: ', docRef.id);
 };
 
-export const addUsersDocs = async ({ userId, favorites }: Users) => {
+export const addUsersDocs = async ({
+  userId,
+  userName,
+  profileImgURL,
+}: UsersWithImgAndName) => {
   await addDoc(collection(db, 'users'), {
     userId,
-    favorites,
+    userName,
+    profileImgURL,
   });
 };
 
