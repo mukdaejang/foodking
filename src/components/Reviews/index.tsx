@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import Review from './Review';
 import { Header } from './Review.styled';
 import { useAppSelector } from '@/store/hooks';
-import { ReviewWithId as ReviewType } from '@/firebase/type';
+import { Review as ReviewType } from '@/firebase/type';
 
 const calcReviewCount = (reviews: ReviewType[] = [], reviewScore: number) =>
   reviews.filter(({ score }) => score === reviewScore).length;
