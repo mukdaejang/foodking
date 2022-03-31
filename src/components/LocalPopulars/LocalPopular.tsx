@@ -1,40 +1,32 @@
-import { StyledLi, CategoryTitle } from './SurroundPopular.styled';
+import { Link } from 'react-router-dom';
+import { StyledLi, CategoryTitle } from './LocalPopular.styled';
+import { Posts } from '@/firebase/type';
 
-export interface Restaurant {
-  id: number;
-  name: string;
-  categories: string[];
-  locations: string[];
-  price: string;
-  image: string;
-}
-
-const SurroundPopular = ({
+const LocalPopular = ({
+  id,
   name,
-  categories,
-  locations,
-  price,
-  image,
-}: Restaurant) => {
-  return (
+  category,
+  address,
+  images,
+  score,
+}: Posts) => (
+  <Link to={`/restaurants/${id}`}>
     <StyledLi>
-      <img src={image} alt={name}></img>
+      {images?.length ? <img src={images[0]?.src} alt={name}></img> : ''}
       <div>
-        <div>{name}</div>
         <div>
-          <CategoryTitle>음식 종류:</CategoryTitle>{' '}
-          {categories.map((category, i) => (i ? ` / ${category}` : category))}
+          <span>{name} </span>
+          <span className="orange">{score}</span>
         </div>
         <div>
-          <CategoryTitle>위치:</CategoryTitle>{' '}
-          {locations.map((location, i) => (i ? `/${location}` : location))}
+          <CategoryTitle>음식 종류:</CategoryTitle> {category}
         </div>
         <div>
-          <CategoryTitle>가격대:</CategoryTitle> {price}
+          <CategoryTitle>위치:</CategoryTitle> {address?.district}
         </div>
       </div>
     </StyledLi>
-  );
-};
+  </Link>
+);
 
-export default SurroundPopular;
+export default LocalPopular;
