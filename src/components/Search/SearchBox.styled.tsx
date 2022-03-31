@@ -4,14 +4,14 @@ import Theme from '@/styles/theme';
 
 export const SearchBar = css`
   width: 750px;
-  z-index: 102;
+  z-index: 101;
 `;
 
 export const ModalSearchBar = css`
   width: 750px;
 
   position: relative;
-  z-index: 102;
+  z-index: 101;
 `;
 
 export const SearchBarField = styled.fieldset`

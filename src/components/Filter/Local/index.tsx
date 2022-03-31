@@ -319,4 +319,4 @@ const Local = ({ local, setLocal }: PropsType) => {
   );
 };
 
-export default Local;
+export default React.memo(Local);
