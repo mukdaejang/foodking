@@ -11,10 +11,13 @@ import {
   ContainerText,
   SortMiddel70,
 } from '@/components/style';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CategoryType } from '@/firebase/type';
 import { getPostListDocs, getBestRestaurantsIdDocs } from '@/firebase/request';
+
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
 
 export interface BestRestaurantType {
   id: string;
@@ -44,10 +47,13 @@ const BestRestaurants = () => {
         setPostList(res);
       });
     });
-  }, []);
+  }, [category]);
 
   return (
-    <>
+    <Fragment>
+      <Helmet>
+        <title>{setDocumentTitle(categoryData?.title ?? '')}</title>
+      </Helmet>
       <GrayContainer>
         <ContainerTitle>
           {categoryData ? categoryData.title : ''}
@@ -71,7 +77,7 @@ const BestRestaurants = () => {
           <MatjibListTags />
         </SortMiddel70>
       </GrayContainer>
-    </>
+    </Fragment>
   );
 };
 

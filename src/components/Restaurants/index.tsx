@@ -18,7 +18,7 @@ const Restaurants = ({ title }: restaurantChecker) => {
 
   useEffect(() => {
     getTopScorePostDocs(8, title).then((res) => setRestaurants(res));
-  }, []);
+  }, [setRestaurants, title]);
 
   return (
     <RestaurantsContent>

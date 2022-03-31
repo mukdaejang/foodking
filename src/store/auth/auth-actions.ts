@@ -7,7 +7,7 @@ export const login = createAsyncThunk(
   async (loginType: SocialType, { rejectWithValue }) => {
     try {
       const result = await loginWithSocial(loginType);
-      console.log(result);
+
       if (!result) {
         return;
       }

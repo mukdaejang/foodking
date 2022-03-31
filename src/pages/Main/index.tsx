@@ -7,6 +7,9 @@ import { SortMiddel95 } from '@/components/style';
 import { getKeywordData } from '@/firebase/api/searchkeyword';
 import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
 
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
+
 const Main = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(({ auth }) => auth.status);
@@ -32,6 +35,9 @@ const Main = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{setDocumentTitle('')}</title>
+      </Helmet>
       <Banner />
       <SortMiddel95>
         <Carousel title={'맛집'} />
