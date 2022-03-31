@@ -30,6 +30,7 @@ export interface Posts {
   star: number;
   description?: string;
   images?: ImageType[];
+  reviews?: Review[];
 }
 export interface PostsWithId extends Posts {
   id: string;
@@ -39,12 +40,12 @@ export interface Users {
   favorites: string[];
 }
 
-export interface Reviews {
+export interface Review {
   userId: string;
   postId: string;
   date: string;
   score: number;
-  images: string[];
+  images: ImageType[];
   text: string;
 }
 
@@ -69,4 +70,12 @@ export interface CategoryType {
   description: string;
   list: string[];
   link: string;
+}
+
+interface Promise {
+  status: 'fulfilled' | 'pending' | 'rejected';
+}
+
+export interface PromiseAllSettled<T> extends Promise {
+  value: T;
 }

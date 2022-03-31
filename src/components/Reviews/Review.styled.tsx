@@ -52,6 +52,7 @@ export const profileStyle = css`
     display: inline-block;
     width: 5rem;
     font-size: 0.8rem;
+    overflow-wrap: break-word;
   }
 `;
 
@@ -60,6 +61,7 @@ export const contentStyle = css`
 
   p {
     margin: 0.4rem 0 2rem;
+    line-height: 1.2rem;
   }
 `;
 
@@ -71,14 +73,14 @@ export const Evaluation = styled.div`
   text-align: center;
   margin-left: auto;
 
-  img {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
+  i {
+    display: block;
+    margin: 0 auto;
   }
 
   span {
     display: block;
+    width: 3rem;
     margin-top: 1rem;
     color: ${({ theme }) => theme.colors.orange};
   }

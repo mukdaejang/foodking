@@ -1,12 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DocParams, ImageType } from '@/firebase/type';
-import { createDoc, getImageDocs } from '@/firebase/request';
-import { getDoc } from 'firebase/firestore';
+import { DocParams, Review } from '@/firebase/type';
+import {
+  createDoc,
+  createCollection,
+  getImages,
+  reformPromiseAllSettled,
+} from '@/firebase/request';
+import { getDoc, getDocs, query, where } from 'firebase/firestore';
 
-interface PromiseAllSettled {
-  status: 'fulfilled' | 'pending' | 'rejected';
-  value: ImageType;
-}
+const reviewCollection = createCollection<Review>('reviews');
 
 export const request = createAsyncThunk(
   'restaurant/request',
@@ -18,15 +20,29 @@ export const request = createAsyncThunk(
         throw new Error();
       }
 
-      const data = doc.data();
-      data.images = await Promise.allSettled(
-        data.images.map(async (url: string) => ({
-          title: url,
-          src: await getImageDocs(url, 'restaurants'),
+      const post = doc.data();
+
+      const reviewQueryByPostId = query(
+        reviewCollection,
+        where('postId', '==', id),
+      );
+      const reviewDocs = await getDocs(reviewQueryByPostId);
+      const reviews = reviewDocs.docs.map((x) => x.data());
+
+      const reviewsAllSettled = await Promise.allSettled(
+        reviews.map(async (review) => ({
+          ...review,
+          images: await getImages(
+            'reviews',
+            review.images as unknown as string[],
+          ),
         })),
       );
-      data.images = data.images.map(({ value }: PromiseAllSettled) => value);
-      return data;
+
+      post.images = await getImages('restaurants', post.images);
+      post.reviews = reformPromiseAllSettled(reviewsAllSettled);
+
+      return post;
     } catch (error: any) {
       return rejectWithValue(error?.response.data);
     }

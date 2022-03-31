@@ -36,11 +36,11 @@ const Restaurants = () => {
       <div css={mainContent}>
         <div className="main-content">
           <RestaurantInfo />
+          <Reviews />
+          <SurroundPopluars />
         </div>
         <aside>11</aside>
       </div>
-      <Reviews />
-      <SurroundPopluars />
     </div>
   );
 };
