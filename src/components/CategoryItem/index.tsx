@@ -45,12 +45,17 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
   const changeImgLoadState = () =>
     setImgLoadState(imgLoadState[0] ? [true, true] : [true, false]);
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   if (loadState) {
     return (
       <CategoryItemLi cnt={cnt}>
         <CategoryLink
           to={`/bestRestaurants/${categoryData.link}`}
           state={categoryData}
+          onClick={scrollToTop}
         >
           <figure>
             <CategoryImgBox>

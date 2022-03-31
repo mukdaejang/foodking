@@ -37,10 +37,14 @@ const Restaurant = ({ info, cnt }: RestaurantType) => {
 
   const changeImgLoadState = () => setImgLoadState(true);
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   if (loadState) {
     return (
       <RestaurantItem cnt={cnt}>
-        <RestaurantLink to={`/restaurants/${info.id}`}>
+        <RestaurantLink to={`/restaurants/${info.id}`} onClick={scrollToTop}>
           <figure>
             <RestaurantImgBox>
               <RestaurantImg
@@ -70,7 +74,7 @@ const Restaurant = ({ info, cnt }: RestaurantType) => {
   } else {
     return (
       <RestaurantItem cnt={cnt}>
-        <RestaurantLink to="/">
+        <RestaurantLink to="/" onClick={scrollToTop}>
           <figure>
             <RestaurantImgBox>
               <RestaurantSkeleton>

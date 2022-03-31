@@ -59,6 +59,7 @@ const SearchBox = () => {
       saveKeywordToRedux(inputValue);
       saveKeywordsToLocalStorage(inputValue);
       handleSearchBackModal();
+
       navigate(`/search/${inputValue}`);
     } else {
       alert('검색어를 입력 해주세요!');
