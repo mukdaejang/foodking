@@ -26,8 +26,6 @@ const Filter = ({
   const [kind, setKind] = useState<string[]>([]);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    console.log('order: ', order, 'local: ', local, 'kind: ', kind);
-
     setLoadingDataIsZero(false);
 
     let filteredData = fetchData;

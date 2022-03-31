@@ -16,7 +16,6 @@ import React from 'react';
 import { BestRestaurants } from '@/components';
 const Best5 = () => {
   const auth = useAppSelector(({ auth }) => auth.status);
-  console.log(auth);
 
   return <BestRestaurants />;
 };

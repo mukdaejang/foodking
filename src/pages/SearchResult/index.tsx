@@ -26,7 +26,7 @@ const SearchResult = () => {
     const fetchSearchData = async () => {
       const result = await getSearchData(inputSearchKeyword);
       result.sort((a, b) => b.score - a.score);
-      console.log(result);
+
       if (result.length <= 0) setLoadingDataIsZero(true);
       setFetchData(result);
       setFetchFilteredData(result);

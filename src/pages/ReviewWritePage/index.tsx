@@ -4,7 +4,6 @@ import React from 'react';
 
 const ReviewWritePage = () => {
   const auth = useAppSelector(({ auth }) => auth.status);
-  console.log(auth);
 
   return <ReviewWrite></ReviewWrite>;
 };
