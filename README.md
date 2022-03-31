@@ -48,19 +48,12 @@
 
 
 ### 프로필 사진 깜빡임 문제
-👎 기존 망고플레이트
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![헤더깜빡임](https://user-images.githubusercontent.com/60125497/161048868-bd08f086-67b7-4c15-8123-29dc652516a9.gif)|![헤더깜빡임해결](https://user-images.githubusercontent.com/60125497/161049711-0e522f2a-8825-4322-804a-2889562639b1.gif)|
 
-![헤더깜빡임](https://user-images.githubusercontent.com/60125497/161048868-bd08f086-67b7-4c15-8123-29dc652516a9.gif)
-
-👍 먹대장
-
-![헤더깜빡임해결](https://user-images.githubusercontent.com/60125497/161049711-0e522f2a-8825-4322-804a-2889562639b1.gif)
 
 ### 드롭다운 닫기 버튼 ❌ & 개별 삭제 불가능 & 로그아웃 버튼
-👎 기존 망고플레이트
-
-![image](https://user-images.githubusercontent.com/60125497/161050944-485a332c-7284-42bf-b0bf-70a1dcef67a3.png)
-
-👍 먹대장
-
-![image](https://user-images.githubusercontent.com/60125497/161051140-3bbfb06f-b39d-4645-be16-b7474ca91642.png)
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![image](https://user-images.githubusercontent.com/60125497/161050944-485a332c-7284-42bf-b0bf-70a1dcef67a3.png)|![image](https://user-images.githubusercontent.com/60125497/161051689-57d7e97e-1afd-4dee-8396-05b821d42a51.png)|
