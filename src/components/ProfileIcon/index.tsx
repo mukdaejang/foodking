@@ -66,16 +66,6 @@ const ProfileIcon = ({
     dispatch(modalActions.handleSocialModal());
   };
 
-  // const renderFavoritePosts = () => {
-  //   let favoriteArray: any = localStorage.getItem('favorite');
-  //   favoriteArray = JSON.parse(favoriteArray);
-  //   if (favoriteArray?.length) {
-  //     getPostListDocs(favoriteArray).then((res) => {
-  //       setFavoritePosts(res.reverse());
-  //     });
-  //   }
-  // };
-
   const favoriteClick = () => {
     if (isUserLogin) {
       setisLiFirst(false);
