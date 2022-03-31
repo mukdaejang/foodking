@@ -29,6 +29,8 @@ const Reviews = () => {
     [post?.reviews?.length],
   );
 
+  console.log(post);
+
   return (
     <section>
       <Header>
