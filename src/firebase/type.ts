@@ -37,7 +37,12 @@ export interface PostsWithId extends Posts {
 }
 export interface Users {
   userId: string;
-  favorites: string[];
+}
+
+export interface UsersWithImgAndName {
+  userId: string;
+  userName: string | null;
+  profileImgURL: string | null;
 }
 
 export interface Review {
