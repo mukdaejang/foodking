@@ -62,6 +62,7 @@ const ProfileIcon = ({
   }, [isUserLogin]);
 
   const handleSocialModal = () => {
+    window.scrollTo(0, 0);
     dispatch(modalActions.handleSocialModal());
   };
 

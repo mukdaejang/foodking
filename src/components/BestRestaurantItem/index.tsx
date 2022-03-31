@@ -85,15 +85,22 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
       });
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   if (loadState) {
     return (
       <RestaurantItemLi>
         <RestaurantItem>
-          <RestaurantImg to={`/restaurants/${restaurant.id}`}>
+          <RestaurantImg
+            to={`/restaurants/${restaurant.id}`}
+            onClick={scrollToTop}
+          >
             <img src={imageSrc} alt={imageSrc} />
           </RestaurantImg>
           <RestaurantInfo>
-            <Link to={`/restaurants/${restaurant.id}`}>
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
               <RestaurantTitle>
                 {restaurant.name}
                 <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>
@@ -126,7 +133,7 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
                 </p>
               </RestaurantMenu>
             </RestaurantSubInfo>
-            <Link to="/">
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
               <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
             </Link>
           </RestaurantInfo>
@@ -142,11 +149,14 @@ const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
     return (
       <RestaurantItemLi>
         <RestaurantItem>
-          <RestaurantImg to={`/restaurants/${restaurant.id}`}>
+          <RestaurantImg
+            to={`/restaurants/${restaurant.id}`}
+            onClick={scrollToTop}
+          >
             <Skeleton width={'100%'} height={'100%'} />
           </RestaurantImg>
           <RestaurantInfo>
-            <Link to={`/restaurants/${restaurant.id}`}>
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
               <Skeleton width={'60%'} />
             </Link>
             <IconButton onClick={changeStar} message="">
