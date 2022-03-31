@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-=======
-import { useState, useEffect } from 'react';
->>>>>>> 9523eeeb68671d711d6d55166ac17fc1ab0bb664
 import {
   Section,
   Left,
