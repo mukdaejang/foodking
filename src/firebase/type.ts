@@ -49,6 +49,13 @@ export interface UsersWithImgAndName {
   profileImgURL: string | null;
 }
 
+export interface User {
+  id?: string;
+  userId: string;
+  userName: string;
+  profileImgURL: string;
+}
+
 export interface Review {
   userId: string;
   postId: string;
@@ -56,6 +63,7 @@ export interface Review {
   score: number;
   images: ImageType[];
   text: string;
+  user?: User;
 }
 export interface ReviewWithId extends Review {
   id: string;

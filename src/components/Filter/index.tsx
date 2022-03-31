@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect, useCallback, MouseEvent } from 'react';
 import { Container, ButtonContainer } from './Filter.styled';
 import Sort from './Sort';
 import Local from './Local';
@@ -26,8 +26,6 @@ const Filter = ({
   const [kind, setKind] = useState<string[]>([]);
 
   const onClick = (e: MouseEvent<HTMLElement>) => {
-    console.log('order: ', order, 'local: ', local, 'kind: ', kind);
-
     setLoadingDataIsZero(false);
 
     let filteredData = fetchData;
@@ -61,4 +59,4 @@ const Filter = ({
   );
 };
 
-export default Filter;
+export default React.memo(Filter);

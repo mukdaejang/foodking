@@ -63,4 +63,4 @@ const Sort = ({ order, setOrder }: PropsType) => {
   );
 };
 
-export default Sort;
+export default React.memo(Sort);

@@ -1,4 +1,5 @@
 import {
+  getDoc,
   getDocs,
   collection,
   DocumentData,
@@ -14,6 +15,7 @@ import { db } from '@/firebase';
 import {
   Posts,
   FoodLists,
+  User,
   Users,
   UsersWithImgAndName,
   Review,
@@ -32,6 +34,7 @@ export const createCollection = <T = DocumentData>(collectionName: string) =>
 
 export const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
+const userCol = createCollection<User>('users');
 const usersCol = createCollection<Users>('users');
 const reviewsCol = createCollection<Review>('reviews');
 
@@ -339,6 +342,24 @@ export const searchByLocation = async ({ location, keyword }: Search) => {
       ...data.data(),
       id: data.id,
     }));
+  } catch (error) {
+    console.error(getErrorMessage(error));
+  }
+};
+
+export const getReviewWriter = async (reviewWriterId: string) => {
+  const userQueryByPostId = query(
+    userCol,
+    where('userId', '==', reviewWriterId),
+  );
+
+  try {
+    const userSnapShot = await getDocs(userQueryByPostId);
+    const [user] = userSnapShot.docs.map((data) => ({
+      ...data.data(),
+      id: data.id,
+    }));
+    return user;
   } catch (error) {
     console.error(getErrorMessage(error));
   }

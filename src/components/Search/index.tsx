@@ -3,7 +3,6 @@ import {
   useEffect,
   useRef,
   useCallback,
-  FormEvent,
   KeyboardEvent,
   ChangeEvent,
 } from 'react';
@@ -50,44 +49,57 @@ const SearchBox = () => {
     dispatch(modalActions.handleSearchBackModal());
   }, [dispatch]);
 
-  const saveKeywordToRedux = (str: string) =>
-    dispatch(keywordSuggestActions.handleSearchKeyword(str));
+  const saveKeywordToRedux = useCallback(
+    (inputValue: string) => {
+      dispatch(keywordSuggestActions.handleSearchKeyword(inputValue));
+    },
+    [inputValue],
+  );
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    if (inputValue) {
-      saveKeywordToRedux(inputValue);
-      saveKeywordsToLocalStorage(inputValue);
-      handleSearchBackModal();
+  const onSubmit = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      if (inputValue) {
+        saveKeywordToRedux(inputValue);
+        saveKeywordsToLocalStorage(inputValue);
+        handleSearchBackModal();
 
-      navigate(`/search/${inputValue}`);
-    } else {
-      alert('검색어를 입력 해주세요!');
-    }
-  };
+        navigate(`/search/${inputValue}`);
+      } else {
+        alert('검색어를 입력 해주세요!');
+      }
+    },
+    [inputValue],
+  );
 
-  const onKeyUp = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      (document.activeElement as HTMLElement).blur();
-      setInputValue('');
-      handleSearchBackModal();
-      return;
-    }
-  };
+  const onKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        (document.activeElement as HTMLElement).blur();
+        setInputValue('');
+        handleSearchBackModal();
+        return;
+      }
+    },
+    [inputValue],
+  );
 
-  const onFocus = () => {
+  const onFocus = useCallback(() => {
     setInputValue('');
     if (!isSearchBackModalOpen) handleSearchBackModal();
-  };
+  }, [inputValue]);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    },
+    [inputValue],
+  );
 
-  const onSpanClear = () => {
+  const onSpanClear = useCallback(() => {
     setInputValue('');
     inputRef.current && inputRef.current.focus();
-  };
+  }, [inputValue]);
 
   return (
     <section css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
@@ -113,6 +125,7 @@ const SearchBox = () => {
                   onFocus={onFocus}
                   onKeyUp={onKeyUp}
                   onChange={onChange}
+                  autoComplete="off"
                 ></input>
                 {/* {isSearchBackModalOpen && <SearchModal />} */}
               </div>

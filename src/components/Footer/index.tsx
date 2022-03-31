@@ -1,63 +1,64 @@
 import StyledFooter from './Footer.styled';
 import Logo from '@/assets/img/darkLogo.png';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <StyledFooter>
       <div className="upper">
         <div>
-          <a>
+          <Link to={'/'}>
             <img className="logo" src={Logo} alt="mukdaejang" />
-          </a>
+          </Link>
         </div>
         <nav>
           <ul>
             <li>
-              <a>회사소개</a>
+              <Link to={'/'}>회사소개</Link>
             </li>
             <li>
-              <a>망고플레이트 채용</a>
+              <Link to={'/'}>망고플레이트 채용</Link>
             </li>
             <li>
-              <a>투자 정보</a>
+              <Link to={'/'}>투자 정보</Link>
             </li>
             <li>
-              <a>브랜드 가이드라인</a>
+              <Link to={'/'}>브랜드 가이드라인</Link>
             </li>
             <li>
-              <a>망고플레이트 비즈니스</a>
+              <Link to={'/'}>망고플레이트 비즈니스</Link>
             </li>
             <li>
-              <a>광고 문의</a>
+              <Link to={'/'}>광고 문의</Link>
             </li>
           </ul>
           <ul>
             <li>
-              <a>공지사항</a>
+              <Link to={'/'}>공지사항</Link>
             </li>
             <li>
-              <a>이용약관</a>
+              <Link to={'/'}>이용약관</Link>
             </li>
             <li>
-              <a>비회원 이용자 이용정책</a>
+              <Link to={'/'}>비회원 이용자 이용정책</Link>
             </li>
             <li>
-              <a>개인정보처리방침</a>
+              <Link to={'/'}>개인정보처리방침</Link>
             </li>
             <li>
-              <a>위치기반서비스 이용약관</a>
+              <Link to={'/'}>위치기반서비스 이용약관</Link>
             </li>
             <li>
-              <a>커뮤니티 가이드라인</a>
+              <Link to={'/'}>커뮤니티 가이드라인</Link>
             </li>
             <li>
-              <a>청소년보호정책</a>
+              <Link to={'/'}>청소년보호정책</Link>
             </li>
             <li>
-              <a>홀릭 소개</a>
+              <Link to={'/'}>홀릭 소개</Link>
             </li>
             <li>
-              <a>문의하기</a>
+              <Link to={'/'}>문의하기</Link>
             </li>
           </ul>
         </nav>
@@ -70,7 +71,8 @@ const Footer = () => {
             <span>서울특별시 강남구 봉은사로 479, 479타워 11층</span>
             <span>대표이사: 정명훈</span>
             <span>
-              사업자 등록번호: 742-86-00224 <a>[사업자정보확인]</a>
+              사업자 등록번호: 742-86-00224{' '}
+              <Link to={'/'}>[사업자정보확인]</Link>
             </span>
             <span>통신판매업 신고번호: 2017-서울강남-01779</span>
             <span>고객센터: 02-565-5988</span>

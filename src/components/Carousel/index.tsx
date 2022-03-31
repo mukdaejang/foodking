@@ -77,8 +77,8 @@ const Carousel = ({ title }: CarouselChecker) => {
           <li key={idx}></li>
         ))}
       </NavigationControl>
-      <CarouselControl onClick={PrevSlide}></CarouselControl>
-      <CarouselControl onClick={NextSlide}></CarouselControl>
+      <CarouselControl onClick={PrevSlide}>prev</CarouselControl>
+      <CarouselControl onClick={NextSlide}>next</CarouselControl>
     </CarouselContent>
   );
 };

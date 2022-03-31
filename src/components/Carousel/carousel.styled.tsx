@@ -29,7 +29,9 @@ const CarouselControl = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 5rem;
+  text-indent: -10000px;
+  overflow: hidden;
+  white-space: nowrap;
   width: 20px;
   height: 80px;
   background-color: transparent;
