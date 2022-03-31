@@ -16,7 +16,6 @@
 ## 📚 기술스택
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
@@ -44,14 +43,12 @@
 - semantic tag를 사용한 semantic markup
 - SEO 향상 
 
-![image](https://user-images.githubusercontent.com/60125497/161046416-1e9d7047-a5d9-4b25-9138-adcd14ef12e8.png)
-
+![image](https://user-images.githubusercontent.com/60125497/161055913-a3233888-3ad6-469f-974c-5dc88a8e29e3.png)
 
 ### 프로필 사진 깜빡임 문제
 |👎 기존 망고플레이트|👍 먹대장|
 |:---:|:---:|
 |![헤더깜빡임](https://user-images.githubusercontent.com/60125497/161048868-bd08f086-67b7-4c15-8123-29dc652516a9.gif)|![헤더깜빡임해결](https://user-images.githubusercontent.com/60125497/161049711-0e522f2a-8825-4322-804a-2889562639b1.gif)|
-
 
 ### 드롭다운 닫기 버튼 ❌ & 개별 삭제 불가능 & 로그아웃 버튼
 |👎 기존 망고플레이트|👍 먹대장|
