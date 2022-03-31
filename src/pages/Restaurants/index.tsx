@@ -9,6 +9,11 @@ import Images from './Images';
 import { imageContainer } from './Restaurants.styled';
 import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 
+import { updatePostViews } from '@/firebase/request';
+
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
+
 const Restaurants = () => {
   const dispatch = useAppDispatch();
   const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
@@ -17,6 +22,8 @@ const Restaurants = () => {
 
   useEffect(() => {
     dispatch(request({ docName: 'posts', id: postId }));
+
+    updatePostViews(postId);
 
     let watchedArray: any = localStorage.getItem('watched');
 
@@ -30,6 +37,9 @@ const Restaurants = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>{setDocumentTitle(post?.name ?? '')}</title>
+      </Helmet>
       <div css={imageContainer}>
         {post?.images ? <Images images={post?.images} size="big" /> : ''}
       </div>

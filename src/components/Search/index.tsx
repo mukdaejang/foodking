@@ -125,6 +125,7 @@ const SearchBox = () => {
                   onFocus={onFocus}
                   onKeyUp={onKeyUp}
                   onChange={onChange}
+                  autoComplete="off"
                 ></input>
                 {/* {isSearchBackModalOpen && <SearchModal />} */}
               </div>

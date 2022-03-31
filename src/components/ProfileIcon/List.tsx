@@ -77,6 +77,7 @@ const List = ({
       } else {
         updateStarCount(id, false);
         deleteOneFavorite(id);
+        console.log(favoriteArray);
         favoriteArray = new Set(
           JSON.parse(favoriteArray).filter((item: any) => item !== id),
         );
@@ -91,16 +92,30 @@ const List = ({
     }
   };
 
-  const setLocalStorage = (isLiFirst: boolean) => {
-    const storageName = isLiFirst ? 'watched' : 'favorite';
-    let arr: any = localStorage.getItem(storageName);
-    arr = JSON.parse(arr);
-    const newArr = arr.filter((item: string) => item !== id);
-    localStorage.setItem(storageName, JSON.stringify(newArr));
+  const deleteFavoritePost = (e: MouseEvent) => {
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+
+      updateStarCount(id, false);
+      deleteOneFavorite(id);
+      favoriteArray = new Set(
+        JSON.parse(favoriteArray).filter((item: any) => item !== id),
+      );
+      favoriteArray = [...favoriteArray];
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+    } else {
+      handleSocialModal();
+    }
   };
 
   const deleteRecentPosts = () => {
-    setLocalStorage(isLiFirst);
+    const storageName = 'watched';
+    let arr: any = localStorage.getItem(storageName);
+    arr = JSON.parse(arr);
+    console.log(arr);
+    const newArr = arr.filter((item: string) => item !== id);
+    console.log(newArr);
+    localStorage.setItem(storageName, JSON.stringify(newArr));
   };
 
   return (
@@ -141,7 +156,7 @@ const List = ({
             <Star
               fill={theme.colors['orange']}
               onClick={(e) => {
-                changeStar(e);
+                deleteFavoritePost(e);
                 deleteOnePost(id);
               }}
             />

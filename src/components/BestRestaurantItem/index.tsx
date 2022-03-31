@@ -15,7 +15,7 @@ import {
 import theme from '@/styles/theme';
 import { IconButton } from '@/components';
 import { Star } from '@/components/IconButton';
-import { BestRestaurantType } from '@/components/BestRestaurants';
+import { BestRestaurantType } from '@/pages/BestRestaurants';
 import Modal from '@/components/Modal';
 import SocialLogin from '@/components/Modal/SocialLogin';
 

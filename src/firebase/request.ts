@@ -6,6 +6,7 @@ import {
   CollectionReference,
   addDoc,
   updateDoc,
+  deleteDoc,
   doc,
   increment,
 } from 'firebase/firestore';
@@ -32,6 +33,7 @@ export const createCollection = <T = DocumentData>(collectionName: string) =>
 export const postsCol = createCollection<Posts>('posts');
 const foodListsCol = createCollection<FoodLists>('foodList');
 const usersCol = createCollection<Users>('users');
+const reviewsCol = createCollection<Review>('reviews');
 
 // 모든 음식점 가져오기
 export const getPostDocs = async () => {
@@ -112,6 +114,43 @@ export const updateStarCount = async (postId: string, isIncrement: boolean) => {
   }
 };
 
+// review id로 review update
+export const updateReview = async (
+  reviewId: string,
+  { userId, postId, date, score, images, text }: Review,
+) => {
+  await updateDoc(doc(db, 'reviews', reviewId), {
+    userId,
+    postId,
+    date,
+    score,
+    images,
+    text,
+  });
+};
+
+// review id로 review data 한개 가져오기
+export const getReview = async (reviewId: string) => {
+  const q = query(reviewsCol, where(documentId(), '==', reviewId));
+  const reviewDocs = await getDocs(q);
+  const reviewData = reviewDocs.docs.map((x: any) => x.data());
+
+  return reviewData[0];
+};
+
+// 리뷰삭제
+export const deleteReviewDoc = async (reviewId: string) => {
+  await deleteDoc(doc(db, 'reviews', reviewId));
+  return reviewId;
+};
+
+// post id로 음식점의 views cnt 증가
+export const updatePostViews = async (postId: string) => {
+  await updateDoc(doc(db, 'posts', postId), {
+    views: increment(1),
+  });
+};
+
 // 맛집 술집 별로 데이터 가져오기(맛집 술집)
 export const getTopScorePostDocs = async (num: number, category: string) => {
   const q = query(
@@ -170,7 +209,6 @@ export const registUser = async (
   }
 };
 
-const reviewsCol = createCollection<Review>('reviews');
 export const getReviewDocs = async () => {
   const reviewDocs = await getDocs(reviewsCol);
   const reviewData = reviewDocs.docs.map((x) => x.data());

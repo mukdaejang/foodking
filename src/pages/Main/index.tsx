@@ -6,6 +6,8 @@ import { SortMiddel95 } from '@/components/style';
 /** firebase */
 import { getKeywordData } from '@/firebase/api/searchkeyword';
 import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
 
 /** lazy loading components */
 let Restaurants = lazy(() => {
@@ -43,6 +45,9 @@ const Main = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>{setDocumentTitle('')}</title>
+      </Helmet>
       <Suspense fallback={<div>test</div>}>
         <Banner />
         <SortMiddel95>
