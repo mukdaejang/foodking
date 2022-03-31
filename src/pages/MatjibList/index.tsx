@@ -1,10 +1,11 @@
 import { MatjibListTags, Category } from '@/components';
 import { Title, FloatBox, SortMiddel70 } from '@/components/style';
-import { useState, useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { getFoodListDocs } from '@/firebase/request';
 import { CategoryType } from '@/firebase/type';
-import { signInWithRedirect } from 'firebase/auth';
+
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
 
 interface MatjipListType {
   title: string;
@@ -19,6 +20,9 @@ const MatjipList = ({ title }: MatjipListType) => {
 
   return (
     <SortMiddel70>
+      <Helmet>
+        <title>{setDocumentTitle(`믿고 보는 ${title} 리스트`)}</title>
+      </Helmet>
       <Title>{`믿고 보는 ${title} 리스트`}</Title>
       <MatjibListTags />
       <FloatBox>

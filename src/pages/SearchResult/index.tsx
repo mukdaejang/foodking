@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Section,
   Left,
@@ -9,10 +9,12 @@ import {
 import { Filter, Restaurant } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getSearchData } from '@/firebase/api/searchkeyword';
-import { Posts, PostsWithId } from '@/firebase/type';
+import { PostsWithId } from '@/firebase/type';
+
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
 
 const SearchResult = () => {
-  const auth = useAppSelector(({ auth }) => auth.status);
   const { inputSearchKeyword } = useAppSelector(
     ({ searchkeyword }) => searchkeyword,
   );
@@ -26,7 +28,7 @@ const SearchResult = () => {
     const fetchSearchData = async () => {
       const result = await getSearchData(inputSearchKeyword);
       result.sort((a, b) => b.score - a.score);
-      console.log(result);
+
       if (result.length <= 0) setLoadingDataIsZero(true);
       setFetchData(result);
       setFetchFilteredData(result);
@@ -36,6 +38,11 @@ const SearchResult = () => {
 
   return (
     <article css={Section}>
+      <Helmet>
+        <title>
+          {setDocumentTitle(`${inputSearchKeyword}에 대한 검색 결과`)}
+        </title>
+      </Helmet>
       <div css={Left}>
         <ul css={UlContainer}>
           {fetchFilteredData &&

@@ -11,6 +11,9 @@ import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 
 import { updatePostViews } from '@/firebase/request';
 
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
+
 const Restaurants = () => {
   const dispatch = useAppDispatch();
   const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
@@ -34,6 +37,9 @@ const Restaurants = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>{setDocumentTitle(post?.name ?? '')}</title>
+      </Helmet>
       <div css={imageContainer}>
         {post?.images ? <Images images={post?.images} size="big" /> : ''}
       </div>
