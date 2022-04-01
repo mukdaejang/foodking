@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 
 const CategoryContent = styled.div`
-  padding-top: 30px;
-  padding-bottom: 40px;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  overflow: hidden;
 `;
 const CategoryList = styled.ul`
   display: block;

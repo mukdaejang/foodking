@@ -16,7 +16,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { PostsWithId } from '@/firebase/type';
 
 interface RestaurantType {
-  info: PostsWithId;
+  info?: PostsWithId;
   cnt: number;
 }
 
@@ -26,13 +26,15 @@ const Restaurant = ({ info, cnt }: RestaurantType) => {
   const [imgLoadState, setImgLoadState] = useState<boolean>(false);
 
   useEffect(() => {
-    getImageDocs(info.images![0] as any, 'restaurants')
-      .then((res: any) => setImageSrc(res))
-      .then((res) => {
-        setTimeout(() => {
-          setLoadState(true);
-        }, 1000);
-      });
+    if (info) {
+      getImageDocs(info?.images![0] as any, 'restaurants')
+        .then((res: any) => setImageSrc(res))
+        .then((res) => {
+          setTimeout(() => {
+            setLoadState(true);
+          }, 1000);
+        });
+    }
   }, []);
 
   const changeImgLoadState = () => setImgLoadState(true);
@@ -41,10 +43,10 @@ const Restaurant = ({ info, cnt }: RestaurantType) => {
     window.scrollTo(0, 0);
   };
 
-  if (loadState) {
+  if (loadState && info) {
     return (
       <RestaurantItem cnt={cnt}>
-        <RestaurantLink to={`/restaurants/${info.id}`} onClick={scrollToTop}>
+        <RestaurantLink to={`/restaurants/${info?.id}`} onClick={scrollToTop}>
           <figure>
             <RestaurantImgBox>
               <RestaurantImg
@@ -62,10 +64,10 @@ const Restaurant = ({ info, cnt }: RestaurantType) => {
             </RestaurantImgBox>
             <RestaurantInfo>
               <p>
-                <RestaurantName>{info.name}</RestaurantName>
-                <RestaurantScore>{info.score.toFixed(1)}</RestaurantScore>
+                <RestaurantName>{info?.name}</RestaurantName>
+                <RestaurantScore>{info?.score.toFixed(1)}</RestaurantScore>
               </p>
-              <RestaurantSubInfo>{`${info.address.district} - ${info.category}`}</RestaurantSubInfo>
+              <RestaurantSubInfo>{`${info?.address.district} - ${info?.category}`}</RestaurantSubInfo>
             </RestaurantInfo>
           </figure>
         </RestaurantLink>

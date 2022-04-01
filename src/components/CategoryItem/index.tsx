@@ -15,7 +15,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 interface CategoryItemChecker {
-  categoryData: CategoryType;
+  categoryData?: CategoryType;
   cnt: number;
 }
 
@@ -26,20 +26,22 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
   const [imgLoadState, setImgLoadState] = useState<boolean[]>([false, false]);
 
   useEffect(() => {
-    getPostImageTitleDocs(categoryData.list.slice(0, 2))
-      .then((imgTitle) => {
-        getImageDocs(imgTitle[0], 'restaurants').then((res: any) =>
-          setImageSrc1([res, imgTitle[0].replace('1.jpeg', '')]),
-        );
-        getImageDocs(imgTitle[1], 'restaurants').then((res: any) =>
-          setImageSrc2([res, imgTitle[1].replace('1.jpeg', '')]),
-        );
-      })
-      .then((res) => {
-        setTimeout(() => {
-          setLoadState(true);
-        }, 1000);
-      });
+    if (categoryData) {
+      getPostImageTitleDocs(categoryData.list.slice(0, 2))
+        .then((imgTitle) => {
+          getImageDocs(imgTitle[0], 'restaurants').then((res: any) =>
+            setImageSrc1([res, imgTitle[0].replace('1.jpeg', '')]),
+          );
+          getImageDocs(imgTitle[1], 'restaurants').then((res: any) =>
+            setImageSrc2([res, imgTitle[1].replace('1.jpeg', '')]),
+          );
+        })
+        .then((res) => {
+          setTimeout(() => {
+            setLoadState(true);
+          }, 1000);
+        });
+    }
   }, []);
 
   const changeImgLoadState = () =>
@@ -49,7 +51,7 @@ const CategoryItem = ({ categoryData, cnt }: CategoryItemChecker) => {
     window.scrollTo(0, 0);
   };
 
-  if (loadState) {
+  if (loadState && categoryData) {
     return (
       <CategoryItemLi cnt={cnt}>
         <CategoryLink
