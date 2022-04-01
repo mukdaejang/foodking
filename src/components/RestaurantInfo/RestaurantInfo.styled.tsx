@@ -1,16 +1,19 @@
 import styled from '@emotion/styled';
 
 interface Status {
-  view: number;
-  write: number;
-  star: number;
+  view: number | undefined;
+  write: number | undefined;
+  star: number | undefined;
 }
 
 export const TitleHeader = styled.header<{ status: Status }>`
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
+
   div.title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
 
     div {
       display: flex;
@@ -22,10 +25,16 @@ export const TitleHeader = styled.header<{ status: Status }>`
       h1 {
         margin-right: 1rem;
       }
+    }
+  }
 
-      span {
-        color: ${({ theme }) => theme.colors.orange};
-      }
+  .orange {
+    color: ${({ theme }) => theme.colors.orange};
+  }
+
+  div.icon-btns {
+    div {
+      position: relative;
     }
   }
 
@@ -39,22 +48,18 @@ export const TitleHeader = styled.header<{ status: Status }>`
       }
 
       &.view::after {
-        content: '${({ status }) => status.view.toLocaleString()}';
+        content: '${({ status }) => status?.view?.toLocaleString()}';
       }
 
       &.write::after {
-        content: '${({ status }) => status.write.toLocaleString()}';
+        content: '${({ status }) => status?.write?.toLocaleString()}';
       }
 
       &.star::after {
-        content: '${({ status }) => status.star.toLocaleString()}';
+        content: '${({ status }) => status?.star?.toLocaleString()}';
       }
     }
   }
-
-  padding-bottom: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
 `;
 
 export const Descriptions = styled.div`
@@ -63,6 +68,13 @@ export const Descriptions = styled.div`
   dl {
     display: flex;
     margin-bottom: 1rem;
+
+    &.introduce {
+      margin-top: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid ${({ theme }) => theme.colors.gray900};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray900};
+    }
   }
 
   dt {
@@ -76,19 +88,6 @@ export const Descriptions = styled.div`
 
       &:last-of-type {
         margin-top: 0.5rem;
-      }
-
-      &.address_jibun {
-        color: ${({ theme }) => theme.colors.gray300};
-
-        &::before {
-          content: '지번';
-          border: 1px solid ${({ theme }) => theme.colors.gray400};
-          border-radius: 3px;
-          margin-right: 0.5rem;
-          font-size: 0.6rem;
-          padding: 0.1rem;
-        }
       }
     }
 

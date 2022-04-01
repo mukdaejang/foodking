@@ -1,23 +1,30 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-export const ModalContainer = styled.div`
+interface modalContainerProps {
+  scroll: number;
+  isMainPage: boolean;
+}
+
+export const ModalContainer = styled.div<modalContainerProps>`
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   > div {
     position: absolute;
     right: 20px;
-    top: 70px;
+    top: ${({ scroll, isMainPage }) =>
+      isMainPage ? `${scroll + 70}px` : `${scroll + 10}px`};
     width: 320px;
     height: 534px;
 
     box-sizing: border-box;
     background-color: ${({ theme }) => theme.colors.white};
-    z-index: 9998;
+    z-index: 202;
 
     > ul {
       display: flex;
@@ -28,6 +35,7 @@ export const ModalContainer = styled.div`
       height: 413px;
       border-top: 1px solid ${({ theme }) => theme.colors.gray500};
       border-bottom: 1px solid ${({ theme }) => theme.colors.gray500};
+      overflow-y: auto;
 
       > div {
         display: flex;
@@ -57,7 +65,6 @@ export const ModalContainer = styled.div`
         width: 294px;
         height: 86px;
         margin-top: 16px;
-        margin-right: 10px;
         box-sizing: border-box;
 
         section {
@@ -81,7 +88,11 @@ export const ModalContainer = styled.div`
               align-items: center;
               h3 {
                 line-height: 22px;
-                font-size: 16px;
+                font-size: 15px;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 color: black;
               }
 
@@ -99,12 +110,26 @@ export const ModalContainer = styled.div`
           }
           button {
             border: none;
+            width: 40px;
+            height: 28px;
             display: flex;
-            color: ${({ theme }) => theme.colors.gray500};
             background-color: ${({ theme }) => theme.colors.white};
             text-align: center;
+            align-items: center;
             cursor: pointer;
             padding: 0;
+
+            svg {
+              width: 80%;
+              height: 80%;
+              margin-right: 5px;
+            }
+
+            .xIcon {
+              width: 50%;
+              height: 50%;
+              color: ${({ theme }) => theme.colors.gray500};
+            }
           }
         }
 
@@ -175,4 +200,11 @@ export const loginButton = css`
   font-size: 16px;
   color: #ff7100;
   background-color: transparent;
+`;
+
+export const imgSkeleton = css`
+  width: 70px;
+  height: 70px;
+  margin-right: 16px;
+  margin-left: 16px;
 `;

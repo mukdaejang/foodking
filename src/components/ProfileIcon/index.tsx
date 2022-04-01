@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Modal from '@/components/Modal';
-import List from './List';
-import SocialLogin from '../Modal/SocialLogin';
+import List from '@/components/ProfileIcon/List';
+import SocialLogin from '@/components/Modal/SocialLogin';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -9,61 +10,103 @@ import {
   isSelected,
   isNotSelected,
 } from './ProfileIcon.styled';
-import { getPostDocs } from '@/firebase/request';
+
+import { getPostListDocs, updateStarCount } from '@/firebase/request';
+import { PostsWithId } from '@/firebase/type';
 import { getAuth, signOut } from 'firebase/auth';
-import { ListProps } from './List';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { modalActions } from '@/store/modal/modal-slice';
 
 interface ProfileIconProps {
   onClickToggleModal: () => void;
   isLogin: boolean;
+  isMainPage: boolean;
+  scroll: number;
 }
 
-const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
+const ProfileIcon = ({
+  onClickToggleModal,
+  isLogin,
+  isMainPage,
+  scroll,
+}: ProfileIconProps) => {
   const dispatch = useAppDispatch();
   const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
 
   const [isLiFirst, setisLiFirst] = useState(true);
-  const [firstLiMockData, setFirstLiMockData] = useState<any>([]);
-  const [secondLiMockData, setSecondLiMockData] = useState([
-    {
-      name: '담소순대국',
-      address: '광진구',
-      category: '한식',
-      score: 4.6,
-    },
-    {
-      name: '뚱보집',
-      address: '강남구',
-      category: '한식',
-      score: 4.8,
-    },
-    {
-      name: '서가앤쿡',
-      address: '마포구',
-      category: '양식',
-      score: 3.9,
-    },
-  ]);
+  const [recentlyWatchedPosts, setRecentlyWatchedPosts] = useState<
+    PostsWithId[]
+  >([]);
+  const [favoritePosts, setFavoritePosts] = useState<PostsWithId[]>([]);
 
   useEffect(() => {
-    // setSecondLiMockData([]); // 가고싶다 서브메뉴에 빈 데이터가 들어가는 경우의 테스트 코드
-    getPostDocs().then((res) => {
-      setFirstLiMockData(res);
-    });
-  }, []);
+    let watchedArray: any = localStorage.getItem('watched');
+    watchedArray = JSON.parse(watchedArray);
+    if (watchedArray?.length) {
+      getPostListDocs(watchedArray).then((res) => {
+        setRecentlyWatchedPosts(res.reverse());
+      });
+    }
+
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      favoriteArray = JSON.parse(favoriteArray);
+      if (favoriteArray?.length) {
+        getPostListDocs(favoriteArray).then((res) => {
+          setFavoritePosts(res.reverse());
+        });
+      }
+    }
+  }, [isUserLogin]);
 
   const handleSocialModal = () => {
+    window.scrollTo(0, 0);
     dispatch(modalActions.handleSocialModal());
   };
 
-  const onLiClick = () => {
-    setisLiFirst(!isLiFirst);
+  const favoriteClick = () => {
+    if (isUserLogin) {
+      setisLiFirst(false);
+    } else {
+      handleSocialModal();
+    }
+  };
+
+  const recentlyWatchedClick = () => {
+    setisLiFirst(true);
+  };
+
+  const deleteOneRecentlyWathced = (postId: string) => {
+    let arr = recentlyWatchedPosts;
+    arr = arr.filter((item) => item.id !== postId);
+    setRecentlyWatchedPosts(arr);
+  };
+
+  const deleteOneFavorite = (postId: string) => {
+    let arr = favoritePosts;
+    arr = arr.filter((item) => item.id !== postId);
+
+    updateStarCount(postId, false);
+    setFavoritePosts(arr);
   };
 
   const deleteBtnClick = () => {
-    setFirstLiMockData([]);
+    if (isLiFirst) {
+      localStorage.removeItem('watched');
+      setRecentlyWatchedPosts([]);
+    } else {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+
+      favoriteArray.forEach((postId: string) => {
+        updateStarCount(postId, false);
+      });
+
+      localStorage.removeItem('favorite');
+      setFavoritePosts([]);
+    }
   };
 
   const logout = () => {
@@ -79,42 +122,52 @@ const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer scroll={scroll} isMainPage={isMainPage}>
       <Modal closePortal={onClickToggleModal}></Modal>
       <div>
         <ul>
-          <li css={isLiFirst ? isSelected : isNotSelected} onClick={onLiClick}>
+          <li
+            css={isLiFirst ? isSelected : isNotSelected}
+            onClick={recentlyWatchedClick}
+          >
             최근 본 맛집
           </li>
-          <li css={isLiFirst ? isNotSelected : isSelected} onClick={onLiClick}>
+          <li
+            css={isLiFirst ? isNotSelected : isSelected}
+            onClick={favoriteClick}
+          >
             가고싶다
           </li>
         </ul>
         <div>
           <div>
             <button onClick={onClickToggleModal}>창 닫기</button>
-            {isLiFirst && (
-              <button onClick={deleteBtnClick}>
-                <FontAwesomeIcon icon={faXmark} />
-                <span>모두 지우기</span>
-              </button>
-            )}
+            <button onClick={deleteBtnClick}>
+              <FontAwesomeIcon icon={faXmark} />
+              <span>모두 지우기</span>
+            </button>
           </div>
           <ul>
             {isLiFirst ? (
-              firstLiMockData.length ? (
-                firstLiMockData.map(
+              recentlyWatchedPosts.length ? (
+                recentlyWatchedPosts.map(
                   (
-                    { name, address, category, score }: ListProps,
+                    { id, name, address, category, score, star, images },
                     index: number,
                   ) => {
                     return (
                       <List
+                        id={id}
                         key={index}
                         name={name}
                         address={address}
                         category={category}
                         score={score}
+                        star={star}
+                        images={images}
+                        isLiFirst={isLiFirst}
+                        deleteOnePost={deleteOneRecentlyWathced}
+                        deleteOneFavorite={deleteOneFavorite}
                       ></List>
                     );
                   },
@@ -125,16 +178,25 @@ const ProfileIcon = ({ onClickToggleModal, isLogin }: ProfileIconProps) => {
                   <p> 내가 둘러 본 식당이 이 곳에 순서대로 기록됩니다.</p>
                 </div>
               )
-            ) : secondLiMockData.length ? (
-              secondLiMockData.map(
-                ({ name, address, category, score }, index) => {
+            ) : favoritePosts.length ? (
+              favoritePosts.map(
+                (
+                  { id, name, address, category, score, star, images },
+                  index,
+                ) => {
                   return (
                     <List
+                      id={id}
                       key={index}
                       name={name}
                       address={address}
                       category={category}
                       score={score}
+                      star={star}
+                      images={images}
+                      isLiFirst={isLiFirst}
+                      deleteOnePost={deleteOneFavorite}
+                      deleteOneFavorite={deleteOneFavorite}
                     ></List>
                   );
                 },

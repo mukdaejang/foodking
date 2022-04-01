@@ -1,85 +1,113 @@
-import glassSolid from '@/assets/icons/glass-solid.svg';
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  KeyboardEvent,
+  ChangeEvent,
+} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchModal from './SearchModal';
-import Portal from '@/components/Portal';
+
+import glassSolid from '@/assets/icons/glass-solid.svg';
 import {
-  searchBar,
-  modalSearchBar,
+  SearchBar,
+  ModalSearchBar,
   SearchBarField,
-  searchBar__contents,
-  search__input,
-  search__btn,
-  search__link,
-  position,
+  SearchBarContents,
+  SearchInput,
+  SearchBtn,
+  AbsolutePosition,
   findImgStyle,
-  spanDisplay,
-  none,
+  SpanDisplay,
+  None,
 } from './SearchBox.styled';
 
+/** redux */
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
+import { keywordSuggestActions } from '@/store/searchkeyword/keyword-slice';
+import { saveKeywordsToLocalStorage } from '@/utils';
+
 const SearchBox = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const dispatch = useAppDispatch();
+  const { isSearchBackModalOpen } = useAppSelector(({ modal }) => modal);
+  const { inputSearchKeyword } = useAppSelector(
+    ({ searchkeyword }) => searchkeyword,
+  );
+
+  const [inputValue, setInputValue] = useState<string>('');
+  const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    //fetchData
-    console.log(inputValue);
+    // console.log(inputValue);
+    // throttle 걸어서 일정 시간 이후 검색어 가져오기
   }, [inputValue]);
 
-  const searchInput = useRef<any>(null);
-  let navigate = useNavigate();
+  const handleSearchBackModal = useCallback(() => {
+    dispatch(modalActions.handleSearchBackModal());
+  }, [dispatch]);
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    if (!inputValue) {
-      alert('검색어를 입력 해주세요!');
+  const saveKeywordToRedux = useCallback(
+    (inputValue: string) => {
+      dispatch(keywordSuggestActions.handleSearchKeyword(inputValue));
+    },
+    [inputValue],
+  );
+
+  const onSubmit = useCallback(
+    (e: any) => {
       e.preventDefault();
-    }
-  };
-
-  const onKeyUp = (e: any) => {
-    if (e.key === 'Enter' && !inputValue) {
-      alert('검색어를 입력 해주세요!');
-      setModalOpen(false);
-      document.body.style.overflow = 'unset';
-      return;
-    }
-    if (e.key === 'Enter' || e.key === 'Escape') {
-      if (e.key === 'Escape') {
-        setModalOpen(false);
-        document.body.style.overflow = 'unset';
-        return;
-      }
       if (inputValue) {
-        console.log('Clicked key: ', e.key);
+        saveKeywordToRedux(inputValue);
+        saveKeywordsToLocalStorage(inputValue);
+        handleSearchBackModal();
+
         navigate(`/search/${inputValue}`);
       } else {
-        setModalOpen(false);
-        document.body.style.overflow = 'unset';
+        alert('검색어를 입력 해주세요!');
       }
-    }
-  };
+    },
+    [inputValue],
+  );
 
-  const onFocus = () => {
-    setModalOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
+  const onKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        (document.activeElement as HTMLElement).blur();
+        setInputValue('');
+        handleSearchBackModal();
+        return;
+      }
+    },
+    [inputValue],
+  );
 
-  const onChange = (e: any) => {
-    setInputValue(e.target.value);
-  };
-
-  const spanClear = () => {
+  const onFocus = useCallback(() => {
     setInputValue('');
-  };
+    if (!isSearchBackModalOpen) handleSearchBackModal();
+  }, [inputValue]);
+
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    },
+    [inputValue],
+  );
+
+  const onSpanClear = useCallback(() => {
+    setInputValue('');
+    inputRef.current && inputRef.current.focus();
+  }, [inputValue]);
 
   return (
-    <div css={modalOpen ? modalSearchBar : searchBar}>
+    <section css={isSearchBackModalOpen ? ModalSearchBar : SearchBar}>
       <SearchBarField>
-        <div css={searchBar__contents}>
+        <div css={SearchBarContents}>
           <form onSubmit={onSubmit}>
             <div className="contents__left">
-              <label htmlFor="search__input" />
+              <label htmlFor="SearchInput" />
               <span>
                 <img
                   css={findImgStyle}
@@ -87,36 +115,39 @@ const SearchBox = () => {
                   alt="glass-solid"
                 ></img>
               </span>
-              <div css={position}>
+              <div css={AbsolutePosition}>
                 <input
-                  ref={searchInput}
-                  css={search__input}
-                  id="search__input"
-                  className="search__input"
+                  ref={inputRef}
+                  css={SearchInput}
+                  id="SearchInput"
                   placeholder="지역, 식당 또는 음식"
                   value={inputValue}
                   onFocus={onFocus}
                   onKeyUp={onKeyUp}
                   onChange={onChange}
+                  autoComplete="off"
                 ></input>
-                {modalOpen && (
-                  <SearchModal modalOpen={true} setModalOpen={setModalOpen} />
-                )}
-                {modalOpen && <Portal setModalOpen={setModalOpen}></Portal>}
+                {/* {isSearchBackModalOpen && <SearchModal />} */}
               </div>
-              <span css={modalOpen ? spanDisplay : none} onClick={spanClear}>
-                <button>CLEAR</button>
+              <span
+                css={isSearchBackModalOpen ? SpanDisplay : None}
+                onClick={onSpanClear}
+              >
+                <button type="reset" onClick={onSpanClear}>
+                  CLEAR
+                </button>
               </span>
             </div>
             <div className="contents__right">
-              <button type="submit" css={search__btn}>
+              <button type="submit" css={SearchBtn} onClick={onSubmit}>
                 검색
               </button>
             </div>
           </form>
+          {isSearchBackModalOpen && <SearchModal />}
         </div>
       </SearchBarField>
-    </div>
+    </section>
   );
 };
 

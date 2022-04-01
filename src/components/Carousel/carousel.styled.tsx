@@ -8,7 +8,7 @@ const CarouselContent = styled.section`
 `;
 const CategoryTitle = styled.h2`
   color: ${({ theme }) => theme.colors.orange};
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
 `;
 const CarouselView = styled.div`
@@ -29,7 +29,9 @@ const CarouselControl = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 5rem;
+  text-indent: -10000px;
+  overflow: hidden;
+  white-space: nowrap;
   width: 20px;
   height: 80px;
   background-color: transparent;
@@ -59,9 +61,10 @@ const CarouselControl = styled.button`
 //   background-position: -40px 0;
 //   right: 15px;
 // `;
-const NavigationControl = styled.ul`
+
+const NavigationControl = styled.ul<{ nowSlide: number }>`
   position: absolute;
-  bottom: 35px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -69,11 +72,14 @@ const NavigationControl = styled.ul`
   justify-content: center;
   & li {
     margin: 0 4px;
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.orange};
     cursor: pointer;
+    &:nth-of-type(${(props) => props.nowSlide + 1}) {
+      background-color: ${({ theme }) => theme.colors.orange};
+    }
   }
 `;
 export {

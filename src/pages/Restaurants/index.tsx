@@ -1,30 +1,58 @@
-import { css } from '@emotion/react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { SurroundPopluars, Reviews, RestaurantInfo } from '@/components';
+import { LocalPopluars, Reviews, RestaurantInfo, KakaoMap } from '@/components';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { request } from '@/store/restaurants/restaurants-actions';
+
 import Images from './Images';
-import image from '@/assets/img/food.jpg';
+import { imageContainer } from './Restaurants.styled';
+import { mainContent } from '@/pages/Restaurants/Restaurants.styled';
 
-const imageContainer = css`
-  margin: 0 0.4rem;
-`;
+import { updatePostViews } from '@/firebase/request';
+
+import { Helmet } from 'react-helmet-async';
+import { setDocumentTitle } from '@/utils';
 
 const Restaurants = () => {
-  const images = Array(5)
-    .fill(null)
-    .map((_, i) => ({
-      id: String(i),
-      title: '햄버거',
-      src: image,
-    }));
+  const dispatch = useAppDispatch();
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
+
+  const { postId = '' } = useParams();
+
+  useEffect(() => {
+    dispatch(request({ docName: 'posts', id: postId }));
+
+    updatePostViews(postId);
+
+    let watchedArray: any = localStorage.getItem('watched');
+
+    watchedArray = watchedArray === null ? [] : JSON.parse(watchedArray);
+    watchedArray.push(postId);
+    watchedArray = new Set(watchedArray);
+    watchedArray = [...watchedArray];
+
+    localStorage.setItem('watched', JSON.stringify(watchedArray));
+  }, [dispatch, postId]);
 
   return (
     <div>
-      {/* <div css={imageContainer}>
-        <Images images={images} size="big" />
-      </div> */}
-      <SurroundPopluars />
-      <Reviews />
-      <RestaurantInfo />
+      <Helmet>
+        <title>{setDocumentTitle(post?.name ?? '')}</title>
+      </Helmet>
+      <div css={imageContainer}>
+        {post?.images ? <Images images={post?.images} size="big" /> : ''}
+      </div>
+      <div css={mainContent}>
+        <div className="main-content">
+          <RestaurantInfo />
+          <Reviews />
+        </div>
+        <aside>
+          <KakaoMap pos={[37.365264512305174, 127.10676860117488]}></KakaoMap>
+          <LocalPopluars />
+        </aside>
+      </div>
     </div>
   );
 };

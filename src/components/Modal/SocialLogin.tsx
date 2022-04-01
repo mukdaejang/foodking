@@ -12,19 +12,37 @@ interface socialLoginProps {
 }
 const SocialLogin = ({ closePortal }: socialLoginProps) => {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
-  const googleLogin = () => {
-    dispatch(login('google'));
+
+  const googleLogin = async () => {
+    try {
+      await dispatch(login('google')).unwrap();
+      dispatch(modalActions.handleOverlayModal());
+      dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
+      navigate('/');
+    } catch (error) {
+      console.error(getErrorMessage(error));
+    }
   };
-  const facebookLogin = () => {
-    dispatch(login('facebook'));
+  const facebookLogin = async () => {
+    try {
+      await dispatch(login('facebook')).unwrap();
+      dispatch(modalActions.handleOverlayModal());
+      dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
+      navigate('/');
+    } catch (error) {
+      console.error(getErrorMessage(error));
+    }
   };
   const githubLogin = async () => {
     try {
       await dispatch(login('github')).unwrap();
       dispatch(modalActions.handleOverlayModal());
       dispatch(modalActions.handleSocialModal());
+      window.scrollTo(0, 0);
+
       navigate('/');
     } catch (error) {
       console.error(getErrorMessage(error));

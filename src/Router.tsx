@@ -3,7 +3,7 @@ import {
   MatjibList,
   Main,
   NotFound,
-  Best5,
+  BestRestaurants,
   ReviewWritePage,
   SearchResult,
   Restaurants,
@@ -13,11 +13,13 @@ const Router = () => {
   return (
     <Routes>
       <Route index element={<Main />} />
-      <Route path="matjib_list" element={<MatjibList />} />
+      <Route path="food_list" element={<MatjibList title={'맛집'} />} />
+      <Route path="drink_list" element={<MatjibList title={'술집'} />} />
       <Route path="search/:endpoint" element={<SearchResult />} />
-      <Route path="bestRestaurants" element={<Best5 />} />
-      <Route path="reviews" element={<ReviewWritePage />} />
-      <Route path="/restaurants/:restaurant" element={<Restaurants />} />
+      <Route path="/bestRestaurants/:category" element={<BestRestaurants />} />
+      <Route path="/writeReview/:postId" element={<ReviewWritePage />} />
+      <Route path="/editReview/:postId" element={<ReviewWritePage />} />
+      <Route path="/restaurants/:postId" element={<Restaurants />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

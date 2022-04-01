@@ -1,6 +1,5 @@
-import food from '@/assets/food.jpeg';
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, MouseEvent, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import {
   RestaurantItemLi,
   RestaurantItem,
@@ -12,66 +11,171 @@ import {
   RestaurantMenu,
   RestaurantMore,
 } from './bestRestaurantItem.styled';
-import unstar from '@/assets/icons/un-star.svg';
-import star from '@/assets/icons/star.svg';
+
+import theme from '@/styles/theme';
 import { IconButton } from '@/components';
+import { Star } from '@/components/IconButton';
+import { BestRestaurantType } from '@/pages/BestRestaurants';
+import Modal from '@/components/Modal';
+import SocialLogin from '@/components/Modal/SocialLogin';
 
-const BestRestaurantItem = () => {
+import { getImageDocs, updateStarCount } from '@/firebase/request';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
+
+interface BestRestaurantItemType {
+  restaurant: BestRestaurantType;
+}
+
+const BestRestaurantItem = ({ restaurant }: BestRestaurantItemType) => {
+  const dispatch = useAppDispatch();
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
+
   const [starState, setStarState] = useState(false);
+  const [loadState, setLoadState] = useState<boolean>(false);
 
-  const changeStar = (e: any) => {
-    setStarState(!starState);
-    (
-      e.currentTarget.children[0] as HTMLElement
-    ).style.backgroundImage = `url('${!starState ? star : unstar}')`;
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
   };
 
-  return (
-    <RestaurantItemLi>
-      <RestaurantItem>
-        <RestaurantImg to="/">
-          <img src={food} alt="food" />
-        </RestaurantImg>
-        <RestaurantInfo>
-          <Link to="/">
-            <RestaurantTitle>
-              까스까스<RestaurantScore>4.5</RestaurantScore>
-            </RestaurantTitle>
-          </Link>
-          {/* <RestaurantLike>
-            <button onClick={changeStar} ref={starRef}></button>
-            <span>가고싶다</span>
-          </RestaurantLike> */}
-          <IconButton img={unstar} event={changeStar}></IconButton>
-          <address>서울특별시 강남구 미왕빌딩</address>
-          <RestaurantSubInfo>
-            <small>영업시간</small>
-            <small>11:30 - 21:00 </small>
-          </RestaurantSubInfo>
-          <RestaurantSubInfo>
-            <small>대표메뉴</small>
-            <RestaurantMenu>
-              <p>
-                <span>로스카츠</span>
-                <span>13000 원</span>
-              </p>
-              <p>
-                <span>히레카츠</span>
-                <span>14000 원</span>
-              </p>
-              <p>
-                <span>모둠카츠</span>
-                <span>17000 원</span>
-              </p>
-            </RestaurantMenu>
-          </RestaurantSubInfo>
-          <Link to="/">
-            <RestaurantMore>{`${`까스까스`} 더보기 >`}</RestaurantMore>
-          </Link>
-        </RestaurantInfo>
-      </RestaurantItem>
-    </RestaurantItemLi>
-  );
+  const changeStar = (e: MouseEvent) => {
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      if (!starState) {
+        favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+        if (favoriteArray.includes(restaurant.id)) {
+          setStarState(true);
+          return;
+        } else {
+          updateStarCount(restaurant.id, true);
+          favoriteArray.push(restaurant.id);
+          favoriteArray = new Set(favoriteArray);
+        }
+      } else {
+        updateStarCount(restaurant.id, false);
+        favoriteArray = new Set(
+          JSON.parse(favoriteArray).filter(
+            (item: any) => item !== restaurant.id,
+          ),
+        );
+      }
+      favoriteArray = [...favoriteArray];
+
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+
+      setStarState(!starState);
+    } else {
+      handleSocialModal();
+    }
+  };
+
+  const [imageSrc, setImageSrc] = useState<string>();
+
+  useEffect(() => {
+    getImageDocs(restaurant.images[0], 'restaurants')
+      .then((res: any) => setImageSrc(res))
+      .then((res) => {
+        setTimeout(() => {
+          setLoadState(true);
+        }, 500);
+      });
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
+  if (loadState) {
+    return (
+      <RestaurantItemLi>
+        <RestaurantItem>
+          <RestaurantImg
+            to={`/restaurants/${restaurant.id}`}
+            onClick={scrollToTop}
+          >
+            <img src={imageSrc} alt={imageSrc} />
+          </RestaurantImg>
+          <RestaurantInfo>
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
+              <RestaurantTitle>
+                {restaurant.name}
+                <RestaurantScore>{restaurant.score.toFixed(1)}</RestaurantScore>
+              </RestaurantTitle>
+            </Link>
+            <IconButton onClick={changeStar} message="가고싶다">
+              <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
+            </IconButton>
+            <address>
+              {`${restaurant.address.city} ${restaurant.address.district} ${restaurant.address.detail}`}
+            </address>
+            <RestaurantSubInfo>
+              <small>영업시간</small>
+              <small>{restaurant.time} </small>
+            </RestaurantSubInfo>
+            <RestaurantSubInfo>
+              <small>대표메뉴</small>
+              <RestaurantMenu>
+                <p>
+                  <span>{restaurant.menu[0]}</span>
+                  <span>{restaurant.menu[1]}</span>
+                </p>
+                <p>
+                  <span>{restaurant.menu[2]}</span>
+                  <span>{restaurant.menu[3]}</span>
+                </p>
+                <p>
+                  <span>{restaurant.menu[4]}</span>
+                  <span>{restaurant.menu[5]}</span>
+                </p>
+              </RestaurantMenu>
+            </RestaurantSubInfo>
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
+              <RestaurantMore>{`${restaurant.name} 더보기 >`}</RestaurantMore>
+            </Link>
+          </RestaurantInfo>
+          {isSocialModalOpen && (
+            <Modal closePortal={handleSocialModal}>
+              <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+            </Modal>
+          )}
+        </RestaurantItem>
+      </RestaurantItemLi>
+    );
+  } else {
+    return (
+      <RestaurantItemLi>
+        <RestaurantItem>
+          <RestaurantImg
+            to={`/restaurants/${restaurant.id}`}
+            onClick={scrollToTop}
+          >
+            <Skeleton width={'100%'} height={'100%'} />
+          </RestaurantImg>
+          <RestaurantInfo>
+            <Link to={`/restaurants/${restaurant.id}`} onClick={scrollToTop}>
+              <Skeleton width={'60%'} />
+            </Link>
+            <IconButton onClick={changeStar} message="">
+              <Skeleton width={'100%'} height={'100%'} />
+            </IconButton>
+            <address>
+              <Skeleton width={'70%'} height={'100%'} />
+            </address>
+            <Skeleton width={'100%'} count={5} />
+          </RestaurantInfo>
+          {isSocialModalOpen && (
+            <Modal closePortal={handleSocialModal}>
+              <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+            </Modal>
+          )}
+        </RestaurantItem>
+      </RestaurantItemLi>
+    );
+  }
 };
 
 BestRestaurantItem.defaultProps = {

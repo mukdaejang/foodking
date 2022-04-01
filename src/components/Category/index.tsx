@@ -1,19 +1,31 @@
 import { CategoryItem } from '@/components';
 import { CategoryContent, CategoryList } from './category.styled';
+import { CategoryType } from '@/firebase/type';
 
 interface CategoryChecker {
-  categoryItemList: Array<object>;
+  categoryItemList?: CategoryType[];
+  cnt: number;
 }
 
-const Category = ({ categoryItemList }: CategoryChecker) => {
+const Category = ({ categoryItemList, cnt }: CategoryChecker) => {
   return (
-    <CategoryContent>
-      <CategoryList>
-        {categoryItemList.map((categoryItem, idx: any) => (
-          <CategoryItem key={idx} categoryData={categoryItem} />
-        ))}
-      </CategoryList>
-    </CategoryContent>
+    <li>
+      <CategoryContent>
+        <CategoryList>
+          {categoryItemList
+            ? categoryItemList?.map((categoryItem) => (
+                <CategoryItem
+                  key={categoryItem.id}
+                  categoryData={categoryItem}
+                  cnt={cnt}
+                />
+              ))
+            : [...Array(6)].map((_, idx) => (
+                <CategoryItem key={idx} cnt={cnt} />
+              ))}
+        </CategoryList>
+      </CategoryContent>
+    </li>
   );
 };
 

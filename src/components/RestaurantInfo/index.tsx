@@ -1,41 +1,105 @@
+import { useState, MouseEvent } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
 import { TitleHeader, Descriptions } from './RestaurantInfo.styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPen, faStar } from '@fortawesome/free-solid-svg-icons';
 import foodImage from '@/assets/img/food.jpg';
 
+import { IconButton } from '@/components';
+import { Pen, Star } from '@/components/IconButton';
+import Modal from '@/components/Modal';
+import SocialLogin from '@/components/Modal/SocialLogin';
+import theme from '@/styles/theme';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { modalActions } from '@/store/modal/modal-slice';
+
+import { updateStarCount } from '@/firebase/request';
+
 const RestaurantInfo = () => {
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { isSocialModalOpen } = useAppSelector(({ modal }) => modal);
+  const { isUserLogin } = useAppSelector(({ user }) => user);
+
   const status = {
-    view: 141982,
-    write: 114,
-    star: 3787,
+    view: post?.views,
+    write: post?.reviews?.length,
+    star: post?.star,
   };
 
-  const restaurantInfo = {
-    address: [
-      '서울특별시 용산구 한강대로38가길 7-2',
-      '서울시 용산구 한강로2가 153-8',
-    ],
+  const [starState, setStarState] = useState(false);
+
+  const handleSocialModal = () => {
+    dispatch(modalActions.handleSocialModal());
   };
 
-  const menus = [
-    { name: '브라운돈가스', price: 10000 },
-    { name: '브라운치킨가스', price: 10000 },
-    { name: '로스가스', price: 10000 },
-    { name: '화이트돈가스', price: 13000 },
-    { name: '크림우동', price: 9000 },
-  ].map((menu, id) => ({ ...menu, id }));
+  const { postId = '' } = useParams();
+
+  const changeStar = (e: MouseEvent) => {
+    if (isUserLogin) {
+      let favoriteArray: any = localStorage.getItem('favorite');
+      if (!starState) {
+        favoriteArray = favoriteArray === null ? [] : JSON.parse(favoriteArray);
+        if (favoriteArray.includes(postId)) {
+          setStarState(true);
+          return;
+        } else {
+          updateStarCount(postId, true);
+          favoriteArray.push(postId);
+          favoriteArray = new Set(favoriteArray);
+        }
+      } else {
+        updateStarCount(postId, false);
+        favoriteArray = new Set(
+          JSON.parse(favoriteArray).filter((item: any) => item !== postId),
+        );
+      }
+      favoriteArray = [...favoriteArray];
+
+      localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+
+      setStarState(!starState);
+    } else {
+      handleSocialModal();
+    }
+  };
+
+  const writeReview = () => {
+    if (isUserLogin) {
+      navigate(`/writeReview/${postId}`);
+    } else {
+      handleSocialModal();
+    }
+  };
 
   return (
     <div>
       <TitleHeader status={status}>
         <div className="title">
           <div>
-            <h1>북천</h1>
-            <span>4.6</span>
+            <h1>{post?.name}</h1>
+            <span className="orange">{post?.score}</span>
           </div>
-          <div>
-            <button>리뷰쓰기</button>
-            <button>가고싶다</button>
+          <div className="icon-btns">
+            <div>
+              <IconButton
+                onClick={() => {
+                  writeReview();
+                }}
+                message="리뷰쓰기"
+              >
+                <Pen width="30" height="30" fill={theme.colors['gray1000']} />
+              </IconButton>
+            </div>
+            <div>
+              <IconButton onClick={changeStar} message="가고싶다">
+                <Star fill={theme.colors[starState ? 'orange' : 'gray1000']} />
+              </IconButton>
+            </div>
           </div>
         </div>
         <div>
@@ -54,70 +118,57 @@ const RestaurantInfo = () => {
         <dl>
           <dt>주소</dt>
           <dd>
-            <span>{restaurantInfo.address[0]}</span>
-            {restaurantInfo.address[1] ? (
-              <span className="address_jibun">{restaurantInfo.address[1]}</span>
-            ) : (
-              ''
-            )}
+            {post?.address?.city} {post?.address?.district}{' '}
+            {post?.address?.detail}
           </dd>
         </dl>
         <dl>
           <dt>전화번호</dt>
-          <dd>02-796-2461</dd>
+          <dd>{post?.phone}</dd>
         </dl>
         <dl>
           <dt>음식 종류</dt>
-          <dd>까스 요리</dd>
-        </dl>
-        <dl>
-          <dt>가격대</dt>
-          <dd>만원 미만</dd>
-        </dl>
-        <dl>
-          <dt>주차</dt>
-          <dd>주차공간없음</dd>
+          <dd>{post?.category}</dd>
         </dl>
         <dl>
           <dt>영업시간</dt>
           <dd>
-            <span>월~금: 11:30 - 20:00</span>
-            <span>토: 11:30 - 15:00</span>
+            {post?.time?.map((_time) => (
+              <span key={_time}>{_time}</span>
+            ))}
           </dd>
         </dl>
         <dl>
           <dt>쉬는시간</dt>
-          <dd>13:30 - 17:00</dd>
-        </dl>
-        <dl>
-          <dt>휴일</dt>
-          <dd>일</dd>
+          <dd>{post?.breakTime}</dd>
         </dl>
         <dl>
           <dt>메뉴</dt>
           <dd>
             <ul className="menus">
-              {menus.map(({ name, price }) => (
-                <li>
+              {post?.menus?.map(({ name, price }) => (
+                <li key={name}>
                   <span>{name}</span>
                   <span>{price.toLocaleString()}원</span>
                 </li>
               ))}
             </ul>
-            <button>
+            {/* <button>
               <img src={foodImage} alt={'메뉴'} />
-            </button>
+            </button> */}
           </dd>
         </dl>
         <p>업데이트: 2018 2.2</p>
-        <dl>
+        <dl className="introduce">
           <dt>식당 소개</dt>
-          <dd>
-            로스가스, 브라운돈가스, 치킨가스, 가쓰오 우동 등을 파는 돈까스
-            전문점
-          </dd>
+          <dd>{post?.description}</dd>
         </dl>
       </Descriptions>
+      {isSocialModalOpen && (
+        <Modal closePortal={handleSocialModal}>
+          <SocialLogin closePortal={handleSocialModal}></SocialLogin>
+        </Modal>
+      )}
     </div>
   );
 };

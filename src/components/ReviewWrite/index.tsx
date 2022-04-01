@@ -18,16 +18,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components';
 import theme from '@/styles/theme';
-import { useState, useEffect, useRef, forwardRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import {
+  postReviewDocs,
+  postImage,
+  getPostTitleDocs,
+  postRestaurantsDocs,
+  updateReview,
+  getReview,
+} from '@/firebase/request';
+import { useAppSelector } from '@/store/hooks';
+import { restaurants } from './obj';
+import { useLocation, useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
+import { RestaurantLink } from '../RestaurantItem/restaurant.styled';
 
 const ReviewWrite = () => {
-  const [selectScore, setSelectScore] = useState('good');
-  const [prevSelectScore, setPrevSelectScore] = useState(null);
-  const disabledRef = useRef<HTMLButtonElement>(null);
+  const userId = useAppSelector(({ auth }) => auth.status.uid);
 
-  const selectScoreHandler = (e: any) => {
-    changeScore(e.currentTarget);
-  };
+  const [title, setTitle] = useState<string>();
+  const [selectScore, setSelectScore] = useState(null);
+  const [prevSelectScore, setPrevSelectScore] = useState(null);
+  const [reviewText, setReviewText] = useState('');
+  const disabledRef = useRef<HTMLButtonElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const { pathname } = useLocation();
+  const { state }: any = useLocation();
+  const postId = pathname.replace(/(\/writeReview\/)?(\/editReview\/)?/, '');
+  const action = pathname.replace(postId, '');
+
+  const navigate = useNavigate();
+
+  // 이미지 미리보기 할 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState<Blob[]>([]);
+  const [fileImageSrc, setFileImageSrc] = useState<Array<Array<string>>>([]);
+
+  useEffect(() => {
+    getPostTitleDocs(postId).then((res) => setTitle(res[0]));
+    if (action === '/editReview/') {
+      getReview(state.reviewId).then((res: any) => {
+        console.log(res);
+        setReviewText(res.text);
+      });
+    }
+  }, []);
+
+  const selectScoreHandler = (e: any) => changeScore(e.currentTarget);
 
   const changeScore = (node: any) => {
     const id = node.id;
@@ -59,40 +97,128 @@ const ReviewWrite = () => {
       : true;
   };
 
-  //파일 미리볼 url을 저장해줄 state
-  const [fileImage, setFileImage] = useState<Array<string>>([]);
-
   // 파일 저장
-  const saveFileImage = (e: any) => {
-    setFileImage([...fileImage, URL.createObjectURL(e.target.files[0])]);
-    e.target.value = '';
+  const saveFileImage = async (e: any) => {
+    if (fileRef.current?.files) {
+      // setFileImage([...fileImage, fileRef.current?.files[0]]);
+      // setFileImageSrc([
+      //   ...fileImageSrc,
+      //   [
+      //     URL.createObjectURL(fileRef.current?.files[0]),
+      //     fileRef.current?.files[0].name,
+      //   ],
+      // ]);
+
+      let file = fileRef.current?.files[0]; // 입력받은 file객체
+
+      // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+      const options = {
+        maxSizeMB: 2,
+        maxWidthOrHeight: 300,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        setFileImage([...fileImage, compressedFile]);
+        setFileImageSrc([
+          ...fileImageSrc,
+          [URL.createObjectURL(file), file.name],
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+
+      e.target.value = '';
+    }
   };
 
   // 파일 삭제
   const deleteFileImage = (e: any) => {
-    const fileName = e.currentTarget.parentNode.parentNode.dataset.id;
-    setFileImage([...fileImage].filter((file: any) => fileName !== file));
-    URL.revokeObjectURL(fileName);
+    const fileSrc = e.currentTarget.parentNode.parentNode.dataset.id;
+    const fileName = e.currentTarget.parentNode.parentNode.dataset.name;
+
+    setFileImageSrc(
+      [...fileImageSrc].filter((file: any) => fileSrc !== file[0]),
+    );
+    setFileImage([...fileImage].filter((file: any) => fileName !== file.name));
+    URL.revokeObjectURL(fileSrc);
   };
 
-  const check = () => {
-    console.log('fileImage', fileImage);
-    console.log('selectScore', selectScore);
-    const text = document.querySelector('textarea')?.value;
-    console.log('text', text);
+  const craeteReview = async () => {
+    // 현재 시간
+    const today = new Date();
+    const date = `${today.getFullYear()}-${
+      today.getMonth() + 1
+    }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+
+    // 이미지
+    const images = await Promise.all(
+      fileImage.map(async (file) => await postImage(file, 'reviews')),
+    );
+
+    // text
+    const text = textRef.current?.value || '';
+
+    // 점수
+    const score = +(selectScore || 0);
+
+    // firebase insert
+    await postReviewDocs({
+      postId,
+      userId,
+      date,
+      images,
+      text,
+      score,
+    }).then((res) => navigate(-1));
+
+    // 데이터 집어넣는 부분
+    // restaurants.forEach(async (obj: any) => {
+    //   await postRestaurantsDocs({ ...obj, images: [...images] });
+    // });
+  };
+
+  const editReview = async () => {
+    // 현재 시간
+    const today = new Date();
+    const date = `${today.getFullYear()}-${
+      today.getMonth() + 1
+    }-${today.getDate()}-${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+
+    // 이미지
+    const images = await Promise.all(
+      fileImage.map(async (file) => await postImage(file, 'reviews')),
+    );
+
+    // text
+    const text = textRef.current?.value || '';
+
+    // 점수
+    const score = +(selectScore || 0);
+
+    const reviewId = state.reviewId || '';
+    // firebase insert
+    await updateReview(reviewId, {
+      postId,
+      userId,
+      date,
+      images,
+      text,
+      score,
+    }).then((res) => navigate(-1));
   };
 
   return (
     <Review>
       <SortMiddel60>
-        <RestaurantsTitle>까스까스</RestaurantsTitle>
+        <RestaurantsTitle>{title}</RestaurantsTitle>
         <SubTitle>에 대한 솔직한 리뷰를 써주세요.</SubTitle>
         <ReviewContent>
           <ReviewScoreGroup>
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'good'}
+                id={'5'}
                 posX={-1}
                 posY={100}
               >
@@ -102,7 +228,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'middle'}
+                id={'3'}
                 posX={49}
                 posY={100}
               >
@@ -112,7 +238,7 @@ const ReviewWrite = () => {
             <li>
               <ReviewScoreButton
                 onClick={selectScoreHandler}
-                id={'bad'}
+                id={'1'}
                 posX={98}
                 posY={100}
               >
@@ -121,14 +247,22 @@ const ReviewWrite = () => {
             </li>
           </ReviewScoreGroup>
           <ReviewText
+            ref={textRef}
             onInput={changeText}
             placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"
+            defaultValue={reviewText}
           ></ReviewText>
         </ReviewContent>
         <ReviewSelectImgs>
-          {fileImage.map((file, idx) => {
+          {fileImageSrc.map((file, idx) => {
+            console.log(file);
             return (
-              <ReviewSelectImg key={idx} data-id={file} img={file}>
+              <ReviewSelectImg
+                key={idx}
+                data-id={file[0]}
+                data-name={file[1]}
+                img={file[0]}
+              >
                 <ImgDelete>
                   <FontAwesomeIcon
                     onClick={deleteFileImage}
@@ -148,23 +282,42 @@ const ReviewWrite = () => {
               type="file"
               accept="image/*"
               onChange={saveFileImage}
+              ref={fileRef}
             />
           </ReviewImg>
         </ReviewSelectImgs>
 
         <ButtonGroup>
-          <Button background={theme.colors.white} color={theme.colors.gray300}>
+          <Button
+            background={theme.colors.white}
+            color={theme.colors.gray300}
+            clickEvent={() => {
+              navigate(-1);
+            }}
+          >
             취소
           </Button>
-          <Button
-            background={theme.colors.gray500}
-            color={theme.colors.white}
-            // disabled
-            forwardRef={disabledRef}
-            event={check}
-          >
-            리뷰 올리기
-          </Button>
+          {action === '/editReview/' ? (
+            <Button
+              background={theme.colors.gray500}
+              color={theme.colors.white}
+              // disabled
+              forwardRef={disabledRef}
+              clickEvent={editReview}
+            >
+              리뷰 수정하기
+            </Button>
+          ) : (
+            <Button
+              background={theme.colors.gray500}
+              color={theme.colors.white}
+              // disabled
+              forwardRef={disabledRef}
+              clickEvent={craeteReview}
+            >
+              리뷰 올리기
+            </Button>
+          )}
         </ButtonGroup>
       </SortMiddel60>
     </Review>

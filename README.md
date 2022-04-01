@@ -1,50 +1,76 @@
-<<<<<<< HEAD
-# foodking
-=======
-# Getting Started with Create React App
+## 🍽 기획의도
+![image](https://user-images.githubusercontent.com/60125497/161045894-e8ec52b0-a4e8-4bf2-a3cb-09906b895d41.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+## 📆 프로젝트 기간
+2022.03.08 ~ 2022.03.31
 
-In the project directory, you can run:
+<br>
 
-### `npm start`
+## 👨‍💻 팀원
+[김민성](https://gtihub.com/minsoftk) [김효식](https://github.com/h-sick) [원종빈](https://github.com/JJongBin) [조용우](https://github.com/ywc8851) 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 📚 기술스택
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
-### `npm test`
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 😥 개선 전
+- tab focusing 불가능
+- 프로필 이미지 상태값 새로고침 시 초기화되어 깜빡거림
+- 프로필 아이콘 클릭 시 드롭다운 닫기 버튼 없음 , 개별 삭제 불가능
+- 부적절한 로그아웃의 위치
+- semantic tag 미사용
 
-### `npm run build`
+![image](https://user-images.githubusercontent.com/60125497/161046037-f7890369-822f-4bde-82bf-ac667a0cf339.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🤩 개선 후
+- 키보드로 tab focusing 가능
+- 새로고침 시 프로필 이미지 깜빡거리지 않음
+- 프로필 아이콘 클릭 시 드롭다운 닫기 버튼 추가 , 개별 삭제 가능
+- 로그아웃 위치 변경
+- semantic tag를 사용한 semantic markup
+- SEO 향상 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![image](https://user-images.githubusercontent.com/60125497/161055913-a3233888-3ad6-469f-974c-5dc88a8e29e3.png)
 
-### `npm run eject`
+### 프로필 사진 깜빡임 문제
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![헤더깜빡임](https://user-images.githubusercontent.com/60125497/161048868-bd08f086-67b7-4c15-8123-29dc652516a9.gif)|![헤더깜빡임해결](https://user-images.githubusercontent.com/60125497/161049711-0e522f2a-8825-4322-804a-2889562639b1.gif)|
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 드롭다운 닫기 버튼 ❌ & 개별 삭제 불가능 & 로그아웃 버튼
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![image](https://user-images.githubusercontent.com/60125497/161050944-485a332c-7284-42bf-b0bf-70a1dcef67a3.png)|![image](https://user-images.githubusercontent.com/60125497/161051689-57d7e97e-1afd-4dee-8396-05b821d42a51.png)|
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 스켈레톤 UI 적용
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![mangoUI](https://user-images.githubusercontent.com/86653111/161056780-ddc736f6-c2b3-46b4-a89d-f0465c72e134.gif)|![skeletonUI](https://user-images.githubusercontent.com/86653111/161056511-00cf2dd7-7940-4039-8a70-8714465a2d53.gif)|
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br/>
 
-## Learn More
+### Tabable 접근성 문제 개선
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![망고플레이트tab](https://user-images.githubusercontent.com/55948211/161093463-1eccdea1-8a62-429e-b0f6-95b7df17743f.gif)|![먹대장tab](https://user-images.githubusercontent.com/55948211/161093514-07f6f505-c837-439f-ac04-89b81a8d36b9.gif)|
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
->>>>>>> release/v0.1.0
+
+
+

@@ -1,20 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FC, MouseEvent } from 'react';
 import { IconButtonStyle } from './iconButton.styled';
-import { textSpanContainsPosition } from 'typescript';
 
 interface IconButtonType {
-  event: (e: any) => void;
-  img: string;
+  onClick: (e: MouseEvent) => void;
+  message: string;
 }
 
-const IconButton = ({ event, img }: IconButtonType) => {
+const IconButton: FC<IconButtonType> = ({ onClick, message, children }) => {
   return (
-    <IconButtonStyle img={img} onClick={event}>
-      <button></button>
-      <span>가고싶다</span>
+    <IconButtonStyle onClick={onClick}>
+      <button>{children}</button>
+      <span>{message}</span>
     </IconButtonStyle>
   );
 };
 
 export default IconButton;
+export { default as Pen } from './Pen';
+export { default as Star } from './Star';

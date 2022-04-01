@@ -19,8 +19,12 @@ const RestaurantItem = styled.figure`
 
 const RestaurantImg = styled(Link)`
   width: 45%;
+  position: relative;
   & img {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 

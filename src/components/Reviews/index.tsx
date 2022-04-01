@@ -1,38 +1,45 @@
+import { useMemo } from 'react';
 import Review from './Review';
 import { Header } from './Review.styled';
+import { useAppSelector } from '@/store/hooks';
+import { ReviewWithId as ReviewType } from '@/firebase/type';
+
+const calcReviewCount = (reviews: ReviewType[] = [], reviewScore: number) =>
+  reviews.filter(({ score }) => score === reviewScore).length;
 
 const Reviews = () => {
-  const reviews = Array(3)
-    .fill(null)
-    .map((_, i) => ({
-      id: i,
-    }));
+  const { data: post } = useAppSelector(({ restaurant }) => restaurant.post);
 
-  const filters = [
-    {
-      type: '전체',
-      count: 14,
-    },
-    { type: '맛있다', count: 13 },
-    {
-      type: '괜찮다',
-      count: 1,
-    },
-    {
-      type: '별로',
-      count: 0,
-    },
-  ];
+  const reviewCounts = useMemo(
+    () => [
+      {
+        type: '전체',
+        count: post?.reviews?.length,
+      },
+      { type: '맛있다', count: calcReviewCount(post?.reviews!, 5) },
+      {
+        type: '괜찮다',
+        count: calcReviewCount(post?.reviews!, 3),
+      },
+      {
+        type: '별로',
+        count: calcReviewCount(post?.reviews!, 1),
+      },
+    ],
+    [post?.reviews?.length],
+  );
+
+  console.log(post);
 
   return (
     <section>
       <Header>
         <h2>
           <span>리뷰 </span>
-          <span>(14)</span>
+          <span>({post?.reviews?.length})</span>
         </h2>
         <ul>
-          {filters.map(({ type, count }) => (
+          {reviewCounts.map(({ type, count }) => (
             <li key={type}>
               {type} ({count})
             </li>
@@ -40,8 +47,8 @@ const Reviews = () => {
         </ul>
       </Header>
       <ul>
-        {reviews.map(({ id }) => (
-          <Review key={id} />
+        {post?.reviews?.map((review) => (
+          <Review key={review.date} {...review} />
         ))}
       </ul>
     </section>

@@ -9,6 +9,7 @@ const theme = {
     gray700: '#4f4f4f',
     gray800: '#808080',
     gray900: '#dbdbdb',
+    gray1000: '#b9b9b9',
     orange: '#fd8c2a',
     white: '#ffffff',
     black: '#000000',
@@ -17,6 +18,7 @@ const theme = {
     border0: '1px solid #bdbdbd',
     border1: '3px solid #fd8c2a',
     radius: '40px',
+    radiusCircle: '50%',
   },
 };
 

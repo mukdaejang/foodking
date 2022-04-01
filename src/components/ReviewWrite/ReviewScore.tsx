@@ -4,8 +4,8 @@ interface ReviewScoreButtonChecker {
   children: string;
   posX: number;
   posY: number;
-  id: string;
-  onClick: (e: any) => void;
+  id?: string;
+  onClick?: (e: any) => void;
 }
 
 export const ReviewScoreButton = ({
