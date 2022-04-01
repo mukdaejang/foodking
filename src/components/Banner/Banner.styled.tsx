@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import mainBanner from '@/assets/img/banner.jpg';
 
 export const banner = css`
-  width: 100vw;
+  width: 100%;
   height: 500px;
   background: url(${mainBanner}) no-repeat;
   background-size: cover;
