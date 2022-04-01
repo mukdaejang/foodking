@@ -55,12 +55,22 @@
 |:---:|:---:|
 |![image](https://user-images.githubusercontent.com/60125497/161050944-485a332c-7284-42bf-b0bf-70a1dcef67a3.png)|![image](https://user-images.githubusercontent.com/60125497/161051689-57d7e97e-1afd-4dee-8396-05b821d42a51.png)|
 
-
+<br/>
 
 ### 스켈레톤 UI 적용
 |👎 기존 망고플레이트|👍 먹대장|
 |:---:|:---:|
 |![mangoUI](https://user-images.githubusercontent.com/86653111/161056780-ddc736f6-c2b3-46b4-a89d-f0465c72e134.gif)|![skeletonUI](https://user-images.githubusercontent.com/86653111/161056511-00cf2dd7-7940-4039-8a70-8714465a2d53.gif)|
+
+<br/>
+
+### Tabable 접근성 문제 개선
+|👎 기존 망고플레이트|👍 먹대장|
+|:---:|:---:|
+|![망고플레이트tab](https://user-images.githubusercontent.com/55948211/161093463-1eccdea1-8a62-429e-b0f6-95b7df17743f.gif)|![먹대장tab](https://user-images.githubusercontent.com/55948211/161093514-07f6f505-c837-439f-ac04-89b81a8d36b9.gif)|
+
+<br/>
+
 
 
 
