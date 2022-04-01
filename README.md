@@ -81,6 +81,24 @@ https://mukdaejang-3b8e6.web.app/
 
 <br/>
 
+## 리팩토링
+
+### 불필요한 렌더링 방지(React.memo)
+|👎 이전 먹대장|👍 현재 먹대장|
+|:---:|:---:|
+|![memo적용전](https://user-images.githubusercontent.com/55948211/161093699-33a6b5ec-de82-4215-85ea-d1e98e163469.gif)|![memo적용](https://user-images.githubusercontent.com/55948211/161093682-1651f1a2-4e86-4279-b6d7-b45575d94bc2.gif)|
+
+
+<br/>
+
+### 렌더링 성능 개선(Lazy Loading(code Spliting), useCallback)
+|👎 이전 먹대장|👍 현재 먹대장|
+|:---:|:---:|
+|![MainVSMatijipList](https://user-images.githubusercontent.com/55948211/161108421-cc4256cb-c708-48bb-9d37-8a4ff23a29df.png)|![MainVSMatijipList(after)](https://user-images.githubusercontent.com/55948211/161108738-7ba9a559-3ddb-4623-b2cb-4a2a4b32a7f0.png)|
+|![MainVSMatijipList2](https://user-images.githubusercontent.com/55948211/161109144-369be2e3-15f9-42a3-87af-2a8ea9509890.png) | ![MainVSMatijipList2(after)](https://user-images.githubusercontent.com/55948211/161109118-ceb55aae-527d-4c17-a781-79449541d1d5.png)|
+
+
+
 
 
 
