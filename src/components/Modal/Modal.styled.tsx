@@ -10,11 +10,7 @@ export const modalBackground = css`
 `;
 
 export const bannerModalOpen = css`
-<<<<<<< HEAD
-  width: 100vw;
-=======
   width: 100%;
->>>>>>> hotfix/hotfix_style
   height: 100vh;
   position: fixed;
   top: 0;
