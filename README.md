@@ -64,7 +64,8 @@
 ### 스켈레톤 UI 적용
 |👎 기존 망고플레이트|👍 먹대장|
 |:---:|:---:|
-|![mangoUI](https://user-images.githubusercontent.com/86653111/161056780-ddc736f6-c2b3-46b4-a89d-f0465c72e134.gif)|![skeletonUI](https://user-images.githubusercontent.com/86653111/161056511-00cf2dd7-7940-4039-8a70-8714465a2d53.gif)|
+|![망고플레이트_스켈레톤](https://user-images.githubusercontent.com/86653111/161181729-71509434-53e5-44d8-be77-34f4a501ada8.gif)|![먹대장_스켈레톤](https://user-images.githubusercontent.com/86653111/161181767-bd651369-e59e-461c-a588-667529c8f147.gif)
+|
 
 <br/>
 
