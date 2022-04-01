@@ -91,7 +91,6 @@ https://mukdaejang-3b8e6.web.app/
 |:---:|:---:|
 |![MainVSMatijipList](https://user-images.githubusercontent.com/55948211/161108421-cc4256cb-c708-48bb-9d37-8a4ff23a29df.png)|![MainVSMatijipList(after)](https://user-images.githubusercontent.com/55948211/161108738-7ba9a559-3ddb-4623-b2cb-4a2a4b32a7f0.png)|
 |![MainVSMatijipList2](https://user-images.githubusercontent.com/55948211/161109144-369be2e3-15f9-42a3-87af-2a8ea9509890.png) | ![MainVSMatijipList2(after)](https://user-images.githubusercontent.com/55948211/161109118-ceb55aae-527d-4c17-a781-79449541d1d5.png)|
-* React에서 lazy()는 외부라이브러리 도움 없이 코드 분할을 통해 구성 요소를 느리게 로드할 수 있는 함수이다. 코드 분할을 통해 여러 번들로 동적으로 분할 되며, 동적으로 로드된다. 
 
 
 
