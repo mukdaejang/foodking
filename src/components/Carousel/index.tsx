@@ -67,9 +67,13 @@ const Carousel = ({ title }: CarouselChecker) => {
       <CategoryTitle>{`믿고 보는 ${title} 리스트`}</CategoryTitle>
       <CarouselView>
         <CarouselItems ref={slideRef}>
-          {categoryComponent.map((category: CategoryType[], idx: number) => (
-            <Category key={idx} categoryItemList={category} cnt={3} />
-          ))}
+          {categoryComponent.length ? (
+            categoryComponent.map((category: CategoryType[], idx: number) => (
+              <Category key={idx} categoryItemList={category} cnt={3} />
+            ))
+          ) : (
+            <Category cnt={3} />
+          )}
         </CarouselItems>
       </CarouselView>
       <NavigationControl ref={slideDotRef} nowSlide={currentSlide}>
@@ -77,8 +81,14 @@ const Carousel = ({ title }: CarouselChecker) => {
           <li key={idx}></li>
         ))}
       </NavigationControl>
-      <CarouselControl onClick={PrevSlide}>prev</CarouselControl>
       <CarouselControl onClick={NextSlide}>next</CarouselControl>
+      <CarouselControl onClick={PrevSlide}>prev</CarouselControl>
+      {/* {categoryComponent.length ? (
+        <div>
+        </div>
+      ) : (
+        ''
+      )} */}
     </CarouselContent>
   );
 };

@@ -24,9 +24,11 @@ const Restaurants = ({ title }: restaurantChecker) => {
     <RestaurantsContent>
       <RestaurantsTitle>{`평점이 높은 ${title}`}</RestaurantsTitle>
       <RestaurantsList ref={restaurantsRef}>
-        {restaurants.map((restaurant: PostsWithId) => (
-          <Restaurant cnt={4} key={restaurant.id} info={restaurant} />
-        ))}
+        {restaurants.length
+          ? restaurants.map((restaurant: PostsWithId) => (
+              <Restaurant cnt={4} key={restaurant.id} info={restaurant} />
+            ))
+          : [...Array(8)].map((_, idx) => <Restaurant key={idx} cnt={4} />)}
       </RestaurantsList>
     </RestaurantsContent>
   );
