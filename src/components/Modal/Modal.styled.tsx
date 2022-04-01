@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const modalBackground = css`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -10,7 +10,11 @@ export const modalBackground = css`
 `;
 
 export const bannerModalOpen = css`
+<<<<<<< HEAD
   width: 100vw;
+=======
+  width: 100%;
+>>>>>>> hotfix/hotfix_style
   height: 100vh;
   position: fixed;
   top: 0;
@@ -19,12 +23,12 @@ export const bannerModalOpen = css`
 `;
 
 export const loginModalBackground = css`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: fixed;
   top: 0;
   z-index: 9999;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 export const loginModalOpen = css`
   position: absolute;
