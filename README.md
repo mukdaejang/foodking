@@ -14,7 +14,7 @@ https://mukdaejang-3b8e6.web.app/
 <br>
 
 ## 👨‍💻 팀원
-[김민성](https://gtihub.com/minsoftk) [김효식](https://github.com/h-sick) [원종빈](https://github.com/JJongBin) [조용우](https://github.com/ywc8851) 
+[김민성](https://github.com/minsoftk) [김효식](https://github.com/h-sick) [원종빈](https://github.com/JJongBin) [조용우](https://github.com/ywc8851) 
 
 <br>
 
